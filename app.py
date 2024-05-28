@@ -111,46 +111,56 @@ if choice == 'Run AutoML':
     st.subheader("Now let's run some AutoML magic!")
     #create profile report
 
-    st.info('So what do you want to predict?')
+    st.info('Step 1: So what do you want to predict?')
     target = st.selectbox("Select Target Variable", df.columns)
+    st.text("Our ML model with predict this target:", target)
     
-    if st.button('Train my Classification Model......Whoosh!!!'):
-        setup(df,target=target,fix_imbalance = True)
+    st.info('Step 2: Any columns should be ignored? (names, ids, etc - not needed for prediction)')
+    ignore_list= st.multiselect("",df.columns)
+    # Display the dataset:
+    st.dataframe(df)
+    st.write("You selected the following columns to be ignored:", ignore_list)
+    
+    st.info("Step 3: Ready to run your model? PRESS THE BUTTON BELOW!")
+    if st.button('Train my moodel baby......Whoosh!!!'):
+        setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list)
         setup_df=pull()
-        st.info('This is the ML Experiment setup:')
+        st.info('Pycaret ML settings : 10+ models will be trained and compared. This may take a few minutes.')
         st.dataframe(setup_df)
         best_model = compare_models()
         compare_df = pull()
         st.write("Best Model: bloody Oath that's impressive ")
         #renders the best model leaderboard: 
-        st.dataframe(compare_df)
-        st.write("Cream of the crop, that rose to the top! ")
+        st.dataframe(compare_df) 
         best_model 
-        save_model(best_model, 'Data pipeline & best_model ')    
+        save_model(best_model, 'best_model')    
+        st.success('Model trained successfully!')	
+        auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
+        cm_img = plot_model(best_model, plot = 'confusion_matrix', display_format="streamlit", save=True)
 
-        auc_img = plot_model(best_model, plot = 'auc')
-        # plot confusion matrix
-        cm_img = plot_model(best_model, plot = 'confusion_matrix')
         # plot feature importance
-        features_img  = plot_model(best_model, plot = 'feature')
+        features_img  = plot_model(best_model, plot = 'feature', display_format="streamlit", save=True)
         #render the images
-        st.image(features_img)
-        st.image(cm_img)
+        st.info('Fig 1 Model performance: AUC curve ' )
         st.image(auc_img)
+        st.info('Fig 2 Model performance: Confusion Matrix ' )
+        st.image(cm_img)
+        st.info('Fig 3 Model performance: Feature Importance ' )
+        st.image(features_img)
+        
+    
 
+    
             
 ######################################################################
 # lets build our Model Download page
 ######################################################################
 
-if choice == 'Model Download':
-    with st.spinner('Wait for it...'):
-        # Download the model as a pickle file
-        st.markdown('### [Download the model](best_model.pkl)')
-        st.success('Downloaded successfully!')
-        st.balloons()
-        st.info('Select "View Results" in the sidebar to continue.')
-
+if choice == 'Model download':
+    with open('best_model.pkl', 'rb') as f: 
+        if st.download_button('Download Model', f, file_name="best_model.pkl"): 
+            st.success('Model downloaded successfully!')
+            st.balloons()
 
 ######################################################################
 # lets build our ML Glossary page
