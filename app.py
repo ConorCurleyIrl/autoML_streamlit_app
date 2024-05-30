@@ -3,7 +3,9 @@
 from operator import index
 import streamlit as st
 import plotly.express as px
-from pycaret.regression import setup, compare_models, pull, save_model, load_model, predict_model
+from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, interpret_model, evaluate_model, tune_model
+
+
 from ydata_profiling import ProfileReport
 import pandas as pd
 from streamlit_pandas_profiling import st_profile_report
@@ -107,35 +109,34 @@ if choice == 'Step1: Upload Data':
         st.success('Data uploaded successfully!') 
         
     # Add common datasets
-    st.info('Option 2: Select a sample dataset.')
+    st.info('Option 2: Download a sample dataset to use.')
     if st.button('View sample datasets') == True:
 
         st.subheader('Titanic Passenger Dataset:')
         st.info('Info: The Titanic dataset is a historical dataset that includes passenger information like age, gender, passenger class, and survival status from the tragic Titanic shipwreck. This is a classic dataset used to train ML models, to predict if a passenger survived or not. using the passenger information.')
         st.link_button('link to dataset','https://github.com/datasciencedojo/datasets/blob/master/titanic.csv')
-        if st.button('Use titanic dataset') == True:
-            df = pd.read_csv('titanic_data.csv', index_col=None)
-            df.to_csv('uploaded_dataset.csv', index=False)
-            # Display the dataset:
-            st.dataframe(df)
+        
+        with open('titanic_data.csv', 'rb') as f:
+            if st.download_button('Download Titanic CSV', f, file_name="titanic_data.csv"): 
+                st.success('Titanic dataset downloaded :ship:')
 
         st.subheader('Vodafone Customer Dataset:')
         st.info('Info: This dataset includes customer information used to predict when a customer leaves/churns. Before you ask, yes Churn is silly business term invented to sound technical.')
         st.link_button('link to dataset','https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv')
-        if st.button('Vodafone Customer dataset') == True:
-            df = pd.read_csv('telco_churn.csv', index_col=None)
-            df.to_csv('uploaded_dataset.csv', index=False)
-            # Display the dataset:
-            st.dataframe(df)
-        
+      
+        with open('telco_churn.csv', 'rb') as f: 
+            if st.download_button('Download Vodafone Customer CSV', f, file_name="telco_churn.csv"): 
+                st.success('Vodafone dataset downloaded :mobile_phone:')
+
         st.subheader('Penguins Speciies Classification Dataset:')
         st.info('Info: This dataset is used to predict penguin species. There are 3 different species of penguins in this dataset, collected from 3 islands in the Palmer Archipelago, Antarctica.')
-        st.link_button('link to dataset','https://github.com/allisonhorst/palmerpenguins/tree/main')
-        if st.button('Use Penguins Dataste') == True:
-            df = pd.read_csv('penguins.csv', index_col=None)
-            df.to_csv('uploaded_dataset.csv', index=False)
-            # Display the dataset:
-            st.dataframe(df)
+        st.link_button('link to dataset','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
+   
+        #df = pd.read_csv('https://raw.githubusercontent.com/dickoa/penguins/master/data/penguins_lter.csv')
+        
+        with open('penguins.csv', 'rb') as f: 
+            if st.download_button('Download Penguins CSV', f, file_name="penguins.csv"): 
+                st.success('dPenguin dataset downloaded :peguin:')
 
     # next steps prompt
     if not df.empty:  
@@ -154,12 +155,14 @@ if choice == 'Step2: Data Profiling':
     #set up the data
     if os.path.exists('uploaded_dataset.csv'):
         df = pd.read_csv('uploaded_dataset.csv', index_col=None)
-
+    # Display the dataset:
+    
     st.title('Step 2: Data Profiling')
     st.image(width=200,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F9ADoZQgs0tyww%2Fgiphy.gif&f=1&nofb=1&ipt=bbe895f57b94a3eb6cc387f2bc4dd996bf548428356950b16d9f17de07feefaf&ipo=images')
     st.header('Whats Data Profiling?')
     st.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
     st.info("Let's see what how data looks like!")
+    st.dataframe(df)
     if st.button('Generate Data Profile Report') == True:
         #create profile report
         profile = ProfileReport(df, title='Pandas Profiling Report', explorative=True)
@@ -176,11 +179,6 @@ if choice == 'Step2: Data Profiling':
 ######################################################################
 # lets build our Run AutoML page
 ######################################################################
-#ML libraries
-import sklearn 
-import numpy as np
-from pycaret.classification import *
-
 
 if choice == 'Step3: Run AutoML':
     st.title('Step 3: Run AutoML')
@@ -214,7 +212,7 @@ if choice == 'Step3: Run AutoML':
 
     #Step 2 
     st.info("Step 2: Any columns should be ignored? (Select columns such as Names and individual ID numbers,  don't select your Target Variable here.")
-    st.write("Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. Similar if you are using the Telco Churn dataset, you may want to ignore the 'Customer ID' column.")  
+    st.write("Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. Similar if you are using the Telco Churn dataset, you may want to ignore the 'Customer ID' column. In the Penguins dataset, you may want to ignore the 'Individual' column.")  
     ignore_list= st.multiselect("Select columns to ignore: ",df.columns)
     # Display the dataset for reference:
     st.dataframe(df)
@@ -226,62 +224,89 @@ if choice == 'Step3: Run AutoML':
     if st.button('Train my model baby......Whoosh!!!'):
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list)
         setup_df=pull()
-        st.info('Pycaret ML settings : 16 differnent ML models will be trained and compared. This may take a few minute - go stick the kettle on, the cat has to do some serious work to do!')
+        st.info('Figuring out patterns in the data to make preditions...+15 different ML models will be trained. This may take a few minute - go stick the kettle on, my cat has some serious machine learning work to do!')
         st.image(width=200, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
+        st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
-        best_model = compare_models()
+        best_model = compare_models(sort='AUC')
         compare_df = pull()
         st.info("Results are in! Review your model performance below:")
-        st.write("Bloody Oath that's impressive table of ML models!")
+        st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
         #renders the best model leaderboard: 
         st.dataframe(compare_df) 
-        if st.button("What do these performance scores mean? Click here for more info") == True:
-            st.subheader("1. What does 'Accuracy' mean?")
-            st.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
-            st.subheader("2. What does 'AUC' mean?")
-            st.info('AUC stands for Area Under the Curve. It is used in classification analysis in order to determine which of the used models predicts the classes best.')
-            st.info('An excellent model has AUC near to the 1 which means it has good measure of separability. A poor model has AUC near to the 0 which means it has worst measure of separability.')
-            st.subheader("3. What does 'Recall' mean?")
-            st.info('Recall is the ratio of correctly predicted positive observations to the all observations in actual class - yes, it is the ratio of true positive to the sum of true positive and false negative.')
-            st.subheader("4. What does 'Precision' mean?")
-            st.info('Precision is the ratio of correctly predicted positive observations to the total predicted positive observations. High precision relates to the low false positive rate.')
-            st.subheader("5. What does 'Kappa' mean?")
-            st.info('Kappa is a statistic that measures inter-rater agreement for qualitative items. It is generally thought to be a more robust measure than simple percent agreement calculation, as Kappa takes into account the possibility of the agreement occurring by chance.')
-            st.subheader("6. What does 'MCC' mean?")
-            st.info('MCC is a measure of the quality of binary classifications. It returns a value between -1 and 1. A coefficient of 1 represents a perfect prediction, 0 an average random prediction and -1 an inverse prediction.')
-            st.subheader("7. What does 'TT sec' mean?")
-            st.info('TT sec is the time taken to train the model.')
-        
-        best_model 
-        save_model(best_model, 'best_model')    
+        best_model = tune_model(best_model)
+        best_model
+        evaluation= evaluate_model(best_model)
+        st.write(evaluation)
+        save_model(best_model, 'best_model')   
         st.success('You model was trained successfully on your data! We can now use this model to make predictions.')	
         
-    if st.button('Model trained and you want to view more model performance graphs?') == True:
+    if st.button("Optional: What do these performance scores mean? Click here for more info") == True:
+        st.subheader("1. What does 'Accuracy' mean?")
+        st.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
+        st.subheader("2. What does 'AUC' mean?")
+        st.info('AUC stands for Area Under the Curve. It is used in classification analysis in order to determine which of the used models predicts the classes best.')
+        st.info('An excellent model has AUC near to the 1 which means it has good measure of separability. A poor model has AUC near to the 0 which means it has worst measure of separability.')
+        st.subheader("3. What does 'Recall' mean?")
+        st.info('Recall is the ratio of correctly predicted positive observations to the all observations in actual class - yes, it is the ratio of true positive to the sum of true positive and false negative.')
+        st.subheader("4. What does 'Precision' mean?")
+        st.info('Precision is the ratio of correctly predicted positive observations to the total predicted positive observations. High precision relates to the low false positive rate.')
+        st.subheader("5. What does 'Kappa' mean?")
+        st.info('Kappa is a statistic that measures inter-rater agreement for qualitative items. It is generally thought to be a more robust measure than simple percent agreement calculation, as Kappa takes into account the possibility of the agreement occurring by chance.')
+        st.subheader("6. What does 'MCC' mean?")
+        st.info('MCC is a measure of the quality of binary classifications. It returns a value between -1 and 1. A coefficient of 1 represents a perfect prediction, 0 an average random prediction and -1 an inverse prediction.')
+        st.subheader("7. What does 'TT sec' mean?")
+        st.info('TT sec is the time taken to train the model.')
+    
+    if st.button('Optional: View best model performance graphs (test_data)') == True:
+        with open('best_model.pkl', 'rb') as f: 
+            best_model = load_model('best_model')
         # plot feature importance
-        st.subheader("Model Performance Figures:")
-        auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
-        cm_img = plot_model(best_model, plot = 'confusion_matrix', display_format="streamlit", save=True)
-        classr_img = plot_model(best_model, plot = 'class_report', display_format="streamlit", save=True)
-        features_img  = plot_model(best_model, plot = 'feature_all', display_format="streamlit", save=True)
+        st.subheader("Model Performance Figures: (if available - not all models have these features)")
+        try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
+        except: pass
+        try : cm_img = plot_model(best_model, plot = 'confusion_matrix', display_format="streamlit", save=True)
+        except: pass
+
+        try : features_img  = plot_model(best_model, plot = 'feature_all', display_format="streamlit", save=True)
+        except: pass
         
+        try : pipeline_img  = plot_model(best_model, plot = 'pipeline', display_format="streamlit", save=True)
+        except: pass
+
         
         #render the images
-        st.subheader('Fig 1 Model performance: AUC curve')
-        st.info('AUC graph is very useful when the target variable is binary. It is a measure of how well a binary classification model is able to distinguish between positive and negative classes.')
-        st.image(auc_img)
-
-        st.subheader('Fig 2 Model performance: Confusion Matrix: '  )
-        st.info('A confusion matrix is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It allows the visualization of the performance of an algorithm.')
-        st.info(f'The confusion matrix is a useful tool for understanding the performance of a classification model. It provides a detailed breakdown of the model\'s predictions, allowing you to see where it is making errors and how well it is performing overall.')
-        st.image(cm_img)
-
-        st.subheader('Fig 3, Classification Report' )
-        st.info('Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report.')
-        st.image(classr_img)
+        if 'auc_img' not in locals():
+            st.warning('No AUC graph available for this model.')
+        else:   
+            st.subheader('Fig 1 Model performance: AUC curve')
+            st.info('AUC graph is very useful when the target variable is binary. It is a measure of how well a binary classification model is able to distinguish between positive and negative classes.')
+            
+            st.image(auc_img)
+        if 'cm_img' not in locals():
+            st.warning('No Confusion Matrix available for this model.')
+        else:
+            st.subheader('Fig 2 Model performance: Confusion Matrix: '  )
+            st.info('A confusion matrix is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It allows the visualization of the performance of an algorithm.')
+            st.info('Correct Predictions - Top left: True Negative, Bottom Right: True Positive')
+            st.info('Incorrect Predictions - Top Right: False Positive, Bottom Left: False Negative')
+            st.image(cm_img)
+        if 'features_img' not in locals():
+            st.warning('No Feature Importance available for this model.')
+        else:  
+            st.subheader('Fig 3, Feature Importance:' )
+            st.info('Feature importance is a technique that assigns a score to input features based on how useful they are at predicting a target variable. The higher the score, the more important the feature is.')
+            st.image(features_img)
         
-        st.subheader('Fig 4, Feature Importance:' )
-        st.info('Feature importance is a technique that assigns a score to input features based on how useful they are at predicting a target variable. The higher the score, the more important the feature is.')
-        st.image(features_img)
+        if 'pipeline_img' not in locals():
+            st.warning('No Model Pipeline available for this model.')
+        else:  
+            st.subheader('Fig 4, Model Pipeline:')
+            st.info('The model pipeline is a visual representation of the steps that are taken to preprocess the data and train the model. It shows the different steps that are involved in the process, such as data cleaning, feature engineering, and model training.')
+            st.image(pipeline_img)
+        
+
+
     #Step 4
     st.info("Step 4: Download your trained Model as a Pickle file:")
 
@@ -308,13 +333,14 @@ if choice == 'Step3: Run AutoML':
     #Step 5
     st.info("Step 6: Run your model on new data and get some predictions!:")
 
-    if st.button("Alrighty this is the moment of truth - let's punch thoses numbers and predit with our model!") == True:
+    if st.button("Alrighty this is the moment of truth - let's punch thoses numbers and predict with our model!") == True:
         with open('best_model.pkl', 'rb') as f: 
             best_model = load_model('best_model')
         st.write('Applying our ML model ...')
         new_prediction = predict_model(best_model, data=test)
+        new_prediction['Target_Variable_Actual'] = df_holdout[target]
         st.dataframe(new_prediction)
-        st.success('Predictions made successfully! Have a look at the predictions above in the table!')    
+        st.success('Predictions made successfully! Have a look at the predictions above in the table! (at the end you will see your prediction and actual classification):rocket:')    
 
     #Step 5
     st.info("Gotten this far? I think you deserve a dance!:")	
