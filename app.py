@@ -44,7 +44,7 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary'],horizontal=True)
 
 if choice == 'Home':
-    st.title('Magical AutoML App :magic_wand:')
+    st.title('Welcome to my EasyML App! :rocket:')
     st.image(width=200, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F410907%2Fscreenshots%2F2591935%2Fscientist.gif&f=1&nofb=1&ipt=cc4d4b0d731bd638dd9572b9986fb8b021850c61c9f2ff92cbf3b775a40b39d4&ipo=images")
     st.header('Welcome to the AutoML Laboratory :microscope:')
     st.info('This app helps you build a machine learning (ML) models without writing a single line of code.')
