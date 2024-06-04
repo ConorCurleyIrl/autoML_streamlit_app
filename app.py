@@ -45,8 +45,7 @@ choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data
 
 if choice == 'Home':
     st.title('Welcome to my EasyML App! :rocket:')
-    st.image(width=200, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F410907%2Fscreenshots%2F2591935%2Fscientist.gif&f=1&nofb=1&ipt=cc4d4b0d731bd638dd9572b9986fb8b021850c61c9f2ff92cbf3b775a40b39d4&ipo=images")
-    st.header('Welcome to the AutoML Laboratory :microscope:')
+    st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info('This app helps you build a machine learning (ML) models without writing a single line of code.')
     st.subheader('How is this useful?')
     st.info("""
@@ -89,7 +88,7 @@ if choice == 'Home':
 
 if choice == 'Step1: Upload Data':
     st.title('Step 1: Upload your dataset')
-    st.image(width=200, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
+    st.image(width=400, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.header('Use the file uploader to select your dataset or select from the sample datasets:')
     st.info('This app only supports CSV files for now. If you have a different file type, please convert it to a CSV file before uploading.')
      
@@ -161,7 +160,7 @@ if choice == 'Step2: Data Profiling':
         df = pd.read_csv('uploaded_dataset.csv', index_col=None)
     # Display the dataset:  
     st.title('Step 2: Data Profiling')
-    st.image(width=200,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F9ADoZQgs0tyww%2Fgiphy.gif&f=1&nofb=1&ipt=bbe895f57b94a3eb6cc387f2bc4dd996bf548428356950b16d9f17de07feefaf&ipo=images')
+    st.image(width=400,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F9ADoZQgs0tyww%2Fgiphy.gif&f=1&nofb=1&ipt=bbe895f57b94a3eb6cc387f2bc4dd996bf548428356950b16d9f17de07feefaf&ipo=images')
     st.header('Whats Data Profiling?')
     st.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
     st.info("Let's see what how data looks like!")
@@ -169,7 +168,7 @@ if choice == 'Step2: Data Profiling':
     if st.button('Generate Data Profile Report') == True:
         #create profile report
         profile = ProfileReport(df, title='Pandas Profiling Report', explorative=True)
-        st.image(width=200, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
+        st.image(width=400, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
         #rendering the report in the streamlit app
         st.info('Review your dataset profile:')
         st_profile_report(profile)
@@ -182,7 +181,7 @@ if choice == 'Step2: Data Profiling':
 
 if choice == 'Step3: Run AutoML':
     st.title('Step 3: Run AutoML')
-    st.image(width=200, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
+    st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
 
     #set up the data
     if os.path.exists('uploaded_dataset.csv'):
@@ -225,7 +224,7 @@ if choice == 'Step3: Run AutoML':
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list)
         setup_df=pull()
         st.info('Figuring out patterns in the data to make preditions...+15 different ML models will be trained. This may take a few minute - go stick the kettle on, my cat has some serious machine learning work to do!')
-        st.image(width=200, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
+        st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
         best_model = compare_models(sort='AUC')
