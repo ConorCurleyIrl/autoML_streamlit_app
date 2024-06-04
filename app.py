@@ -230,6 +230,7 @@ if choice == 'Step3: Run AutoML':
     if st.button('Train my model baby......Whoosh!!!'):
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=5)
         setup_df=pull()
+
         st.info('Figuring out patterns in the data to make preditions...+15 different ML models will be trained. This may take a few minutes (approx 6-8mins as it hosted on the free cloud) - go stick the kettle on, my cat has some serious machine learning work to do!')
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
@@ -240,7 +241,7 @@ if choice == 'Step3: Run AutoML':
         st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
         #renders the best model leaderboard: 
         st.dataframe(compare_df) 
-        
+        #might review in v2
         #best_model = tune_model(best_model)
         best_model
         evaluation= evaluate_model(best_model)
