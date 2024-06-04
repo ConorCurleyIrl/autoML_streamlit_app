@@ -240,6 +240,7 @@ if choice == 'Step3: Run AutoML':
         st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
         #renders the best model leaderboard: 
         st.dataframe(compare_df) 
+        
         #best_model = tune_model(best_model)
         best_model
         evaluation= evaluate_model(best_model)
