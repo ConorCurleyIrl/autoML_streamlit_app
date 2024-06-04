@@ -238,13 +238,11 @@ if choice == 'Step3: Run AutoML':
         setup_df=pull()
         start_time = time.time()
         st.info('Figuring out patterns in the data to make preditions.... Best to go stick the kettle on, my cat has some serious machine learning work to do!')
-        st.warning("""Note for adavnaced users: To improve train time, I have simplified the model parameters. 
-                   I limited to only a few models, added a time budget, removed hyper-parameter tuning, turned on turbo versions of algorithems and reduced Kfold to 4.  
-                   I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
+        st.warning("""Note for adavnaced users: To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithems and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
-        best_model = compare_models(sort='AUC', budget_time=2, include = ['lr', 'knn','xgboost','ridge','nb','svm'], turbo=True) 
+        best_model = compare_models(budget_time=2, include = ['lr', 'knn','xgboost','ridge','nb','svm'], turbo=True) 
         compare_df = pull()
         st.info("Results are in! Review your model performance below:")
         st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
@@ -279,6 +277,8 @@ if choice == 'Step3: Run AutoML':
         st.info('Recall is the ratio of correctly predicted positive observations to the all observations in actual class - yes, it is the ratio of true positive to the sum of true positive and false negative.')
         st.subheader("4. What does 'Precision' mean?")
         st.info('Precision is the ratio of correctly predicted positive observations to the total predicted positive observations. High precision relates to the low false positive rate.')
+        st.subheader("5. What does 'f1' mean?")
+        st.info('F1 Score is the weighted average of Precision and Recall. Therefore, this score takes both false positives and false negatives into account. It is a good way to show that a classifer has a good value for both false positives and false negatives.')    
         st.subheader("5. What does 'Kappa' mean?")
         st.info('Kappa is a statistic that measures inter-rater agreement for qualitative items. It is generally thought to be a more robust measure than simple percent agreement calculation, as Kappa takes into account the possibility of the agreement occurring by chance.')
         st.subheader("6. What does 'MCC' mean?")
@@ -286,7 +286,10 @@ if choice == 'Step3: Run AutoML':
         st.subheader("7. What does 'TT sec' mean?")
         st.info('TT sec is the time taken to train the model.')
     
-    if st.button('Optional: View best model performance graphs (test_data)') == True:
+    st.divider()
+
+    if st.button('Optional: View best model performance graphs') == True:
+        st.info('The best model is at the top of the leaderboard. Review the model performance below:')
         with open('best_model.pkl', 'rb') as f: 
             best_model = load_model('best_model')
         #best_model = tune_model(best_model)
@@ -339,13 +342,15 @@ if choice == 'Step3: Run AutoML':
 
     #Step 4
     st.info("Step 4: Download your trained Model as a Pickle file:")
-
-    with open('best_model.pkl', 'rb') as f: 
-        if st.download_button('Download Model', f, file_name="best_model.pkl"): 
-            best_model = load_model('best_model')
-            st.write(best_model)
-            st.success('Model downloaded successfully!')          
-            st.balloons()
+    if 'best_model' not in locals():
+            st.warning('No model available for download.')
+    else: 
+        with open('best_model.pkl', 'rb') as f: 
+            if st.download_button('Download Model', f, file_name="best_model.pkl"): 
+                best_model = load_model('best_model')
+                st.write(best_model)
+                st.success('Model downloaded successfully!')          
+                st.balloons()
 
     #Step 5
     st.info("Step 5: Prepare some new data to test your model:")
