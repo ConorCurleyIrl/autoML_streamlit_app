@@ -61,7 +61,7 @@ if choice == 'Home':
             This app is designed to make the process of building ML models easier and faster.
             
             """)
-    st.subheader('Will they be as good as a machine learning model built by a experienced Data Scientist? :microscope:') 
+    st.subheader('Will my models be as good as one built by a experienced Data Scientist? :microscope:') 
     st.info("Well no, but they will be pretty good and will be great starting point for understanding your data and making intial predictions.")
     st.subheader('Ok so how do I use this app?')
     st.info("Just follow the steps in the navigation menu - I've maker the steps and in a few clicks you'll have an Machine Learning model trained on histroial data that can provide future predictions.")
@@ -218,7 +218,8 @@ if choice == 'Step3: Run AutoML':
     #Step 2 
     st.info("Step 2: Any columns should be ignored? (Select columns such as Names and individual ID numbers,  don't select your Target Variable here.")
     st.write("Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. Similar if you are using the Telco Churn dataset, you may want to ignore the 'Customer ID' column. In the Penguins dataset, you may want to ignore the 'Individual' column.")  
-    ignore_list= st.multiselect("Select columns to ignore: ",df.columns)
+    temp_df=df.drop(target, axis=1)
+    ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
     # Display the dataset for reference:
     st.dataframe(df)
 
@@ -245,7 +246,9 @@ if choice == 'Step3: Run AutoML':
         st.write(evaluation)
         save_model(best_model, 'best_model')   
         st.success('You model was trained successfully on your data! We can now use this model to make predictions.')	
-        
+    
+    st.divider()
+
     if st.button("Optional: What do these performance scores mean? Click here for more info") == True:
         st.subheader("1. What does 'Accuracy' mean?")
         st.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
