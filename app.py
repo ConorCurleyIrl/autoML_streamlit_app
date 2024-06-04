@@ -42,7 +42,7 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 # 3. lets build our Home Page & Navigation
 ######################################################################
 st.title('EasyML App :rocket:')
-choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary'],horizontal=True)
+choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary', 'Future Development'],horizontal=True)
 
 if choice == 'Home':
     st.subheader('Welcome to my EasyML App! :rocket:')
@@ -73,6 +73,7 @@ if choice == 'Home':
     if st.button('DO NOT PRESS THIS BUTTON') == True:
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
         st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.]')
+    
         st.balloons()
 
 
@@ -144,6 +145,7 @@ if choice == 'Step1: Upload Data':
     if not df.empty:  
         st.success('A Dataset is uploaded, ready to move to the next step!')
         st.subheader(':rainbow[Great job you have dataset loaded! Select "Data Profiling" in the navigation to continue.]')
+        
     else:    
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
 
@@ -181,7 +183,7 @@ if choice == 'Step2: Data Profiling':
         st_profile_report(profile)
         
         st.subheader(':rainbow[Look at you go, you profiled your dataset! select "AutoML" in the navigation to continue.]')
-
+        
 ######################################################################
 # 6. lets build our Run AutoML page
 ######################################################################
@@ -219,6 +221,7 @@ if choice == 'Step3: Run AutoML':
     #Step 2 
     st.info("Step 2: Any columns should be ignored? (Select columns such as Names and individual ID numbers,  don't select your Target Variable here.")
     st.write("Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. Similar if you are using the Telco Churn dataset, you may want to ignore the 'Customer ID' column. In the Penguins dataset, you may want to ignore the 'Individual' column.")  
+    
     temp_df=df.drop(target, axis=1)
     ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
     # Display the dataset for reference:
@@ -229,7 +232,7 @@ if choice == 'Step3: Run AutoML':
     #Step 3
     st.info("Step 3: Ready to run your model? PRESS THE BUTTON BELOW!")
     if st.button('Train my model baby......Whoosh!!!'):
-        setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=5)
+        setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4)
         setup_df=pull()
         start_time = time.time()
         st.info('Figuring out patterns in the data to make preditions...+15 different ML models will be trained. Best to go stick the kettle on, my cat has some serious machine learning work to do!')
@@ -255,7 +258,7 @@ if choice == 'Step3: Run AutoML':
     st.divider()
 
     if st.button("Optional: What do these performance scores mean? Click here for more info") == True:
-        st.dataframe(compare_df) 
+        
         st.subheader("1. What does 'Accuracy' mean?")
         st.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
         st.subheader("2. What does 'AUC' mean?")
@@ -338,7 +341,7 @@ if choice == 'Step3: Run AutoML':
     
     if os.path.exists('uploaded_dataset.csv'):
         df = pd.read_csv('uploaded_dataset.csv', index_col=None)
-        df_holdout= df.tail(10)   
+        df_holdout= df.sample(n=10, random_state=42)
 
     test=df_holdout.drop(target, axis=1)
     if st.button("View a sub-sample of your data, without a target variable."):
@@ -397,3 +400,19 @@ if choice == 'ML Glossary':
 
     st.subheader('Explain Data Profiling')
     st.info(short_profile_desc)
+
+
+
+if choice == 'Future Development':
+    st.title('Future Development::')
+    st.image(width=200, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
+    st.subheader('What is next?')
+    st.info("""
+        Thanks for using my app! I hope you found it a good introduction into the capability of Streamlit framwework and deployment on their hosting platform.
+        However the speed is too slow for any real usage, Ill release the new version on heroku then get busy exploring the other options for using pycaret package.
+        - It would be great to have options for  time series problems or image classification problems.
+        - I would like to add more visualizations and insights into the data profiling section.
+        - I would like to add more options for data preprocessing and feature engineering as it sits in the background in the current version.
+        
+            """)
+
