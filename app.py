@@ -42,7 +42,7 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 # 3. lets build our Home Page & Navigation
 ######################################################################
 st.title('EasyML App :rocket:')
-choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary', 'Future Development'],horizontal=True)
+choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary'],horizontal=True)
 
 if choice == 'Home':
     st.subheader('Welcome to my EasyML App! :rocket:')
@@ -71,14 +71,10 @@ if choice == 'Home':
     
     #easter egg 1
     if st.button('DO NOT PRESS THIS BUTTON') == True:
+        st.balloons()
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
         st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.]')
-    
-        st.balloons()
-
-
-    
- 
+        
     st.subheader('created by Conor Curley')
     st.image(width=180,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2Fa0afeb9cc47a7baf61be453b9a5736b2%2Ftenor.gif%3Fitemid%3D5957952&f=1&nofb=1&ipt=cf528c182da24543a702e83f1b68b0432117d3f21be75f3f1848402db8e10426&ipo=images&clickurl=https%3A%2F%2Ftenor.com%2Fsearch%2Fmagic-gifs')
     st.link_button('Say hello on LinkedIn! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
@@ -221,17 +217,16 @@ if choice == 'Step3: Run AutoML':
 
     #Step 2 
     st.info("""Step 2: Select identifcation columns that should be ignored:""")
-            
+                
+    temp_df=df.drop(target, axis=1)
+    ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
+    # Display the dataset for reference:
+    st.dataframe(df.head(10))
     st.info("""Why? Some columns may not be useful for making predictions - they create "Data noise" which our machine learning algorthms classify as information for prediction but are actually assigned numbers or names. 
             For example, names and ID numbers should be ignored""")
     st.warning("""Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
              Similar if you are using the Telco Churn dataset, you may want to ignore the 'Customer ID' column. 
-             In the Penguins dataset, you may want to ignore the 'Individual' column.""")  
-    
-    temp_df=df.drop(target, axis=1)
-    ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
-    # Display the dataset for reference:
-    st.dataframe(df)
+             In the Penguins dataset, you may want to ignore the 'Individual' column.""") 
 
     st.warning(f"You selected the following columns to be ignored: {ignore_list}")
     
@@ -387,6 +382,7 @@ if choice == 'Step3: Run AutoML':
     if st.button("Dance button!") == True:
         st.image(width=500,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FZAoUo4PquusAAAAC%2Fyou-did-it-congratulations.gif&f=1&nofb=1&ipt=bfeb6b6934c23145f401edd23610973857097a7938a18d49835bc9dbbc30e0f1&ipo=images')
         st.subheader(":rainbow[Congrats you beauty! You built your own Machine learning model without writing a single line of code! ]:wink:")
+        st.info("I hope you enjoyed the app and learned something new. If you have any questions or feedback, please let me know. I'm always happy to help!")
         st.balloons()
         
 
@@ -396,7 +392,7 @@ if choice == 'Step3: Run AutoML':
 
 if choice == 'ML Glossary':
     st.title('Machine Learning Glossary:')
-    st.image(width=200, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
+    st.image(width=200, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.smartdatacollective.com%2Fwp-content%2Fuploads%2F2021%2F06%2Fmachine-learning-helps-life-insurance-scaled.jpg&f=1&nofb=1&ipt=568d2bad1625616c365ef6f5c3aa772e1f042c5219fe20c70e0660d7143774a6&ipo=images')
     
     st.subheader('Technology I used to build this app:')
     if st.button("Want to learn more about Pycaret?") == True:
@@ -414,27 +410,11 @@ if choice == 'ML Glossary':
         st.info('Ydata Profiling is an open-source library that generates profile reports from a pandas DataFrame. These reports contain interactive visualizations that allow you to explore your data.')
         st.link_button('Ydata Profiling Documentation', 'https://pypi.org/project/ydata-profiling/')
 
-    st.header('Explain Classification Problems:')
+    st.header('What are Classification Problems?')
     st.info(short_class_desc)
 
-    st.subheader('Explain AutoML:')
+    st.subheader('What is AutoML?')
     st.info(short_automl_desc)
 
-    st.subheader('Explain Data Profiling')
-    st.info(short_profile_desc)
-
-
-
-if choice == 'Future Development':
-    st.title('Future Development::')
-    st.image(width=200, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
-    st.subheader('What is next?')
-    st.info("""
-        Thanks for using my app! I hope you found it a good introduction into the capability of Streamlit framwework and deployment on their hosting platform.
-        However the speed is too slow for any real usage, Ill release the new version on heroku then get busy exploring the other options for using pycaret package.
-        - It would be great to have options for  time series problems or image classification problems.
-        - I would like to add more visualizations and insights into the data profiling section.
-        - I would like to add more options for data preprocessing and feature engineering as it sits in the background in the current version.
-        
-            """)
+    st.subheader('created by Conor Curley')
 
