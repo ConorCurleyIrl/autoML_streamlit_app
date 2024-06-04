@@ -232,7 +232,8 @@ if choice == 'Step3: Run AutoML':
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=5)
         setup_df=pull()
         start_time = time.time()
-        st.info('Figuring out patterns in the data to make preditions...+15 different ML models will be trained. This may take a few minutes (approx 6-8mins as it hosted on the free cloud) - go stick the kettle on, my cat has some serious machine learning work to do!')
+        st.info('Figuring out patterns in the data to make preditions...+15 different ML models will be trained. Best to go stick the kettle on, my cat has some serious machine learning work to do!')
+        st.warning('This may take a few minutes...approx 10mins as it hosted on the free cloud, I am working on getting a faster server!')
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
@@ -242,7 +243,7 @@ if choice == 'Step3: Run AutoML':
         st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
         #renders the best model leaderboard: 
         st.dataframe(compare_df) 
-        st.write('Time taken to train the model:', round(time.time() - start_time, 2), 'seconds')
+        st.write('Time taken to train the model:', round(((time.time() - start_time)/60), 2), 'mins')
         #might review in v2
         #best_model = tune_model(best_model)
         best_model
@@ -254,6 +255,7 @@ if choice == 'Step3: Run AutoML':
     st.divider()
 
     if st.button("Optional: What do these performance scores mean? Click here for more info") == True:
+        st.dataframe(compare_df) 
         st.subheader("1. What does 'Accuracy' mean?")
         st.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
         st.subheader("2. What does 'AUC' mean?")
