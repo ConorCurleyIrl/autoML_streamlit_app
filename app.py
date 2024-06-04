@@ -1,23 +1,20 @@
-
-#importing libraries - see requirements.txt for all libraries used
-from operator import index
+######################################################################
+# 1. importing libraries - see requirements.txt for all libraries used
+######################################################################
 import streamlit as st
-import plotly.express as px
-from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, interpret_model, evaluate_model, tune_model
-
+#import plotly.express as px
+from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
 
 from ydata_profiling import ProfileReport
 import pandas as pd
 from streamlit_pandas_profiling import st_profile_report
 import os 
-import pickle
 #created file to store variables
 from variables import short_automl_desc , short_class_desc, short_profile_desc, short_pycaret_desc
 
 ######################################################################
-# Build the side bar - split sections to debug any issues
+# 2. Build the side bar - split sections to debug any issues
 ######################################################################
-
 
 # using OS to check if file is up and use as needed
 if os.path.exists('uploaded_dataset.csv'):
@@ -25,7 +22,7 @@ if os.path.exists('uploaded_dataset.csv'):
 else:
     df = pd.DataFrame()
 
-# Set the page layout
+# Set the page 
 st.set_page_config(layout="wide", page_title="Conor's AutoML App")
 hide_default_format = """
        <style>
@@ -38,16 +35,16 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 
 
 ######################################################################
-# lets build our Home Page & Navigation
+# 3. lets build our Home Page & Navigation
 ######################################################################
 
 choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary'],horizontal=True)
 
 if choice == 'Home':
-    st.title('Magical AutoML App 🚀')
+    st.title('Magical AutoML App :magic_wand:')
     st.image(width=200, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F410907%2Fscreenshots%2F2591935%2Fscientist.gif&f=1&nofb=1&ipt=cc4d4b0d731bd638dd9572b9986fb8b021850c61c9f2ff92cbf3b775a40b39d4&ipo=images")
     st.header('Welcome to the AutoML Laboratory :microscope:')
-    st.info('This app helps you to help you build a machine learning model without writing a single line of code.')
+    st.info('This app helps you build a machine learning (ML) models without writing a single line of code.')
     st.subheader('How is this useful?')
     st.info("""
             Well the world has gone AI/ ML mad! This app is a great way to get started with ML, understand your data and build a model quickly. 
@@ -57,16 +54,16 @@ if choice == 'Home':
             AutoML is a process of automating the end-to-end process of applying machine learning to real-world problems.
             This app is designed to make the process of building ML models easier and faster.
             
-            Will they be as good as a handcrafted model by a Data Scientise? 
-            Absolutely not, but they will be a great starting point and very useful for understanding your data and making intial predictions.
             """)
+    st.subheader('Will they be as good as a machine learning model built by a experienced Data Scientist? :microscope:') 
+    st.info("Well no, but they will be pretty good and will be great starting point for understanding your data and making intial predictions.")
     st.subheader('Ok so how do I use this app?')
     st.info("Just follow the steps in the navigation menu - I've maker the steps and in a few clicks you'll have an Machine Learning model trained on histroial data that can provide future predictions.")
     st.subheader('But I dont know what any of this means?')
     st.info('I built this as a sandbox app so play around and see how it works, there is a Learn More tab witrh some helpful info and resources.')
+    
+    #easter egg 1
     if st.button('DO NOT PRESS THIS BUTTON') == True:
-
-
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
         st.info('Select "Step1: Upload Data" in the Navigation to continue.')
         st.balloons()
@@ -84,15 +81,14 @@ if choice == 'Home':
     st.link_button('Say hello on LinkedIn! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
     
 ######################################################################
-# lets build our upload data page
+# 4. lets build our Upload data page
 ######################################################################
 
 if choice == 'Step1: Upload Data':
     st.title('Step 1: Upload your dataset')
     st.image(width=200, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.header('Use the file uploader to select your dataset or select from the sample datasets:')
-    
-
+    st.info('This app only supports CSV files for now. If you have a different file type, please convert it to a CSV file before uploading.')
      
     # Add a file uploader to the sidebar:    
     st.info('Option 1: Please select a CSV file type as your dataset.')
@@ -112,51 +108,55 @@ if choice == 'Step1: Upload Data':
     st.info('Option 2: Download a sample dataset to use.')
     if st.button('View sample datasets') == True:
 
-        st.subheader('Titanic Passenger Dataset:')
+        #titanic dataset
+        st.subheader('Titanic Passenger Dataset :ship::')
+        st.subheader(':violet[Want to predict who will survive based on the passenger infoformation?]')
         st.info('Info: The Titanic dataset is a historical dataset that includes passenger information like age, gender, passenger class, and survival status from the tragic Titanic shipwreck. This is a classic dataset used to train ML models, to predict if a passenger survived or not. using the passenger information.')
-        st.link_button('link to dataset','https://github.com/datasciencedojo/datasets/blob/master/titanic.csv')
+        #st.link_button('Link to dataset source','https://github.com/datasciencedojo/datasets/blob/master/titanic.csv')
         
         with open('titanic_data.csv', 'rb') as f:
-            if st.download_button('Download Titanic CSV', f, file_name="titanic_data.csv"): 
+            if st.download_button(':violet[Download Titanic CSV :ship:]', f, file_name="titanic_data.csv"): 
                 st.success('Titanic dataset downloaded :ship:')
 
-        st.subheader('Vodafone Customer Dataset:')
+        #telco company dataset
+        st.subheader('Vodafone Customer Dataset: :phone:')
+        st.subheader(':red[Want to predict who will leave (churn) Vodafone based on customer information?] ')
         st.info('Info: This dataset includes customer information used to predict when a customer leaves/churns. Before you ask, yes Churn is silly business term invented to sound technical.')
-        st.link_button('link to dataset','https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv')
+        #st.link_button('Link to dataset','https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv')
       
         with open('telco_churn.csv', 'rb') as f: 
-            if st.download_button('Download Vodafone Customer CSV', f, file_name="telco_churn.csv"): 
+            if st.download_button(':red[Download Vodafone Customer CSV :phone:]', f, file_name="telco_churn.csv"): 
                 st.success('Vodafone dataset downloaded :mobile_phone:')
 
-        st.subheader('Penguins Speciies Classification Dataset:')
+        #penguins        
+        st.subheader('Penguins Speciies Classification Dataset :penguin:')
+        st.subheader(':blue[Want to predict the speicies of Penguin based on some observations?]')
         st.info('Info: This dataset is used to predict penguin species. There are 3 different species of penguins in this dataset, collected from 3 islands in the Palmer Archipelago, Antarctica.')
-        st.link_button('link to dataset','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
+        #st.link_button('link to dataset','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
    
-        #df = pd.read_csv('https://raw.githubusercontent.com/dickoa/penguins/master/data/penguins_lter.csv')
-        
         with open('penguins.csv', 'rb') as f: 
-            if st.download_button('Download Penguins CSV', f, file_name="penguins.csv"): 
-                st.success('dPenguin dataset downloaded :peguin:')
+            if st.download_button(':blue[Download Penguins CSV]', f, file_name="penguins.csv"): 
+                st.success('dPenguin dataset downloaded :penguin:')
 
     # next steps prompt
     if not df.empty:  
         st.success('A Dataset is uploaded, ready to move to the next step!')
-        st.info('Select "Data Profiling" in the navigation to continue.')
+        st.subheader(':rainbow[Great job you have dataset loaded! Select "Data Profiling" in the navigation to continue.]')
     else:    
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
 
      
 
 ######################################################################
-# lets build our data profiling page
+# 5. lets build our data profiling page
 ######################################################################
 
 if choice == 'Step2: Data Profiling':
-    #set up the data
+    
+    #set up the dataset
     if os.path.exists('uploaded_dataset.csv'):
         df = pd.read_csv('uploaded_dataset.csv', index_col=None)
-    # Display the dataset:
-    
+    # Display the dataset:  
     st.title('Step 2: Data Profiling')
     st.image(width=200,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F9ADoZQgs0tyww%2Fgiphy.gif&f=1&nofb=1&ipt=bbe895f57b94a3eb6cc387f2bc4dd996bf548428356950b16d9f17de07feefaf&ipo=images')
     st.header('Whats Data Profiling?')
@@ -170,14 +170,11 @@ if choice == 'Step2: Data Profiling':
         #rendering the report in the streamlit app
         st.info('Review your dataset profile:')
         st_profile_report(profile)
-        st.success('Select "Auto ML" in the navugation to continue to the next step')
-    
-
-
-
+        
+        st.subheader(':rainbow[Look at you go, you profiled your dataset! select "AutoML" in the navigation to continue.]')
 
 ######################################################################
-# lets build our Run AutoML page
+# 6. lets build our Run AutoML page
 ######################################################################
 
 if choice == 'Step3: Run AutoML':
@@ -265,6 +262,7 @@ if choice == 'Step3: Run AutoML':
         st.subheader("Model Performance Figures: (if available - not all models have these features)")
         try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
         except: pass
+
         try : cm_img = plot_model(best_model, plot = 'confusion_matrix', display_format="streamlit", save=True)
         except: pass
 
@@ -346,11 +344,12 @@ if choice == 'Step3: Run AutoML':
     st.info("Gotten this far? I think you deserve a dance!:")	
     if st.button("Dance button!") == True:
         st.image(width=500,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FZAoUo4PquusAAAAC%2Fyou-did-it-congratulations.gif&f=1&nofb=1&ipt=bfeb6b6934c23145f401edd23610973857097a7938a18d49835bc9dbbc30e0f1&ipo=images')
+        st.subheader(":rainbow[Congrats you beauty! You built your own Machine learning model without writing a single line of code!]")
         st.balloons()
         st.success('You have completed the AutoML process! You have trained a model and made predictions on new data. You beauty :wink:')
 
 #############################################################################################
-## ML Glossary Section
+## 7. ML Glossary Section
 #############################################################################################
 
 if choice == 'ML Glossary':
@@ -373,7 +372,6 @@ if choice == 'ML Glossary':
         st.info('Ydata Profiling is an open-source library that generates profile reports from a pandas DataFrame. These reports contain interactive visualizations that allow you to explore your data.')
         st.link_button('Ydata Profiling Documentation', 'https://pypi.org/project/ydata-profiling/')
 
-            
     st.header('Explain Classification Problems:')
     st.info(short_class_desc)
 
