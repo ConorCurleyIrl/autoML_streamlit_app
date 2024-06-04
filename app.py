@@ -47,6 +47,10 @@ if choice == 'Home':
     st.title('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info('This app helps you build a machine learning (ML) models without writing a single line of code.')
+    st.info("""
+        Note this app can only perform AutoML on classifcation problems in this version, more to come soon!
+
+        """)
     st.subheader('How is this useful?')
     st.info("""
             Well the world has gone AI/ ML mad! This app is a great way to get started with ML, understand your data and build a model quickly. 
@@ -72,12 +76,7 @@ if choice == 'Home':
 
 
     
-    st.info("""
-            This ML app is a demo of AutoML using streamlit, Ydata_profiling and Pycaret. 
-
-            Note this app can only perform AutoML on classifcation problems in this version, more to come soon!
-            
-            """)
+ 
     st.subheader('created by Conor Curley')
     st.image(width=180,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2Fa0afeb9cc47a7baf61be453b9a5736b2%2Ftenor.gif%3Fitemid%3D5957952&f=1&nofb=1&ipt=cf528c182da24543a702e83f1b68b0432117d3f21be75f3f1848402db8e10426&ipo=images&clickurl=https%3A%2F%2Ftenor.com%2Fsearch%2Fmagic-gifs')
     st.link_button('Say hello on LinkedIn! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
