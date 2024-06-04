@@ -176,12 +176,13 @@ if choice == 'Step2: Data Profiling':
     
     if st.button('Generate Data Profile Report') == True:
         #create profile report
+        start_time_pp = time.time()
         profile = ProfileReport(df, title='Pandas Profiling Report', explorative=True)
         st.image(width=400, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
         #rendering the report in the streamlit app
         st.info('Review your dataset profile:')
         st_profile_report(profile)
-        
+        st.write('Time taken to create data profile report', round(((time.time() - start_time_pp)/60), 2), 'mins')
         st.subheader(':rainbow[Look at you go, you profiled your dataset! select "AutoML" in the navigation to continue.]')
         
 ######################################################################
@@ -345,7 +346,7 @@ if choice == 'Step3: Run AutoML':
 
     test=df_holdout.drop(target, axis=1)
     if st.button("View a sub-sample of your data, without a target variable."):
-        st.write("This is an example of what your future data would look like. ") 
+        st.write("This is an example of what your future data would look for new predictions") 
         st.dataframe(test)
 
     #Step 5
@@ -364,9 +365,9 @@ if choice == 'Step3: Run AutoML':
     st.info("Gotten this far? I think you deserve a dance!:")	
     if st.button("Dance button!") == True:
         st.image(width=500,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FZAoUo4PquusAAAAC%2Fyou-did-it-congratulations.gif&f=1&nofb=1&ipt=bfeb6b6934c23145f401edd23610973857097a7938a18d49835bc9dbbc30e0f1&ipo=images')
-        st.subheader(":rainbow[Congrats you beauty! You built your own Machine learning model without writing a single line of code!]")
+        st.subheader(":rainbow[Congrats you beauty! You built your own Machine learning model without writing a single line of code! ]:wink:")
         st.balloons()
-        st.success('You have completed the AutoML process! You have trained a model and made predictions on new data. You beauty :wink:')
+        
 
 #############################################################################################
 ## 7. ML Glossary Section
