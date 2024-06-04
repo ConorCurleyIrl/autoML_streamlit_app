@@ -245,7 +245,7 @@ if choice == 'Step3: Run AutoML':
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
-        best_model = compare_models(sort='AUC', budget_time=3, include = ['lr', 'knn','xgboost','ridge','nb','svm'],cross_validation=False, turbo=True, verbose=False, round=2, n_select=1, fold=4, round=2, budget_time=2, optimize='AUC')
+        best_model = compare_models(sort='AUC', budget_time=2, include = ['lr', 'knn','xgboost','ridge','nb','svm'],cross_validation=False, turbo=True, optimize='AUC')
         compare_df = pull()
         st.info("Results are in! Review your model performance below:")
         st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
