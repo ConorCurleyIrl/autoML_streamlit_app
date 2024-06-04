@@ -232,28 +232,28 @@ if choice == 'Step3: Run AutoML':
     
     #Step 3
     st.info("Step 3: Ready to run your model? PRESS THE BUTTON BELOW!")
-    if st.button("Optional: Advanced config skip if you are new") == True:
-        st.info('Advanced Configurations will be added in version 2 such as more control over the data preprocessing steps, feature engineering, and model training. ')
-        st.info('For now, Ive configued to only run popular classification models and I limited train time to a max of 2mins.')
 
     if st.button('Train my model baby......Whoosh!!!'):
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4)
         setup_df=pull()
         start_time = time.time()
         st.info('Figuring out patterns in the data to make preditions.... Best to go stick the kettle on, my cat has some serious machine learning work to do!')
-        st.warning('This may take a max of 2mins, I am working on getting a faster server which will add more power for number crunching!')
+        st.warning("""Note for adavnaced users: To improve train time, I have simplified the model parameters. 
+                   I limited to only a few models, added a time budget, removed hyper-parameter tuning, turned on turbo versions of algorithems and reduced Kfold to 4.  
+                   I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
-        best_model = compare_models(sort='AUC', budget_time=2, include = ['lr', 'knn','xgboost','ridge','nb','svm'],cross_validation=False, turbo=True) 
+        best_model = compare_models(sort='AUC', budget_time=2, include = ['lr', 'knn','xgboost','ridge','nb','svm'], turbo=True) 
         compare_df = pull()
         st.info("Results are in! Review your model performance below:")
         st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
         #renders the best model leaderboard: 
         st.dataframe(compare_df) 
+        
+        compare_df.to_csv('results_table.csv', index=False)
         st.write('Time taken to train the model:', round(((time.time() - start_time)/60), 2), 'mins')
         #might review in v2
-        #best_model = tune_model(best_model)
         best_model
         evaluation= evaluate_model(best_model)
         st.write(evaluation)
@@ -264,6 +264,12 @@ if choice == 'Step3: Run AutoML':
 
     if st.button("Optional: What do these performance scores mean? Click here for more info") == True:
         
+           
+        # Save the uploaded file to a csv file:
+        res_temp = pd.read_csv('results_table.csv', index_col=None)
+        # Display the dataset:
+        st.dataframe(res_temp)
+    
         st.subheader("1. What does 'Accuracy' mean?")
         st.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
         st.subheader("2. What does 'AUC' mean?")
@@ -283,6 +289,7 @@ if choice == 'Step3: Run AutoML':
     if st.button('Optional: View best model performance graphs (test_data)') == True:
         with open('best_model.pkl', 'rb') as f: 
             best_model = load_model('best_model')
+        #best_model = tune_model(best_model)
         # plot feature importance
         st.subheader("Model Performance Figures: (if available - not all models have these features)")
         try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
