@@ -71,7 +71,7 @@ if choice == 'Home':
     #easter egg 1
     if st.button('DO NOT PRESS THIS BUTTON') == True:
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
-        st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.')
+        st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.]')
         st.balloons()
 
 
