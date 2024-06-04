@@ -232,16 +232,20 @@ if choice == 'Step3: Run AutoML':
     
     #Step 3
     st.info("Step 3: Ready to run your model? PRESS THE BUTTON BELOW!")
+    if st.button("Optional: Advanced config skip if you are new") == True:
+        st.info('Advanced Configurations will be added in version 2 such as more control over the data preprocessing steps, feature engineering, and model training. ')
+        st.info('For now, Ive configued to only run 5 popular classification models and I limited train time to a max of 2mins.')
+
     if st.button('Train my model baby......Whoosh!!!'):
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4)
         setup_df=pull()
         start_time = time.time()
-        st.info('Figuring out patterns in the data to make preditions...+15 different ML models will be trained. Best to go stick the kettle on, my cat has some serious machine learning work to do!')
-        st.warning('This may take a few minutes...approx 10mins as it hosted on the free cloud, I am working on getting a faster server!')
+        st.info('Figuring out patterns in the data to make preditions...6 different popular ML models will be trained. Best to go stick the kettle on, my cat has some serious machine learning work to do!')
+        st.warning('This may take a max of 2mins, I am working on getting a faster server which will add more power for number crunching!')
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
-        best_model = compare_models(sort='AUC')
+        best_model = compare_models(sort='AUC', budget_time=3, include = ['lr', 'knn','rf', 'lightgbm','xgboost','ridge'])
         compare_df = pull()
         st.info("Results are in! Review your model performance below:")
         st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
