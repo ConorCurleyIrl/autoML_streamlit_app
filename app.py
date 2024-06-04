@@ -220,8 +220,9 @@ if choice == 'Step3: Run AutoML':
     st.info(f"Our ML model with predict the {target} variable.")
 
     #Step 2 
-    st.info("""Step 2: Any columns should be ignored?
-            Why? Some columns may not be useful for making predictions - they create "Data noise" which our machine learning algorthms classify as information for prediction but are actually assigned numbers or names. 
+    st.info("""Step 2: Select identifcation columns that should be ignored:""")
+            
+    st.info("""Why? Some columns may not be useful for making predictions - they create "Data noise" which our machine learning algorthms classify as information for prediction but are actually assigned numbers or names. 
             For example, names and ID numbers should be ignored""")
     st.warning("""Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
              Similar if you are using the Telco Churn dataset, you may want to ignore the 'Customer ID' column. 
