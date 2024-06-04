@@ -392,7 +392,7 @@ if choice == 'Step3: Run AutoML':
 
 if choice == 'ML Glossary':
     st.title('Machine Learning Glossary:')
-    st.image(width=200, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.smartdatacollective.com%2Fwp-content%2Fuploads%2F2021%2F06%2Fmachine-learning-helps-life-insurance-scaled.jpg&f=1&nofb=1&ipt=568d2bad1625616c365ef6f5c3aa772e1f042c5219fe20c70e0660d7143774a6&ipo=images')
+    st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.smartdatacollective.com%2Fwp-content%2Fuploads%2F2021%2F06%2Fmachine-learning-helps-life-insurance-scaled.jpg&f=1&nofb=1&ipt=568d2bad1625616c365ef6f5c3aa772e1f042c5219fe20c70e0660d7143774a6&ipo=images')
     
     st.subheader('Technology I used to build this app:')
     if st.button("Want to learn more about Pycaret?") == True:
