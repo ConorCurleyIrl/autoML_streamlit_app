@@ -71,7 +71,7 @@ if choice == 'Home':
     #easter egg 1
     if st.button('DO NOT PRESS THIS BUTTON') == True:
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
-        st.info('Select "Step1: Upload Data" in the Navigation to continue.')
+        st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.')
         st.balloons()
 
 
@@ -90,7 +90,7 @@ if choice == 'Step1: Upload Data':
     st.image(width=400, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.header('Use the file uploader to select your dataset or select from the sample datasets:')
     st.info('This app only supports CSV files for now. If you have a different file type, please convert it to a CSV file before uploading.')
-     
+    df = pd.DataFrame()
     # Add a file uploader to the sidebar:    
     st.info('Option 1: Please select a CSV file type as your dataset.')
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")  
@@ -155,15 +155,22 @@ if choice == 'Step1: Upload Data':
 if choice == 'Step2: Data Profiling':
     
     #set up the dataset
-    if os.path.exists('uploaded_dataset.csv'):
-        df = pd.read_csv('uploaded_dataset.csv', index_col=None)
+    
     # Display the dataset:  
     st.title('Step 2: Data Profiling')
     st.image(width=400,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F9ADoZQgs0tyww%2Fgiphy.gif&f=1&nofb=1&ipt=bbe895f57b94a3eb6cc387f2bc4dd996bf548428356950b16d9f17de07feefaf&ipo=images')
     st.header('Whats Data Profiling?')
     st.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
     st.info("Let's see what how data looks like!")
-    st.dataframe(df)
+        # next steps prompt
+    if not df.empty:  
+        #if os.path.exists('uploaded_dataset.csv'):
+        #    df = pd.read_csv('uploaded_dataset.csv', index_col=None)
+        st.dataframe(df.head(10))
+    else:    
+        st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
+
+    
     if st.button('Generate Data Profile Report') == True:
         #create profile report
         profile = ProfileReport(df, title='Pandas Profiling Report', explorative=True)
