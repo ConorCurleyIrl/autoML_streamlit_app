@@ -5,9 +5,11 @@ import streamlit as st
 #import plotly.express as px
 from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
 
-from ydata_profiling import ProfileReport
 import pandas as pd
 from streamlit_pandas_profiling import st_profile_report
+# ydata_profiling is the latest howerver it is not supported by streamlit_pandas_profiling so using older versio pandas_profiling
+from pandas_profiling import ProfileReport
+
 import os 
 #created file to store variables
 from variables import short_automl_desc , short_class_desc, short_profile_desc, short_pycaret_desc
