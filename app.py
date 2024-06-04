@@ -40,11 +40,11 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 ######################################################################
 # 3. lets build our Home Page & Navigation
 ######################################################################
-
+st.title('EasyML App :rocket:')
 choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary'],horizontal=True)
 
 if choice == 'Home':
-    st.title('Welcome to my EasyML App! :rocket:')
+    st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info('This app helps you build a machine learning (ML) models without writing a single line of code.')
     st.info("""
