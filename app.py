@@ -1,14 +1,15 @@
 ######################################################################
 # 1. importing libraries - see requirements.txt for all libraries used
-######################################################################
+######################################################################y
 import streamlit as st
-#import plotly.express as px
 from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
-
 import pandas as pd
+
+#from pydantic_settings import BaseSettings # fixed the issue with pydantic_settings realted to using an outdated version of pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 # ydata_profiling is the latest howerver it is not supported by streamlit_pandas_profiling so using older versio pandas_profiling
-from pandas_profiling import ProfileReport
+from ydata_profiling import ProfileReport
+#from pandas_profiling.profile_report import ProfileReport
 
 import os 
 #created file to store variables
