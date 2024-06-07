@@ -27,7 +27,7 @@ else:
     df = pd.DataFrame()
 
 # Set the page 
-st.set_page_config(layout="wide", page_title="Conor's AutoML App")
+st.set_page_config(layout="wide", page_title="Conor's EasyML App")
 hide_default_format = """
        <style>
        #MainMenu {visibility: hidden; }
@@ -38,43 +38,65 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 
 
 
+
+st.title('EasyML App :rocket:')
+choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary'],horizontal=True)
+st.divider()
+
 ######################################################################
 # 3. lets build our Home Page & Navigation
 ######################################################################
-st.title('EasyML App :rocket:')
-choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary'],horizontal=True)
-
 if choice == 'Home':
     st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
-    st.info('This app helps you build a machine learning (ML) models without writing a single line of code.')
     st.info("""
+        This app helps beginners you build a machine learning (ML) models without writing a single line of code.
+        
         Note this app can only perform AutoML on classifcation problems in this version, more to come soon!
-
         """)
-    st.subheader('How is this useful?')
-    st.info("""
-            Well the world has gone AI/ ML mad! This app is a great way to get started with ML, understand your data and build a model quickly. 
-            
-            Building production Machine Learning models requires a lot of time, high quality data, platform infastructure, effort, and expertise. 
-            But with the advent of AutoML, the process has become much easier. 
+    
+    st.divider()
+ 
+    st.subheader("Who is this App for? 	:game_die:")
+    st.info(":black[I built this app for anyone who is interested in seeing the end-to-end Machine learning process without writing code]")
+    st.info(":black[This app has a simple interface for uploading your dataset, profiling your dataset and then running machine learning algorithms to create a model which you can test.]")
+    st.info(":black[I hope you enjoy using the app and building your own ML models!]")
+    st.info("Note: I have included some explainer buttons (optional) along the way which will hopefully help explain some data science concepts. But don't worry if some parts are not clear yet, this is now a simplified process and i will create a more advanced version soon!")
+
+    st.divider()
+    st.subheader("A little more info: :mag_right:")
+    expander = st.expander("Why did I build this? :building_construction:")
+    expander.write(""""I wanted to experiment with the Streamlit framework for web development to explore it's capability as a prototyping tool and for sharing apps.
+                   In addition, Pycaret package which I use here is an excellent Machinelearning package for beginners and""")
+  
+    expander = st.expander("What is Machine Learning (ML)? What is ML model? :robot_face:")
+    expander.write("Machine learning is a branch of artificial intelligence that uses computer algorithms to learn from data and perform tasks that normally require human intelligence.")
+    expander.info("An ML model is a set of complex rules that uses historical and current data to predict future outcomes")
+    expander = st.expander("What is AutoML and why is it useful? :computer:")
+    expander.write("""
             AutoML is a process of automating the end-to-end process of applying machine learning to real-world problems.
             This app is designed to make the process of building ML models easier and faster.
+                   
+            Building production Machine Learning models requires a lot of time, high quality data, platform infastructure, effort, and expertise. 
+            But with the advent of AutoML, the process has become much easier and faster to build basic starter models.
             
             """)
-    st.subheader('Will my models be as good as one built by a experienced Data Scientist? :microscope:') 
-    st.info("Well no, but they will be pretty good and will be great starting point for understanding your data and making intial predictions.")
-    st.subheader('Ok so how do I use this app?')
-    st.info("Just follow the steps in the navigation menu - I've maker the steps and in a few clicks you'll have an Machine Learning model trained on histroial data that can provide future predictions.")
-    st.subheader('But I dont know what any of this means?')
-    st.info('I built this as a sandbox app so play around and see how it works, there is a Learn More tab witrh some helpful info and resources.')
+    expander.info("This app used AutoML technology to build your own ML model without writing code.")
+
+    expander = st.expander('Will my models be as good as one built by a experienced Data Scientist? :microscope:') 
+    expander.write("Well no, but they will be pretty good and will be great starting point for understanding your data and making intial predictions.")
     
+    expander = st.expander('Ok so how do I use this app? :racing_car:')
+    expander.write("Follow the steps in the navigation menu and in a few clicks you'll have an Machine Learning model trained on histroial data that can provide future predictions.")
+    
+
     #easter egg 1
-    if st.button('DO NOT PRESS THIS BUTTON') == True:
+    if st.button(':rainbow[DO NOT PRESS THIS BUTTON]') == True:
         st.balloons()
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
         st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.]')
-        
+    
+    st.divider()    
     st.subheader('created by Conor Curley')
     st.image(width=180,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2Fa0afeb9cc47a7baf61be453b9a5736b2%2Ftenor.gif%3Fitemid%3D5957952&f=1&nofb=1&ipt=cf528c182da24543a702e83f1b68b0432117d3f21be75f3f1848402db8e10426&ipo=images&clickurl=https%3A%2F%2Ftenor.com%2Fsearch%2Fmagic-gifs')
     st.link_button('Say hello on LinkedIn! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
