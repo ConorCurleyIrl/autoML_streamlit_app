@@ -50,7 +50,7 @@ if choice == 'Home':
     st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info("""
-        This app helps beginners you build a machine learning (ML) models without writing a single line of code.
+        This app helps anyone build a machine learning (ML) models without writing a single line of code.
         
         Note this app can only perform AutoML on classifcation problems in this version, more to come soon!
         """)
@@ -107,9 +107,12 @@ if choice == 'Home':
 
 if choice == 'Step1: Upload Data':
     st.title('Step 1: Upload your dataset')
-    st.image(width=400, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
-    st.header('Use the file uploader to select your dataset or select from the sample datasets:')
-    st.info('This app only supports CSV files for now. If you have a different file type, please convert it to a CSV file before uploading.')
+    st.image(width=300, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
+    st.subheader('Instructions:')
+    st.info('Use the file uploader to select your dataset or download a sample datasets to use.')
+    st.markdown('Note: This app only supports CSV files for now. If you have a different file type, please convert it to a CSV file before uploading.')
+    
+    st.divider()
     df = pd.DataFrame()
     # Add a file uploader to the sidebar:    
     st.info('Option 1: Please select a CSV file type as your dataset.')
@@ -124,7 +127,9 @@ if choice == 'Step1: Upload Data':
         # Display the dataset:
         st.dataframe(df)
         st.success('Data uploaded successfully!') 
-        
+    
+    st.divider()
+
     # Add common datasets
     st.info('Option 2: Download a sample dataset to use.')
     if st.button('View sample datasets') == True:
@@ -179,10 +184,16 @@ if choice == 'Step2: Data Profiling':
     
     # Display the dataset:  
     st.title('Step 2: Data Profiling')
-    st.image(width=400,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F9ADoZQgs0tyww%2Fgiphy.gif&f=1&nofb=1&ipt=bbe895f57b94a3eb6cc387f2bc4dd996bf548428356950b16d9f17de07feefaf&ipo=images')
-    st.header('Whats Data Profiling?')
-    st.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
-    st.info("Let's see what how data looks like!")
+    st.image(width=300,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F9ADoZQgs0tyww%2Fgiphy.gif&f=1&nofb=1&ipt=bbe895f57b94a3eb6cc387f2bc4dd996bf548428356950b16d9f17de07feefaf&ipo=images')
+    st.subheader('Instructions:')
+    st.info('Review the data profile report (press the button) to understand your dataset better.')
+
+    expander = st.expander("What is Data Profiling?")
+    expander.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
+    
+    st.divider()
+    
+    st.markdown("A sample of your dataset is displayed below:")
         # next steps prompt
     if not df.empty:  
         #if os.path.exists('uploaded_dataset.csv'):
@@ -192,7 +203,7 @@ if choice == 'Step2: Data Profiling':
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
 
     
-    if st.button('Generate Data Profile Report') == True:
+    if st.button(':blue[Generate Data Profile Report]') == True:
         #create profile report
         start_time_pp = time.time()
         profile = ProfileReport(df, title='Pandas Profiling Report', explorative=True)
@@ -210,50 +221,60 @@ if choice == 'Step2: Data Profiling':
 if choice == 'Step3: Run AutoML':
     st.title('Step 3: Run AutoML')
     st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
+    st.subheader('Instructions:')
+    st.info('1.  Select the target variable you want to predict.')
+    st.info('2.  Select the columns to ignore.')
+    st.info('3. Hit the button to train your model.')
+    st.info('4. Review the model performance and download the model.')
+    st.info('5. Test your model on new data and make predictions.')
 
+    st.divider()
     #set up the data
     if os.path.exists('uploaded_dataset.csv'):
         df = pd.read_csv('uploaded_dataset.csv', index_col=None)
 
-    if st.button('First time at this step? Click here for more info') == True:
-        st.subheader("1. So I have profiled my data, what next?")
-        st.info('Now we train a machine learning model to predict a target variable. This is where the magic happens!')
-        st.subheader("2. How does it work?")
-        st.info('Depending on ML Algorithm, the model will learn from historical data to create a set of complex rules, this is your model. We then can use this model to make predictions on new data.')
 
-        st.subheader("3. How are we doing this in this app?")
-        st.info('We are using Pycaret, an AutoML library that trains and compares multiple machine learning models. Pycaret will train 10+ models and compare them to find the best model for your data. ')
+    expander= st.expander('First time at this step? Click here for more info')
+    expander.subheader("1. So I have profiled my data, what next?")
+    expander.info('Now we train a machine learning model to predict a target variable. This is where the magic happens!')
+    expander.subheader("2. How does it work?")
+    expander.info('Depending on ML Algorithm, the model will learn from historical data to create a set of complex rules, this is your model. We then can use this model to make predictions on new data.')
+
+    expander.subheader("3. How are we doing this in this app?")
+    expander.info('We are using Pycaret, an AutoML library that trains and compares multiple machine learning models. Pycaret will train 10+ models and compare them to find the best model for your data. ')
         
-        st.subheader("4. What about cleaning my data? It's a mess!")
-        st.info('Pycaret will handle missing values, encoding, scaling, and other data preprocessing steps for you. It will also handle class imbalance and multicollinearity.')
+    expander.subheader("4. What about cleaning my data? It's a mess!")
+    expander.info('Pycaret will handle missing values, encoding, scaling, and other data preprocessing steps for you. It will also handle class imbalance and multicollinearity.')
         
     st.subheader("Ready to run some AutoML magic?")
     st.info('Follow the auotML process steps below to train your model:')
    
+    st.divider()
     #Step 1 
-    st.info('Step 1: So what do you want to predict?')
+    st.info('1: Selct the target variable - this is the column you want to to predict.')
     st.write("Note: if you are using the titanic dataset, use Survived column. If you are using the Vodafone Customer dataset, use Churn column. If you are using the Penguins dataset, use Species")  
-    
     target = st.selectbox("Select Target Variable", df.columns)
-    st.info(f"Our ML model with predict the {target} variable.")
+    st.success(f"Our ML model with predict:  {target}")
 
     #Step 2 
-    st.info("""Step 2: Select identifcation columns that should be ignored:""")
-                
+    st.info("2: Select columns that should be ignored:")
+    st.write("""Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
+             Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. 
+             In the Penguins dataset, you may want to ignore the 'Individual' column.""")
+           
     temp_df=df.drop(target, axis=1)
     ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
     # Display the dataset for reference:
     st.dataframe(df.head(10))
-    st.info("""Why? Some columns may not be useful for making predictions - they create "Data noise" which our machine learning algorthms classify as information for prediction but are actually assigned numbers or names. 
-            For example, names and ID numbers should be ignored""")
-    st.warning("""Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
-             Similar if you are using the Telco Churn dataset, you may want to ignore the 'Customer ID' column. 
-             In the Penguins dataset, you may want to ignore the 'Individual' column.""") 
-
     st.warning(f"You selected the following columns to be ignored: {ignore_list}")
+
+    expander = st.expander("Why do we ignore columns?")
+    expander.info("Ignoring columns can help improve the accuracy of the model by removing irrelevant or redundant data. This can help the model focus on the most important features in the data.")
     
+    st.divider()
     #Step 3
-    st.info("Step 3: Ready to run your model? PRESS THE BUTTON BELOW!")
+
+    st.info("3: Ready to run your model? PRESS THE BUTTON BELOW!")
 
     if st.button('Train my model baby......Whoosh!!!'):
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4)
@@ -264,7 +285,7 @@ if choice == 'Step3: Run AutoML':
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
-        best_model = compare_models(budget_time=2, include = ['lr', 'knn','xgboost','ridge','nb','svm'], turbo=True) 
+        best_model = compare_models(budget_time=2, include = ['lr', 'knn','ridge','nb','svm'], turbo=True) 
         compare_df = pull()
         st.info("Results are in! Review your model performance below:")
         st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
@@ -282,88 +303,86 @@ if choice == 'Step3: Run AutoML':
     
     st.divider()
 
-    if st.button("Optional: What do these performance scores mean? Click here for more info") == True:
-        
-           
-        # Save the uploaded file to a csv file:
-        res_temp = pd.read_csv('results_table.csv', index_col=None)
-        # Display the dataset:
-        st.dataframe(res_temp)
-    
-        st.subheader("1. What does 'Accuracy' mean?")
-        st.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
-        st.subheader("2. What does 'AUC' mean?")
-        st.info('AUC stands for Area Under the Curve. It is used in classification analysis in order to determine which of the used models predicts the classes best.')
-        st.info('An excellent model has AUC near to the 1 which means it has good measure of separability. A poor model has AUC near to the 0 which means it has worst measure of separability.')
-        st.subheader("3. What does 'Recall' mean?")
-        st.info('Recall is the ratio of correctly predicted positive observations to the all observations in actual class - yes, it is the ratio of true positive to the sum of true positive and false negative.')
-        st.subheader("4. What does 'Precision' mean?")
-        st.info('Precision is the ratio of correctly predicted positive observations to the total predicted positive observations. High precision relates to the low false positive rate.')
-        st.subheader("5. What does 'f1' mean?")
-        st.info('F1 Score is the weighted average of Precision and Recall. Therefore, this score takes both false positives and false negatives into account. It is a good way to show that a classifer has a good value for both false positives and false negatives.')    
-        st.subheader("5. What does 'Kappa' mean?")
-        st.info('Kappa is a statistic that measures inter-rater agreement for qualitative items. It is generally thought to be a more robust measure than simple percent agreement calculation, as Kappa takes into account the possibility of the agreement occurring by chance.')
-        st.subheader("6. What does 'MCC' mean?")
-        st.info('MCC is a measure of the quality of binary classifications. It returns a value between -1 and 1. A coefficient of 1 represents a perfect prediction, 0 an average random prediction and -1 an inverse prediction.')
-        st.subheader("7. What does 'TT sec' mean?")
-        st.info('TT sec is the time taken to train the model.')
+    expander = st.expander("Optional: What do these performance scores mean? Click here for more info")
+    expander.subheader("Performance Scores:")   
+    # Save the uploaded file to a csv file:
+    res_temp = pd.read_csv('results_table.csv', index_col=None)
+    # Display the dataset:
+    expander.dataframe(res_temp)
+
+    expander.subheader("1. What does 'Accuracy' mean?")
+    expander.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
+    expander.subheader("2. What does 'AUC' mean?")
+    expander.info('AUC stands for Area Under the Curve. It is used in classification analysis in order to determine which of the used models predicts the classes best.')
+    expander.info('An excellent model has AUC near to the 1 which means it has good measure of separability. A poor model has AUC near to the 0 which means it has worst measure of separability.')
+    expander.subheader("3. What does 'Recall' mean?")
+    expander.info('Recall is the ratio of correctly predicted positive observations to the all observations in actual class - yes, it is the ratio of true positive to the sum of true positive and false negative.')
+    expander.subheader("4. What does 'Precision' mean?")
+    expander.info('Precision is the ratio of correctly predicted positive observations to the total predicted positive observations. High precision relates to the low false positive rate.')
+    expander.subheader("5. What does 'f1' mean?")
+    expander.info('F1 Score is the weighted average of Precision and Recall. Therefore, this score takes both false positives and false negatives into account. It is a good way to show that a classifer has a good value for both false positives and false negatives.')    
+    expander.subheader("5. What does 'Kappa' mean?")
+    expander.info('Kappa is a statistic that measures inter-rater agreement for qualitative items. It is generally thought to be a more robust measure than simple percent agreement calculation, as Kappa takes into account the possibility of the agreement occurring by chance.')
+    expander.subheader("6. What does 'MCC' mean?")
+    expander.info('MCC is a measure of the quality of binary classifications. It returns a value between -1 and 1. A coefficient of 1 represents a perfect prediction, 0 an average random prediction and -1 an inverse prediction.')
+    expander.subheader("7. What does 'TT sec' mean?")
+    expander.info('TT sec is the time taken to train the model.')
     
     st.divider()
 
-    if st.button('Optional: View best model performance graphs') == True:
-        st.info('The best model is at the top of the leaderboard. Review the model performance below:')
-        with open('best_model.pkl', 'rb') as f: 
-            best_model = load_model('best_model')
-        #best_model = tune_model(best_model)
-        # plot feature importance
-        st.subheader("Model Performance Figures: (if available - not all models have these features)")
-        try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
-        except: pass
+    expander=st.expander('Optional: View best model performance graphs')
+    expander.info('The best model is at the top of the leaderboard. Review the model performance below:')
+    with open('best_model.pkl', 'rb') as f: 
+        best_model = load_model('best_model')
+    #best_model = tune_model(best_model)
+    # plot feature importance
+    expander.subheader("Model Performance Figures: (if available - not all models have these features)")
+    try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
+    except: pass
 
-        try : cm_img = plot_model(best_model, plot = 'confusion_matrix', display_format="streamlit", save=True)
-        except: pass
+    try : cm_img = plot_model(best_model, plot = 'confusion_matrix', display_format="streamlit", save=True)
+    except: pass
 
-        try : features_img  = plot_model(best_model, plot = 'feature_all', display_format="streamlit", save=True)
-        except: pass
-        
-        try : pipeline_img  = plot_model(best_model, plot = 'pipeline', display_format="streamlit", save=True)
-        except: pass
+    try : features_img  = plot_model(best_model, plot = 'feature_all', display_format="streamlit", save=True)
+    except: pass
+    
+    try : pipeline_img  = plot_model(best_model, plot = 'pipeline', display_format="streamlit", save=True)
+    except: pass
 
+    
+    #render the images
+    if 'auc_img' not in locals():
+        expander.warning('No AUC graph available for this model.')
+    else:   
+        expander.subheader('Fig 1 Model performance: AUC curve')
+        expander.info('AUC graph is very useful when the target variable is binary. It is a measure of how well a binary classification model is able to distinguish between positive and negative classes.')
         
-        #render the images
-        if 'auc_img' not in locals():
-            st.warning('No AUC graph available for this model.')
-        else:   
-            st.subheader('Fig 1 Model performance: AUC curve')
-            st.info('AUC graph is very useful when the target variable is binary. It is a measure of how well a binary classification model is able to distinguish between positive and negative classes.')
-            
-            st.image(auc_img)
-        if 'cm_img' not in locals():
-            st.warning('No Confusion Matrix available for this model.')
-        else:
-            st.subheader('Fig 2 Model performance: Confusion Matrix: '  )
-            st.info('A confusion matrix is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It allows the visualization of the performance of an algorithm.')
-            st.info('Correct Predictions - Top left: True Negative, Bottom Right: True Positive')
-            st.info('Incorrect Predictions - Top Right: False Positive, Bottom Left: False Negative')
-            st.image(cm_img)
-        if 'features_img' not in locals():
-            st.warning('No Feature Importance available for this model.')
-        else:  
-            st.subheader('Fig 3, Feature Importance:' )
-            st.info('Feature importance is a technique that assigns a score to input features based on how useful they are at predicting a target variable. The higher the score, the more important the feature is.')
-            st.image(features_img)
+        expander.image(auc_img)
+    if 'cm_img' not in locals():
+        expander.warning('No Confusion Matrix available for this model.')
+    else:
+        expander.subheader('Fig 2 Model performance: Confusion Matrix: '  )
+        expander.info('A confusion matrix is a table that is often used to describe the performance of a classification model on a set of test data for which the true values are known. It allows the visualization of the performance of an algorithm.')
+        expander.info('Correct Predictions - Top left: True Negative, Bottom Right: True Positive')
+        expander.info('Incorrect Predictions - Top Right: False Positive, Bottom Left: False Negative')
+        expander.image(cm_img)
+    if 'features_img' not in locals():
+        expander.warning('No Feature Importance available for this model.')
+    else:  
+        expander.subheader('Fig 3, Feature Importance:' )
+        expander.info('Feature importance is a technique that assigns a score to input features based on how useful they are at predicting a target variable. The higher the score, the more important the feature is.')
+        expander.image(features_img)
+    
+    if 'pipeline_img' not in locals():
+        expander.warning('No Model Pipeline available for this model.')
+    else:  
+        expander.subheader('Fig 4, Model Pipeline:')
+        expander.info('The model pipeline is a visual representation of the steps that are taken to preprocess the data and train the model. It shows the different steps that are involved in the process, such as data cleaning, feature engineering, and model training.')
+        expander.image(pipeline_img)
         
-        if 'pipeline_img' not in locals():
-            st.warning('No Model Pipeline available for this model.')
-        else:  
-            st.subheader('Fig 4, Model Pipeline:')
-            st.info('The model pipeline is a visual representation of the steps that are taken to preprocess the data and train the model. It shows the different steps that are involved in the process, such as data cleaning, feature engineering, and model training.')
-            st.image(pipeline_img)
-        
-
 
     #Step 4
-    st.info("Step 4: Download your trained Model as a Pickle file:")
+    st.info("Download your trained Model as a Pickle file:")
     if 'best_model' not in locals():
             st.warning('No model available for download.')
     else: 
@@ -373,9 +392,11 @@ if choice == 'Step3: Run AutoML':
                 st.write(best_model)
                 st.success('Model downloaded successfully!')          
                 st.balloons()
+    
+    st.divider()
 
     #Step 5
-    st.info("Step 5: Prepare some new data to test your model:")
+    st.info("4: Prepare some new data to test your model:")
     st.write("Now that you have trained your model, you can test it on new data to see how well it performs.")
     
     if os.path.exists('uploaded_dataset.csv'):
