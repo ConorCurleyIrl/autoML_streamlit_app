@@ -38,14 +38,14 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 
 
 st.title('EasyML App :rocket:')
-choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Train your model', 'Step4: Download & Predict with your model','ML Glossary'],horizontal=True)
+choice =  st.radio('Navigation menu', ['Starting Point','Step1: Get some data', 'Step2: Make me some pretty graphs!','Step3: Machine Learning Time', 'Step4: Predict the Future!','ML Glossary'],horizontal=True)
 st.divider()
 
 ######################################################################
 # 2. lets build our Home page
 ######################################################################
 
-if choice == 'Home':
+if choice == 'Starting Point':
     st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info("""
@@ -104,7 +104,7 @@ if choice == 'Home':
 # 4. lets build our Upload data page
 ######################################################################
 
-if choice == 'Step1: Upload Data':
+if choice == 'Step1: Get some data':
 
     st.subheader('Step 1: Upload your dataset')
     st.image(width=300, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
@@ -143,7 +143,7 @@ if choice == 'Step1: Upload Data':
         st.info('Info: The Titanic dataset is a historical dataset that includes passenger information like age, gender, passenger class, and survival status from the tragic Titanic shipwreck. This is a classic dataset used to train ML models, to predict if a passenger survived or not. using the passenger information.')
         #st.link_button('Link to dataset source','https://github.com/datasciencedojo/datasets/blob/master/titanic.csv')
         
-        with open('titanic_data.csv', 'rb') as f:
+        with open('data/titanic_data.csv', 'rb') as f:
             if st.download_button(':violet[Download Titanic CSV :ship:]', f, file_name="titanic_data.csv"): 
                 st.success('Titanic dataset downloaded :ship:')
 
@@ -153,7 +153,7 @@ if choice == 'Step1: Upload Data':
         st.info('Info: This dataset includes customer information used to predict when a customer leaves/churns. Before you ask, yes Churn is silly business term invented to sound technical.')
         #st.link_button('Link to dataset','https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv')
       
-        with open('telco_churn.csv', 'rb') as f: 
+        with open('data/telco_churn.csv', 'rb') as f: 
             if st.download_button(':red[Download Vodafone Customer CSV :phone:]', f, file_name="telco_churn.csv"): 
                 st.success('Vodafone dataset downloaded :mobile_phone:')
 
@@ -163,9 +163,9 @@ if choice == 'Step1: Upload Data':
         st.info('Info: This dataset is used to predict penguin species. There are 3 different species of penguins in this dataset, collected from 3 islands in the Palmer Archipelago, Antarctica.')
         #st.link_button('link to dataset','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
    
-        with open('penguins.csv', 'rb') as f: 
+        with open('data/penguins.csv', 'rb') as f: 
             if st.download_button(':blue[Download Penguins CSV]', f, file_name="penguins.csv"): 
-                st.success('dPenguin dataset downloaded :penguin:')
+                st.success('Penguin dataset downloaded :penguin:')
 
     # next steps prompt
     st.divider()
@@ -183,7 +183,7 @@ if choice == 'Step1: Upload Data':
 # 5. lets build our data profiling page
 ######################################################################
 
-if choice == 'Step2: Data Profiling':
+if choice == 'Step2: Make me some pretty graphs!':
     
     #Set up profile report
       
@@ -222,8 +222,8 @@ if choice == 'Step2: Data Profiling':
 # 6. lets build our Run AutoML page
 ######################################################################
 
-if choice == 'Step3: Train your model':
-    st.title('Step3: Train your model')
+if choice == 'Step3: Machine Learning Time':
+    st.subheader('Step3: Machine Learning Time')
     st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
     st.subheader('Instructions:')
     st.info('1. Select the target variable you want to predict.')
@@ -265,7 +265,7 @@ if choice == 'Step3: Train your model':
     st.info("2: Select columns that should be ignored:")
     st.write("""Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
              Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. 
-             In the Penguins dataset, you may want to ignore the 'Individual' column.""")
+             In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.""")
            
     temp_df=df.drop(target, axis=1)
     ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
@@ -283,16 +283,16 @@ if choice == 'Step3: Train your model':
 
     if st.button('Train my model baby......Whoosh!!!'):
 
-        setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4)
+        setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4,normalize = True)
         setup_df=pull()
         start_time = time.time()
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('Figuring out patterns in the data to make preditions.... my cat has some serious machine learning work to do!')
         st.warning("""Note for adavnaced users: 
-                   To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithems and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
-        st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
-        st.info('PyCaret Settings for AutoML')
-        st.dataframe(setup_df)
+                   To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
+        exp1 =st.expander('Optional: Want to see the technical settings under the hood?')
+        exp1.write('The Pycaret settings used to train the model:')
+        exp1.dataframe(setup_df)
         #train the model
         best_model = compare_models(budget_time=2, include=['lr', 'knn', 'nb', 'ridge', 'rf', 'xgboost'], sort='Accuracy', turbo=True) 
         compare_df = pull()
@@ -309,9 +309,9 @@ if choice == 'Step3: Train your model':
         
         save_model(best_model, 'best_model')   
         st.success('You model was trained successfully on your data! We can now use this model to make predictions.')
-        st.subheader(':rainbow[Very Nice!, trained your machine learning model! Go to the navigation to continue.]:point_up_2:')
-        st.image(width=200, image=f'https://th.bing.com/th/id/R.0fa354cd55209e213589fb95517cadc7?rik=QSYgQCVNWgoCEg&riu=http%3a%2f%2fwww.quickmeme.com%2fimg%2f14%2f14c0f057abec6dabfc5be48cbbd0d904fef889a8781eee667984089207daf998.jpg&ehk=HkipOeiqL9zTVbYdF%2bxiBTN1NP6yqwkQHbYRaOha%2faQ%3d&risl=&pid=ImgRaw&r=0')
-    
+        st.image(width=200, image=f'https://gifdb.com/images/high/borat-very-nice-fist-pump-wq6v07qb55osz1jt.gif')
+        st.subheader(':rainbow[Very Nice!, you have trained your machine learning model!! Go to the navigation to continue.]:point_up_2:')
+        
     
     st.divider()
     st.info('Optional: Review the model performance statistics and graphs below.')
@@ -320,10 +320,10 @@ if choice == 'Step3: Train your model':
     try :
         res_temp = pd.read_csv('results_table.csv', index_col=None)
         st.subheader('Model Performance Table:')
+        st.dataframe(res_temp) 
     except: pass
 
-    expander = st.expander("Show me that table again: ")
-    expander.dataframe(res_temp)  
+
     
     expander = st.expander("Optional: So what do these performance scores mean? Click here for more info")
     expander.subheader("Performance Scores:")   
@@ -396,16 +396,16 @@ if choice == 'Step3: Train your model':
 
         
 ######################################################################
-# 
+# # 7. lets build our Download & Predict with your model page
 ######################################################################
 
 
 
-if choice == 'Step4: Download & Predict with your model':
-    st.title('Step4: Download & Predict with your model')
-    st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
+if choice == 'Step4: Predict the Future!':
+    st.subheader('Step4: Predict the Future! :rocket:')
+    st.image(width=400, image='https://media1.giphy.com/media/ZhESFK96NxbuO1yDgy/giphy.gif')
     st.subheader('Instructions:')
-    st.info('1. Download the model.')
+    st.info("1. Let's Download the model.")
     st.info('2. Prepare some new data to test your model.')
     st.info('3. Make predictions. :rocket:')
 
@@ -433,6 +433,7 @@ if choice == 'Step4: Download & Predict with your model':
 
     #Step 5
     st.info("2: Prepare some new data to test your model:")
+    
     st.write("Now that you have trained your model, you can test it on new data to see how well it performs.")
     #yes if anyone is reading this, I know I should have split out the holdout data earlier in the process, but this is a MVP so I'm doing it here.
     
@@ -519,8 +520,8 @@ except: pass
 try : os.remove('uploaded_data.csv') #deletes CSV
 except: pass
 
-try : os.remove('best_model.pkl') #deletes CSV
-except: pass
+#try : os.remove('best_model.pkl') #deletes CSV
+#except: pass
 
 try : os.remove('AUC.png') #deletes CSV
 except: pass
