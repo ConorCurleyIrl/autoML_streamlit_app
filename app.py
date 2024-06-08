@@ -14,8 +14,7 @@ from ydata_profiling import ProfileReport
 
 import os 
 #created file to store variables
-from variables import short_automl_desc , short_class_desc, short_profile_desc, short_pycaret_desc , temp_target
-
+import variables 
 ######################################################################
 # 2. Build the side bar - split sections to debug any issues
 ######################################################################
@@ -255,7 +254,7 @@ if choice == 'Step3: Train your model':
     st.write("Note: if you are using the titanic dataset, use Survived column. If you are using the Vodafone Customer dataset, use Churn column. If you are using the Penguins dataset, use Species")  
     target = st.selectbox("Select Target Variable", df.columns)
     st.success(f"Our ML model with predict:  {target}")
-    temp_target = target
+    variables.temp_target = target
 
     #Step 2 
     st.info("2: Select columns that should be ignored:")
@@ -408,7 +407,7 @@ if choice == 'Step4: Download model and make predictions':
 
     st.divider()
     
-    print(temp_target)
+    
 
     #Step 1
     st.info("1: Download your trained Model as a Pickle file:")
@@ -433,11 +432,14 @@ if choice == 'Step4: Download model and make predictions':
     st.info("2: Prepare some new data to test your model:")
     st.write("Now that you have trained your model, you can test it on new data to see how well it performs.")
     
+    #temp_target_var
+    tt= variables.temp_target
+
     if os.path.exists('uploaded_dataset.csv'):
         df = pd.read_csv('uploaded_dataset.csv', index_col=None)
         df_holdout= df.sample(n=10, random_state=42)
 
-    test=df_holdout.drop(temp_target, axis=1)
+    test=df_holdout.drop(tt, axis=1)
     if st.button("View a sub-sample of your data, without a target variable."):
         st.write("This is an example of what your future data would look for new predictions") 
         st.dataframe(test)
@@ -451,7 +453,7 @@ if choice == 'Step4: Download model and make predictions':
             best_model = load_model('best_model')
         st.write('Applying our ML model ...')
         new_prediction = predict_model(best_model, data=test)
-        new_prediction['Target_Variable_Actual'] = df_holdout[temp_target]
+        new_prediction['Target_Variable_Actual'] = df_holdout[tt]
         st.dataframe(new_prediction)
         st.success('Predictions made successfully! Have a look at the predictions above in the table! (at the end you will see your prediction and actual classification):rocket:')    
 
