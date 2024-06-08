@@ -93,7 +93,7 @@ if choice == 'Home':
     if st.button(':rainbow[DO NOT PRESS THIS BUTTON]') == True:
         st.balloons()
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
-        st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.]')
+        st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.] 	:point_up_2:')
     
     st.divider()    
     st.subheader('created by Conor Curley')
@@ -124,8 +124,9 @@ if choice == 'Step1: Upload Data':
         # Save the uploaded file to a csv file:
         df.to_csv('uploaded_dataset.csv', index=False)
         # Display the dataset:
-        st.dataframe(df)
-        st.success('Data uploaded successfully!') 
+        st.success('Data uploaded successfully! Here is a sample of your dataset:')
+        st.dataframe(df.head(100))
+        
     
     st.divider()
 
@@ -166,7 +167,7 @@ if choice == 'Step1: Upload Data':
     # next steps prompt
     if not df.empty:  
         st.success('A Dataset is uploaded, ready to move to the next step!')
-        st.subheader(':rainbow[Great job you have dataset loaded! Select "Data Profiling" in the navigation to continue.]')
+        st.subheader(':rainbow[Great job you have dataset loaded! Select "Data Profiling" in the navigation to continue.] :point_up_2:')
         
     else:    
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
@@ -224,7 +225,7 @@ if choice == 'Step3: Train your model':
     st.info('1. Select the target variable you want to predict.')
     st.info('2. Select the columns to ignore.')
     st.info('3. Hit the button to train your model.')
-    st.info('4. Review the model performance ')
+    st.info('Optional: Review the model performance statistics and graphs below.')
    
 
     st.divider()
@@ -277,18 +278,21 @@ if choice == 'Step3: Train your model':
     st.info("3: Ready to run your model? PRESS THE BUTTON BELOW!")
 
     if st.button('Train my model baby......Whoosh!!!'):
+
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4)
         setup_df=pull()
         start_time = time.time()
-        st.info('Figuring out patterns in the data to make preditions.... Best to go stick the kettle on, my cat has some serious machine learning work to do!')
-        st.warning("""Note for adavnaced users: To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithems and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
+        st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
+        st.info('Figuring out patterns in the data to make preditions.... my cat has some serious machine learning work to do!')
+        st.warning("""Note for adavnaced users: 
+                   To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithems and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('PyCaret Settings for AutoML')
         st.dataframe(setup_df)
-        best_model = compare_models(budget_time=2, include = ['lr', 'knn','ridge','nb','svm'], turbo=True) 
+        #train the model
+        best_model = compare_models(budget_time=2, include=['lr', 'knn', 'nb', 'ridge', 'rf', 'xgboost'], sort='Accuracy', turbo=True) 
         compare_df = pull()
-        st.info("Results are in! Review your model performance below:")
-        st.write("Bloody Oath that's an impressive table of ML models! The best model is at the top - Highest AUC score.")
+        st.success("Bloody Oath that's an impressive table of ML models! The best model is at the top of the leaderboard.")
         #renders the best model leaderboard: 
         st.dataframe(compare_df) 
         
@@ -304,13 +308,24 @@ if choice == 'Step3: Train your model':
         
     
     st.divider()
+    expander= st.expander('Optional: Review the model performance statistics and graphs below.')
+    #load the results table
+    try :
+        res_temp = pd.read_csv('results_table.csv', index_col=None)
+        st.subheader('Model Performance Table:')
+        st.dataframe(res_temp)
+    except: pass
 
+    #delete the csv file
+    try : os.remove('results_table.csv') #deletes CSV
+    except: pass
+    
+    
+    #Cleaning up the files
+    
+    
     expander = st.expander("Optional: What do these performance scores mean? Click here for more info")
     expander.subheader("Performance Scores:")   
-    # Save the uploaded file to a csv file:
-    res_temp = pd.read_csv('results_table.csv', index_col=None)
-    # Display the dataset:
-    expander.dataframe(res_temp)
 
     expander.subheader("1. What does 'Accuracy' mean?")
     expander.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
@@ -330,24 +345,13 @@ if choice == 'Step3: Train your model':
     expander.subheader("7. What does 'TT sec' mean?")
     expander.info('TT sec is the time taken to train the model.')
     
-    st.divider()
+    
 
-    expander=st.expander('Optional: View best model performance graphs')
-    expander.info('The best model is at the top of the leaderboard. Review the model performance below:')
-    with open('best_model.pkl', 'rb') as f: 
-        best_model = load_model('best_model')
-    #best_model = tune_model(best_model)
-    # plot feature importance
-    expander.subheader("Model Performance Figures: (if available - not all models have these features)")
-    from pycaret.classification import interpret_model
+    expander=st.expander('Optional: View best model performance graphs. Click here for more info')
+
     
     #Expander for the model performance
-    expander.info('The model performance figures below are useful to understand how the model is performing. These figures help to understand the model performance and the importance of the features in the model.')
-    #interpret_model(best_model, plot='summary')
-
-    
-
-
+    expander.info('The following graphs show the performance of the best model. These graphs are useful for understanding how well the model is performing and where it can be improved.')
     try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
     except: pass
 
@@ -403,12 +407,11 @@ if choice == 'Step4: Download model and make predictions':
     st.subheader('Instructions:')
     st.info('1. Download the model.')
     st.info('2. Prepare some new data to test your model.')
-    st.info('3. Make predictions.')
+    st.info('3. Make predictions. :rocket:')
 
     st.divider()
     
     
-
     #Step 1
     st.info("1: Download your trained Model as a Pickle file:")
     #if 'best_model' not in locals():
@@ -431,8 +434,9 @@ if choice == 'Step4: Download model and make predictions':
     #Step 5
     st.info("2: Prepare some new data to test your model:")
     st.write("Now that you have trained your model, you can test it on new data to see how well it performs.")
+    #yes if anyone is reading this, I know I should have split out the holdout data earlier in the process, but this is a MVP so I'm doing it here.
     
-    #temp_target_var
+    #temp_target_var, yes I know I should have used a class or function to store these variables, but this is a MVP so I'm doing it here.
     tt= variables.temp_target
 
     if os.path.exists('uploaded_dataset.csv'):
@@ -477,7 +481,7 @@ if choice == 'ML Glossary':
     st.subheader('Technology I used to build this app:')
     if st.button("Want to learn more about Pycaret?") == True:
         st.subheader('What is Pycaret?')
-        st.info(short_pycaret_desc)
+        st.info(variables.short_pycaret_desc)
         st.link_button('Pycaret Documentation', 'https://pycaret.gitbook.io/docs')
     
     if st.button("Want to learn more about Streamlit?") == True:
@@ -490,13 +494,43 @@ if choice == 'ML Glossary':
         st.info('Ydata Profiling is an open-source library that generates profile reports from a pandas DataFrame. These reports contain interactive visualizations that allow you to explore your data.')
         st.link_button('Ydata Profiling Documentation', 'https://pypi.org/project/ydata-profiling/')
 
-    st.header('What are Classification Problems?')
-    st.info(short_class_desc)
+    
+    expander = st.expander('What are Classification Problems?')
+    expander.info(variables.short_class_desc)
 
-    st.subheader('What is AutoML?')
-    st.info(short_automl_desc)
+    expander = st.expander('What is AutoML?')
+    expander.info(variables.short_automl_desc)
 
     st.subheader('created by Conor Curley')
     st.image(width=180,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2Fa0afeb9cc47a7baf61be453b9a5736b2%2Ftenor.gif%3Fitemid%3D5957952&f=1&nofb=1&ipt=cf528c182da24543a702e83f1b68b0432117d3f21be75f3f1848402db8e10426&ipo=images&clickurl=https%3A%2F%2Ftenor.com%2Fsearch%2Fmagic-gifs')
     st.link_button('Say hello on LinkedIn! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
+
+
+################################################
+#GARBAGE COLLECTION - remove variables and files
+#################################################
+#garbage collection
+import gc
+gc.collect()
+
+try : os.remove('results_table.csv') #deletes CSV
+except: pass
+
+try : os.remove('uploaded_data.csv') #deletes CSV
+except: pass
+
+try : os.remove('best_model.pkl') #deletes CSV
+except: pass
+
+try : os.remove('AUC.png') #deletes CSV
+except: pass
+
+try : os.remove('confusion_matrix.png') #deletes CSV
+except: pass
+
+try : os.remove('feature_importance.png') #deletes CSV
+except: pass
+
+try : os.remove('pipeline.png') #deletes CSV
+except: pass
 
