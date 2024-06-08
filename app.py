@@ -187,7 +187,7 @@ if choice == 'Step2: Make me some pretty graphs!':
     
     #Set up profile report
       
-    st.subheader('Step 2: Data Profiling')
+    st.subheader('Step 2: Make me some pretty graphs!')
     st.image(width=400, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
     st.subheader('Instructions:')
     st.info(' 1. Generate the data profile report (press the button) to understand your dataset better.')
@@ -207,7 +207,7 @@ if choice == 'Step2: Make me some pretty graphs!':
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
 
     #generate the profile report
-    if st.button(':blue[Make those shiny graphs for me! - Generate Data Profile Report]') == True:
+    if st.button(':blue[Make those pretty graphs for me!]') == True:
         #create profile report
         start_time_pp = time.time()
         profile = ProfileReport(df, title='Pandas Profiling Report', explorative=True)
