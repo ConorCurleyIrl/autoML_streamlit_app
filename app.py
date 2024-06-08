@@ -295,7 +295,7 @@ if choice == 'Step3: Run AutoML':
         compare_df.to_csv('results_table.csv', index=False)
         st.write('Time taken to train the model:', round(((time.time() - start_time)/60), 2), 'mins')
         #might review in v2
-        best_model
+        st.write(best_model)
         evaluation= evaluate_model(best_model)
         st.write(evaluation)
         save_model(best_model, 'best_model')   
@@ -389,7 +389,7 @@ if choice == 'Step3: Run AutoML':
         with open('best_model.pkl', 'rb') as f: 
             if st.download_button('Download Model', f, file_name="best_model.pkl"): 
                 best_model = load_model('best_model')
-                st.write(best_model)
+                best_model
                 st.success('Model downloaded successfully!')          
                 st.balloons()
     
