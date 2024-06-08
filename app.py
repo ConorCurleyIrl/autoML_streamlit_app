@@ -14,7 +14,7 @@ from ydata_profiling import ProfileReport
 
 import os 
 #created file to store variables
-from variables import short_automl_desc , short_class_desc, short_profile_desc, short_pycaret_desc
+from variables import short_automl_desc , short_class_desc, short_profile_desc, short_pycaret_desc , temp_target
 
 ######################################################################
 # 2. Build the side bar - split sections to debug any issues
@@ -40,7 +40,7 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 
 
 st.title('EasyML App :rocket:')
-choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Run AutoML','ML Glossary'],horizontal=True)
+choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Train your model', 'Step4: Download model and make predictions','ML Glossary'],horizontal=True)
 st.divider()
 
 ######################################################################
@@ -212,21 +212,21 @@ if choice == 'Step2: Data Profiling':
         st.info('Review your dataset profile:')
         st_profile_report(profile)
         st.write('Time taken to create data profile report', round(((time.time() - start_time_pp)/60), 2), 'mins')
-        st.subheader(':rainbow[Look at you go, you profiled your dataset! select "AutoML" in the navigation to continue.]')
+        st.subheader(':rainbow[Look at you go, you profiled your dataset! select "Step3: Train your model" in the navigation to continue.]')
         
 ######################################################################
 # 6. lets build our Run AutoML page
 ######################################################################
 
-if choice == 'Step3: Run AutoML':
-    st.title('Step 3: Run AutoML')
+if choice == 'Step3: Train your model':
+    st.title('Step3: Train your model')
     st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
     st.subheader('Instructions:')
-    st.info('1.  Select the target variable you want to predict.')
-    st.info('2.  Select the columns to ignore.')
+    st.info('1. Select the target variable you want to predict.')
+    st.info('2. Select the columns to ignore.')
     st.info('3. Hit the button to train your model.')
-    st.info('4. Review the model performance and download the model.')
-    st.info('5. Test your model on new data and make predictions.')
+    st.info('4. Review the model performance ')
+   
 
     st.divider()
     #set up the data
@@ -255,6 +255,7 @@ if choice == 'Step3: Run AutoML':
     st.write("Note: if you are using the titanic dataset, use Survived column. If you are using the Vodafone Customer dataset, use Churn column. If you are using the Penguins dataset, use Species")  
     target = st.selectbox("Select Target Variable", df.columns)
     st.success(f"Our ML model with predict:  {target}")
+    temp_target = target
 
     #Step 2 
     st.info("2: Select columns that should be ignored:")
@@ -295,11 +296,13 @@ if choice == 'Step3: Run AutoML':
         compare_df.to_csv('results_table.csv', index=False)
         st.write('Time taken to train the model:', round(((time.time() - start_time)/60), 2), 'mins')
         #might review in v2
-        st.write(best_model)
-        evaluation= evaluate_model(best_model)
-        st.write(evaluation)
+        best_model= tune_model(best_model)
+        st.subheader('Best Model:')
+        st.info(best_model)
+        
         save_model(best_model, 'best_model')   
-        st.success('You model was trained successfully on your data! We can now use this model to make predictions.')	
+        st.success('You model was trained successfully on your data! We can now use this model to make predictions.')
+        
     
     st.divider()
 
@@ -337,6 +340,15 @@ if choice == 'Step3: Run AutoML':
     #best_model = tune_model(best_model)
     # plot feature importance
     expander.subheader("Model Performance Figures: (if available - not all models have these features)")
+    from pycaret.classification import interpret_model
+    
+    #Expander for the model performance
+    expander.info('The model performance figures below are useful to understand how the model is performing. These figures help to understand the model performance and the importance of the features in the model.')
+    #interpret_model(best_model, plot='summary')
+
+    
+
+
     try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
     except: pass
 
@@ -380,47 +392,70 @@ if choice == 'Step3: Run AutoML':
         expander.info('The model pipeline is a visual representation of the steps that are taken to preprocess the data and train the model. It shows the different steps that are involved in the process, such as data cleaning, feature engineering, and model training.')
         expander.image(pipeline_img)
         
+######################################################################
+# 6. lets build our Run AutoML page
+######################################################################
 
-    #Step 4
-    st.info("Download your trained Model as a Pickle file:")
-    if 'best_model' not in locals():
-            st.warning('No model available for download.')
-    else: 
+
+
+if choice == 'Step4: Download model and make predictions':
+    st.title('Step4: Download model and make predictions')
+    st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
+    st.subheader('Instructions:')
+    st.info('1. Download the model.')
+    st.info('2. Prepare some new data to test your model.')
+    st.info('3. Make predictions.')
+
+    st.divider()
+    
+    print(temp_target)
+
+    #Step 1
+    st.info("1: Download your trained Model as a Pickle file:")
+    #if 'best_model' not in locals():
+    if os.path.exists('best_model.pkl'): 
         with open('best_model.pkl', 'rb') as f: 
             if st.download_button('Download Model', f, file_name="best_model.pkl"): 
                 best_model = load_model('best_model')
-                best_model
+                st.markdown(best_model)
                 st.success('Model downloaded successfully!')          
-                st.balloons()
+                st.balloons()       
+            
+    else: 
+        st.warning('No model available for download.')
+   
+    expander = st.expander("What is a Pickle file?")
+    expander.info("A pickle file is a serialized file that can be saved to disk. It allows you to save your model so that you can use it later without having to retrain it. Pickle files are a common way to save machine learning models.")
     
     st.divider()
 
     #Step 5
-    st.info("4: Prepare some new data to test your model:")
+    st.info("2: Prepare some new data to test your model:")
     st.write("Now that you have trained your model, you can test it on new data to see how well it performs.")
     
     if os.path.exists('uploaded_dataset.csv'):
         df = pd.read_csv('uploaded_dataset.csv', index_col=None)
         df_holdout= df.sample(n=10, random_state=42)
 
-    test=df_holdout.drop(target, axis=1)
+    test=df_holdout.drop(temp_target, axis=1)
     if st.button("View a sub-sample of your data, without a target variable."):
         st.write("This is an example of what your future data would look for new predictions") 
         st.dataframe(test)
 
+    st.divider()
     #Step 5
-    st.info("Step 6: Run your model on new data and get some predictions!:")
+    st.info("3: Run your model on new data and get some predictions!:")
 
     if st.button("Alrighty this is the moment of truth - let's punch thoses numbers and predict with our model!") == True:
         with open('best_model.pkl', 'rb') as f: 
             best_model = load_model('best_model')
         st.write('Applying our ML model ...')
         new_prediction = predict_model(best_model, data=test)
-        new_prediction['Target_Variable_Actual'] = df_holdout[target]
+        new_prediction['Target_Variable_Actual'] = df_holdout[temp_target]
         st.dataframe(new_prediction)
         st.success('Predictions made successfully! Have a look at the predictions above in the table! (at the end you will see your prediction and actual classification):rocket:')    
 
-    #Step 5
+    #easter egg
     st.info("Gotten this far? I think you deserve a dance!:")	
     if st.button("Dance button!") == True:
         st.image(width=500,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FZAoUo4PquusAAAAC%2Fyou-did-it-congratulations.gif&f=1&nofb=1&ipt=bfeb6b6934c23145f401edd23610973857097a7938a18d49835bc9dbbc30e0f1&ipo=images')

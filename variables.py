@@ -1,3 +1,6 @@
+temp_target = []
+
+
 short_automl_desc = """
 Automated Machine Learning (AutoML) is a process that automates the end-to-end process of applying machine learning to real-world problems. It aims to simplify and accelerate the machine learning workflow by automating tasks such as data preprocessing, feature engineering, model selection, hyperparameter tuning, and model evaluation.
 
