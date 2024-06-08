@@ -5,18 +5,19 @@ import streamlit as st
 from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
 import pandas as pd
 import time
-
-#from pydantic_settings import BaseSettings # fixed the issue with pydantic_settings realted to using an outdated version of pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
-# ydata_profiling is the latest howerver it is not supported by streamlit_pandas_profiling so using older versio pandas_profiling
-from ydata_profiling import ProfileReport
-#from pandas_profiling.profile_report import ProfileReport
 
-import os 
-#created file to store variables
-import variables 
+# ydata_profiling is the latest howerver it is not supported by streamlit_pandas_profiling so using older versio pandas_profiling
+#from pandas_profiling.profile_report import ProfileReport
+from ydata_profiling import ProfileReport
+
+
+import os #file management
+import gc #garbage collection
+import variables #created file to store variables
+
 ######################################################################
-# 2. Build the side bar - split sections to debug any issues
+# 1. Configuring the app
 ######################################################################
 
 # using OS to check if file is up and use as needed
@@ -36,15 +37,14 @@ hide_default_format = """
 st.markdown(hide_default_format, unsafe_allow_html=True)
 
 
-
-
 st.title('EasyML App :rocket:')
-choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Train your model', 'Step4: Download model and make predictions','ML Glossary'],horizontal=True)
+choice =  st.radio('Navigation menu', ['Home','Step1: Upload Data', 'Step2: Data Profiling','Step3: Train your model', 'Step4: Download & Predict with your model','ML Glossary'],horizontal=True)
 st.divider()
 
 ######################################################################
-# 3. lets build our Home Page & Navigation
+# 2. lets build our Home page
 ######################################################################
+
 if choice == 'Home':
     st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
@@ -105,13 +105,16 @@ if choice == 'Home':
 ######################################################################
 
 if choice == 'Step1: Upload Data':
-    st.title('Step 1: Upload your dataset')
+
+    st.subheader('Step 1: Upload your dataset')
     st.image(width=300, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.subheader('Instructions:')
     st.info('Use the file uploader to select your dataset or download a sample datasets to use.')
     st.markdown('Note: This app only supports CSV files for now. If you have a different file type, please convert it to a CSV file before uploading.')
     
     st.divider()
+
+    #set up the dataset
     df = pd.DataFrame()
     # Add a file uploader to the sidebar:    
     st.info('Option 1: Please select a CSV file type as your dataset.')
@@ -124,7 +127,7 @@ if choice == 'Step1: Upload Data':
         # Save the uploaded file to a csv file:
         df.to_csv('uploaded_dataset.csv', index=False)
         # Display the dataset:
-        st.success('Data uploaded successfully! Here is a sample of your dataset:')
+        st.success('Dataset uploaded successfully! Here is a sample of your dataset:')
         st.dataframe(df.head(100))
         
     
@@ -165,9 +168,11 @@ if choice == 'Step1: Upload Data':
                 st.success('dPenguin dataset downloaded :penguin:')
 
     # next steps prompt
+    st.divider()
+    
     if not df.empty:  
         st.success('A Dataset is uploaded, ready to move to the next step!')
-        st.subheader(':rainbow[Great job you have dataset loaded! Select "Data Profiling" in the navigation to continue.] :point_up_2:')
+        st.subheader(':rainbow[Great job you have dataset loaded! Select "Step2: Data Profiling" in the navigation to continue.] :point_up_2:')
         
     else:    
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
@@ -180,13 +185,12 @@ if choice == 'Step1: Upload Data':
 
 if choice == 'Step2: Data Profiling':
     
-    #set up the dataset
-    
-    # Display the dataset:  
-    st.title('Step 2: Data Profiling')
-    st.image(width=300,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2F9ADoZQgs0tyww%2Fgiphy.gif&f=1&nofb=1&ipt=bbe895f57b94a3eb6cc387f2bc4dd996bf548428356950b16d9f17de07feefaf&ipo=images')
+    #Set up profile report
+      
+    st.subheader('Step 2: Data Profiling')
+    st.image(width=400, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
     st.subheader('Instructions:')
-    st.info('Review the data profile report (press the button) to understand your dataset better.')
+    st.info(' 1. Generate the data profile report (press the button) to understand your dataset better.')
 
     expander = st.expander("What is Data Profiling?")
     expander.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
@@ -202,17 +206,17 @@ if choice == 'Step2: Data Profiling':
     else:    
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
 
-    
-    if st.button(':blue[Generate Data Profile Report]') == True:
+    #generate the profile report
+    if st.button(':blue[Make those shiny graphs for me! - Generate Data Profile Report]') == True:
         #create profile report
         start_time_pp = time.time()
         profile = ProfileReport(df, title='Pandas Profiling Report', explorative=True)
-        st.image(width=400, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
+        
         #rendering the report in the streamlit app
         st.info('Review your dataset profile:')
         st_profile_report(profile)
         st.write('Time taken to create data profile report', round(((time.time() - start_time_pp)/60), 2), 'mins')
-        st.subheader(':rainbow[Look at you go, you profiled your dataset! select "Step3: Train your model" in the navigation to continue.]')
+        st.subheader(':rainbow[Look at you go, you profiled your dataset! select "Step3: Train your model" in the navigation to continue.]:point_up_2:')
         
 ######################################################################
 # 6. lets build our Run AutoML page
@@ -305,26 +309,23 @@ if choice == 'Step3: Train your model':
         
         save_model(best_model, 'best_model')   
         st.success('You model was trained successfully on your data! We can now use this model to make predictions.')
-        
+        st.subheader(':rainbow[Very Nice!, trained your machine learning model! Go to the navigation to continue.]:point_up_2:')
+        st.image(width=200, image=f'https://th.bing.com/th/id/R.0fa354cd55209e213589fb95517cadc7?rik=QSYgQCVNWgoCEg&riu=http%3a%2f%2fwww.quickmeme.com%2fimg%2f14%2f14c0f057abec6dabfc5be48cbbd0d904fef889a8781eee667984089207daf998.jpg&ehk=HkipOeiqL9zTVbYdF%2bxiBTN1NP6yqwkQHbYRaOha%2faQ%3d&risl=&pid=ImgRaw&r=0')
+    
     
     st.divider()
-    expander= st.expander('Optional: Review the model performance statistics and graphs below.')
+    st.info('Optional: Review the model performance statistics and graphs below.')
+    
     #load the results table
     try :
         res_temp = pd.read_csv('results_table.csv', index_col=None)
         st.subheader('Model Performance Table:')
-        st.dataframe(res_temp)
     except: pass
 
-    #delete the csv file
-    try : os.remove('results_table.csv') #deletes CSV
-    except: pass
+    expander = st.expander("Show me that table again: ")
+    expander.dataframe(res_temp)  
     
-    
-    #Cleaning up the files
-    
-    
-    expander = st.expander("Optional: What do these performance scores mean? Click here for more info")
+    expander = st.expander("Optional: So what do these performance scores mean? Click here for more info")
     expander.subheader("Performance Scores:")   
 
     expander.subheader("1. What does 'Accuracy' mean?")
@@ -346,10 +347,8 @@ if choice == 'Step3: Train your model':
     expander.info('TT sec is the time taken to train the model.')
     
     
+    expander=st.expander('Optional: I really really want to know more about these models, show me the model performance graphs!')
 
-    expander=st.expander('Optional: View best model performance graphs. Click here for more info')
-
-    
     #Expander for the model performance
     expander.info('The following graphs show the performance of the best model. These graphs are useful for understanding how well the model is performing and where it can be improved.')
     try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
@@ -394,15 +393,16 @@ if choice == 'Step3: Train your model':
         expander.subheader('Fig 4, Model Pipeline:')
         expander.info('The model pipeline is a visual representation of the steps that are taken to preprocess the data and train the model. It shows the different steps that are involved in the process, such as data cleaning, feature engineering, and model training.')
         expander.image(pipeline_img)
+
         
 ######################################################################
-# 6. lets build our Run AutoML page
+# 
 ######################################################################
 
 
 
-if choice == 'Step4: Download model and make predictions':
-    st.title('Step4: Download model and make predictions')
+if choice == 'Step4: Download & Predict with your model':
+    st.title('Step4: Download & Predict with your model')
     st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
     st.subheader('Instructions:')
     st.info('1. Download the model.')
