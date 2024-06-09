@@ -39,14 +39,14 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 
 
 st.title('EasyML App :rocket:')
-choice =  st.radio('Navigation menu', ['Starting Point','Step1: Find your data and upload it!', 'Step2: Make me some pretty graphs!','Step3: Machine Learning Time', 'Step4: Predict the Future!','App Build Notes'],horizontal=True)
+choice =  st.radio('Navigation menu', ['Starting Point 🏎️','Step1: Find your data and upload it!', 'Step2: Make me some pretty graphs!','Step3: Machine Learning Time', 'Step4: Predict the Future!','App Build Notes'],horizontal=True)
 st.divider()
 
 ######################################################################
 # 2. lets build our Home page
 ######################################################################
 
-if choice == 'Starting Point':
+if choice == 'Starting Point 🏎️':
     st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info("""
@@ -111,7 +111,7 @@ if choice == 'Step1: Find your data and upload it!':
     st.image(width=200, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.subheader('Instructions:')
     st.info('Use the file uploader to select your dataset.')
-    st.warning('Note this app can only perform AutoML on classifIcation problems - predicting 1 or many outcomes so use a dataset that fits this requirement. Functionality to solve other machine learning problems to come soon!')
+    st.warning('Note: this app can only perform solve classifIcation problems - predicting 1 or many outcomes, select a dataset that fits this requirement. ')
     st.divider()
 
     #set up the dataset
@@ -134,10 +134,10 @@ if choice == 'Step1: Find your data and upload it!':
     st.divider()
 
     # Add common datasets
-    st.subheader("Have no dataset? Download and use one of these sample datasets")
+    st.subheader("Have no dataset? Download and use one of these sample datasets! ")
 
-    if st.button('View sample datasets') == True:
-        st.info("These datasets are open-source and can be used for educational purposes. I've included them in the app for you to use. I have slighyly modified the datasets to make them easier to use in the app - moved and renamed coloumns, removed some columns and added some missing values. See App Build Notes for more info and links to original datasets.")
+    if st.button('View sample datasets:') == True:
+        st.info("These datasets are open-source and can be used for educational purposes. I've included them in the app for you to use. I have slighyly modified the datasets to make them easier to use in the app - moved the order of coloumns, removed some columns and added some missing values. See App Build Notes for more info and links to original datasets.")
 
         #titanic dataset
         st.subheader('Titanic Passenger Dataset :ship::')
@@ -168,7 +168,7 @@ if choice == 'Step1: Find your data and upload it!':
 
         #Mushroom dataset
         st.subheader('Mushroom Classification Dataset :mushroom:')
-        st.info("This is the 'Should Mario eat this?' dataset, used to predict if a mushroom is edible or poisonous based on some observations.")
+        st.info("This is the 'Should Mario eat this?' dataset, used to predict if a mushroom is edible or poisonous based on some observations. Also this has +60,000 rows so it's a big one!")
         st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F4d%2F4c%2Ffc%2F4d4cfc0fa82e58789f811bda40414bc0.gif&f=1&nofb=1&ipt=d338a8039bb3d70ae5d8198661e3f7da03bae8417b9b4cae095e11841301b9c5&ipo=images")
        
         with open('data/mushroom_dataset.csv', 'rb') as f: 
@@ -275,24 +275,26 @@ if choice == 'Step3: Machine Learning Time':
     #Step 2 
     st.info("2: Select columns that should be ignored:")
     st.markdown("""Note:
-                - Generally, Select columns that are IDs, have significant missing values or are irrelevant to the model. 
+                - Generally, Select columns that are IDs, have significant missing values or are irrelevant to the model.""")
 
-                - if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
-                - Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. 
-                - In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.
-                - In the Mushroom dataset, you are good to go! :mushroom:
-                """)
+    st.markdown("- If you are using the titanic dataset, you may want to ignore the 'Passenger Id','Cabin_Num' 'Name', 'Ticket' columns.")
+    st.markdown("- Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. ")
+    st.markdown("- In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.")
+    st.markdown("- In the Mushroom dataset, you are good to go! :mushroom:")
+            
            
     temp_df=df.drop(target, axis=1)
     
     ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
+    expander.success("Note: Ignoring columns is optional and depends on the dataset. If you are unsure, you can leave this blank.")
     # Display the dataset for reference:
     st.dataframe(df.head(10))
     st.warning(f"You selected the following columns to be ignored: {ignore_list}")
 
     expander = st.expander("Why do we ignore columns?")
     expander.info("Ignoring columns can help improve the accuracy of the model by removing irrelevant or redundant data. This can help the model focus on the most important features in the data.")
-    
+    expander.success("Want to see the impsct of ignoring columns? Run the model with and without the columns and compare the results.")
+
     st.divider()
     #Step 3
 
@@ -525,13 +527,13 @@ if choice == 'App Build Notes':
     st.subheader("Some Notes & Learnings: (9-June-2024)")
     st.markdown("- Well its now live and I'm pretty happy with how it turned out. Learned a hell of alot about streamlit, pycaret and more python in general")
     st.markdown("- Few issues getting the package management right.  This app is now on Python 3.10 (using other versions created package conflicts) and I added the absolute minimum list of libraries in the requirements.txt so I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some libraries not pinned to a specific version and let the streamlit package manager avoid conflicts.")
-    st.markdown("- Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted but now I've the hnag of it so I think I can build more complex apps in the future.")
-    st.markdown("- Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky.")
-    st.markdown("- I would plan out the app UX structure better next time - I had to refactor a lot of code as I went along to make it more user-friendly.")
+    st.markdown("- Streamlit is a great tool for building simple web app with Python but it has some limitations - an example is that there is no multi-page functionality. I had to use a lot of workarounds (navigation menu) to get the app to work as I wanted but now I've the hnag of it so I think I can build more complex apps in the future.")
+    st.markdown("- Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky. Ideally you would have full ML model training settings available in a sidebar to allow full customisation but I wanted to keep it simple for new users. I may add this in the future.")
+    st.markdown("- Next time, I would plan out the app UX structure better next time - I had to refactor a lot of code as I went along to make it more user-friendly.")
     st.markdown("- Hosting the app on streamlit's public infastructure was tricky with the ML modelling need for compute. I had to configure and simplify the modelling process, previous ML training took 24mins! to work with the free tier limitations. But hey its free so I can't complain too much. Let's see how it goes with more users.")
     st.markdown("- I may deploy on Heroku next time for hosting as it has more flexibility and better performance. ")
     st.markdown("- All in all, I learned a lot building this app and I'm excited to build and release more ML apps.")
-    st.markdown("- I will be adding more features and datasets in the future, so stay tuned!")
+    st.markdown("- Thanks for checking out the app! If you have any feedback or questions, please let me know via LinkedIn.")
     
     st.divider()
 
