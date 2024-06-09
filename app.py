@@ -273,11 +273,12 @@ if choice == 'Step3: Machine Learning Time':
 
     #Step 2 
     st.info("2: Select columns that should be ignored:")
-    st.warkdown("""Note: 
+    st.markdown("""Note: 
             - if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
             - Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. 
             - In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.
-            - In the Mushroom dataset, you are good to go! :mushroom:""")
+            - In the Mushroom dataset, you are good to go! :mushroom:
+                """)
            
     temp_df=df.drop(target, axis=1)
     ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
@@ -291,7 +292,7 @@ if choice == 'Step3: Machine Learning Time':
     st.divider()
     #Step 3
 
-    st.info("3: Ready to run your model? PRESS THE BUTTON BELOW!")
+    st.info("3: Ready to run your model? PRESS THE RED BUTTON BELOW!")
 
     if st.button(':white[Train my model baby......Whoosh!!! :rocket:]', type='primary'):
 
