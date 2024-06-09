@@ -43,17 +43,14 @@ choice =  st.radio('Navigation menu', ['Starting Point 🏎️','Step1: Find you
 st.divider()
 
 ######################################################################
-# 2. lets build our Home page
+# Home page
 ######################################################################
 
 if choice == 'Starting Point 🏎️':
     st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info("""
-        Well hello there :wave: This app helps users build their own Machine Learning (ML) models without writing a single line of code!
-        
-        Few clicks and you will have a trained ML model that can make predictions on new data! :rocket:
-       
+        Well hello there :wave: This app helps users build their own Machine Learning (ML) models without writing a single line of code! With a few clicks, you will have a trained ML model that can make predictions on new data! 🚀
         """)
     
     st.divider()
@@ -102,7 +99,7 @@ if choice == 'Starting Point 🏎️':
     st.link_button('Say hello on LinkedIn! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
     
 ######################################################################
-# 4. lets build our Upload data page
+# Upload data page
 ######################################################################
 
 if choice == 'Step1: Find your data and upload it!':
@@ -190,7 +187,7 @@ if choice == 'Step1: Find your data and upload it!':
      
 
 ######################################################################
-# 5. lets build our data profiling page
+# Data profiling page
 ######################################################################
 
 if choice == 'Step2: Make me some pretty graphs!':
@@ -230,11 +227,11 @@ if choice == 'Step2: Make me some pretty graphs!':
         st.subheader(':rainbow[Look at you go, you profiled your dataset! select "Step3" in the navigation to continue.]:point_up_2:')
         
 ######################################################################
-# 6. lets build our Run AutoML page
+# Machine Learning page
 ######################################################################
 
 if choice == 'Step3: Machine Learning Time':
-    st.subheader('Step3: Machine Learning Time')
+    st.subheader('Step3: Machine Learning Time ')
     st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
     st.subheader('Instructions:')
     st.info('1. Select the target variable(column) you want to predict.')
@@ -277,9 +274,9 @@ if choice == 'Step3: Machine Learning Time':
     st.markdown("""Note:
                 - Generally, Select columns that are IDs, have significant missing values or are irrelevant to the model.""")
 
-    st.markdown("- If you are using the titanic dataset, you may want to ignore the 'Passenger Id','Cabin_Num' 'Name', 'Ticket' columns.")
-    st.markdown("- Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. ")
-    st.markdown("- In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.")
+    st.markdown("- If you are using the titanic dataset, you may want to ignore the 'Passenger Id','Cabin_Num' 'Name', 'Ticket' columns. :ship:")
+    st.markdown("- Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column.  :phone:")
+    st.markdown("- In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns. :penguin:")
     st.markdown("- In the Mushroom dataset, you are good to go! :mushroom:")
             
            
@@ -327,7 +324,7 @@ if choice == 'Step3: Machine Learning Time':
         st.info('Beep bop beep bop  .... pop the kettle on :teapot: this may take a couple mins as my cat crunches those numbers and builds you a model!')
         st.warning('Note: The time taken to train the model will depend on the size of the dataset (the mushroom dataset is a big one) and the complexity of the model.')
         st.warning("""Note for advanced users: 
-                    to improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
+                - to improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
         exp1 =st.expander('Optional: Want to see the technical settings under the hood?')
         exp1.write('The Pycaret configuration settings used to train the model:')
         exp1.dataframe(setup_df)
