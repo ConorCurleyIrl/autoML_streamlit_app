@@ -439,7 +439,7 @@ if choice == 'Step3: Machine Learning Time':
 
         
 ######################################################################
-# # 7. lets build our Download & Predict with your model page
+#  Download & Predict with your model page
 ######################################################################
 
 
@@ -516,7 +516,7 @@ if choice == 'Step4: Predict the Future!':
         
 
 #############################################################################################
-## 7. ML Glossary Section
+## App Build Notes
 #############################################################################################
 
 if choice == 'App Build Notes':
