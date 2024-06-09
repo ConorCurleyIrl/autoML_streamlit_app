@@ -65,13 +65,10 @@ if choice == 'Starting Point':
     st.divider()
     st.subheader("A little more info: :mag_right:")
     expander = st.expander("Why did I build this? :building_construction:")
-    expander.write(""""
-                   I've built this app to help people understand the machine learning process a little better by showing the process in action.
-
-                   Also I wanted to experiment with the Streamlit framework for web development and the Pycaret AutomMl package as a prototyping tool for sharing apps.
-                   """)
+    expander.write(""" You learn my doing and I wanted to experiment with the Streamlit framework for web development and the Pycaret AutomMl package as a prototyping tool for sharing apps.
+                   Also seeing ML in action will help people understand the machine learning process a little better.""")
   
-    expander = st.expander("What is Machine Learning (ML)? What is ML model? :robot_face:")
+    expander = st.expander("Ok, what is Machine Learning (ML)? What is ML model? :robot_face:")
     expander.write("Machine learning is a branch of artificial intelligence that uses computer algorithms to learn from data and perform tasks that normally require human intelligence.")
     expander.info("An ML model is a set of complex rules that uses historical and current data to predict future outcomes")
     expander = st.expander("What is AutoML and why is it useful? :computer:")
@@ -96,7 +93,7 @@ if choice == 'Starting Point':
     if st.button(':rainbow[DO NOT PRESS THIS BUTTON]') == True:
         st.balloons()
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
-        st.subheader(':rainbow[Select "Step1" in the Navigation to continue.] 	:point_up_2:')
+        st.subheader(':rainbow[Select "Step1" in the navigation to continue.] :point_up_2:')
     
     st.divider()    
     st.subheader('created by Conor Curley')
@@ -109,18 +106,17 @@ if choice == 'Starting Point':
 
 if choice == 'Step1: Find your data and upload it!':
 
-    st.subheader('Step 1: Upload your dataset')
-    st.image(width=300, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
+    st.subheader('Step1: Find your data and upload it!')
+    st.image(width=200, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.subheader('Instructions:')
-    st.info('Use the file uploader to select your dataset or download a sample datasets to use.')
+    st.info('Use the file uploader to select your dataset.')
     st.warning('Note this app can only perform AutoML on classifcation problems - predicting 1 or many outcomes so use a dataset that fits this requirement. Functionality to solve other machine learning problems to come soon!')
     st.divider()
 
     #set up the dataset
     df = pd.DataFrame()
     # Add a file uploader to the sidebar:    
-    st.info('Option 1: Please select a CSV file type as your dataset.')
-    st.warning('Note: This app only supports CSV files for now. If you have an Excel file, please save it as a CSV file.')
+    st.subheader("We can't build a model without data, please select a dataset to use:")
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")  
 
     if uploaded_file :
@@ -137,13 +133,13 @@ if choice == 'Step1: Find your data and upload it!':
     st.divider()
 
     # Add common datasets
-    st.info('Option 2: Download a sample dataset to use.')
+    st.subheader("Have no dataset? Download and use of these sample datasets")
+
     if st.button('View sample datasets') == True:
 
         #titanic dataset
         st.subheader('Titanic Passenger Dataset :ship::')
-        st.subheader(':violet[Want to predict who will survive based on the passenger infoformation?]')
-        st.info('Info: The Titanic dataset is a historical dataset that includes passenger information like age, gender, passenger class, and survival status from the tragic Titanic shipwreck. This is a classic dataset used to train ML models, to predict if a passenger survived or not. using the passenger information.')
+        st.info("This is the Wonderwall of datasets - everyone who knows it, is sick of it but if you've never seen it then it's a banger!. It is a classic dataset used to train ML models, to predict if a passenger survived or not. using the passenger information.")
         #st.link_button('Link to dataset source','https://github.com/datasciencedojo/datasets/blob/master/titanic.csv')
         
         with open('data/titanic_data.csv', 'rb') as f:
@@ -152,8 +148,7 @@ if choice == 'Step1: Find your data and upload it!':
 
         #telco company dataset
         st.subheader('Vodafone Customer Dataset: :phone:')
-        st.subheader(':red[Want to predict who will leave (churn) Vodafone based on customer information?] ')
-        st.info('Info: This dataset includes customer information used to predict when a customer leaves/churns. Before you ask, yes Churn is silly business term invented to sound technical.')
+        st.info("This is the 'please don't leave me' dataset, used to predict when a customer leaves/churns. Before you ask, yes Churn is silly business term invented to sound technical.")
         #st.link_button('Link to dataset','https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv')
       
         with open('data/telco_churn.csv', 'rb') as f: 
@@ -162,8 +157,7 @@ if choice == 'Step1: Find your data and upload it!':
 
         #penguins        
         st.subheader('Penguins Speciies Classification Dataset :penguin:')
-        st.subheader(':blue[Want to predict the speicies of Penguin based on some observations?]')
-        st.info('Info: This dataset is used to predict penguin species. There are 3 different species of penguins in this dataset, collected from 3 islands in the Palmer Archipelago, Antarctica.')
+        st.info("This is the 'Which penguin can I steal?' dataset, used to predict the species of penguins based on some observations. There are 3 different species of penguins in this dataset.")
         #st.link_button('link to dataset','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
    
         with open('data/penguins.csv', 'rb') as f: 
@@ -175,7 +169,7 @@ if choice == 'Step1: Find your data and upload it!':
     
     if not df.empty:  
         st.success('A Dataset is uploaded, ready to move to the next step!')
-        st.subheader(':rainbow[Great job you have dataset loaded! Select "Step2: Data Profiling" in the navigation to continue.] :point_up_2:')
+        st.subheader(':rainbow[Great job you have dataset loaded! Select "Step2" in the navigation to continue.] :point_up_2:')
         
     else:    
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
@@ -193,7 +187,7 @@ if choice == 'Step2: Make me some pretty graphs!':
     st.subheader('Step 2: Make me some pretty graphs!')
     st.image(width=400, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
     st.subheader('Instructions:')
-    st.info(' 1. Generate the data profile report (press the button) to understand your dataset better.')
+    st.info(' 1. Click the button and have a gande! :eyes:')
 
     expander = st.expander("What is Data Profiling?")
     expander.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
@@ -213,13 +207,13 @@ if choice == 'Step2: Make me some pretty graphs!':
     if st.button(':blue[Make those pretty graphs for me!]') == True:
         #create profile report
         start_time_pp = time.time()
-        profile = ProfileReport(df, title='Pandas Profiling Report', explorative=True)
+        profile = ProfileReport(df, title='PProfiling Report', explorative=True)
         
         #rendering the report in the streamlit app
         st.info('Review your dataset profile:')
         st_profile_report(profile)
         st.write('Time taken to create data profile report', round(((time.time() - start_time_pp)/60), 2), 'mins')
-        st.subheader(':rainbow[Look at you go, you profiled your dataset! select "Step3: Train your model" in the navigation to continue.]:point_up_2:')
+        st.subheader(':rainbow[Look at you go, you profiled your dataset! select "Step3" in the navigation to continue.]:point_up_2:')
         
 ######################################################################
 # 6. lets build our Run AutoML page
@@ -229,10 +223,10 @@ if choice == 'Step3: Machine Learning Time':
     st.subheader('Step3: Machine Learning Time')
     st.image(width=400, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
     st.subheader('Instructions:')
-    st.info('1. Select the target variable you want to predict.')
-    st.info('2. Select the columns to ignore.')
-    st.info('3. Hit the train model button and watch the magic happen!.')
-    st.info('Optional: Review the model performance statistics and graphs.')
+    st.info('1. Select the target variable(column) you want to predict.')
+    st.info('2. Select the columns to ignore, removes irrelevant columns.')
+    st.info('3. Hit that train model button and watch the magic happen!.')
+    st.warning('Optional: Review the model performance statistics and graphs.')
    
 
     st.divider()
@@ -260,7 +254,7 @@ if choice == 'Step3: Machine Learning Time':
     #Step 1 
     st.info('1: Selct the target variable - this is the column you want to to predict.')
     st.write("Note: if you are using the titanic dataset, use Survived column. If you are using the Vodafone Customer dataset, use Churn column. If you are using the Penguins dataset, use Species")  
-    target = st.selectbox("Select Target Variable", df.columns)
+    target = st.selectbox("Select your Target Variable", df.columns)
     st.success(f"Our ML model with predict:  {target}")
     variables.temp_target = target
 
@@ -488,8 +482,8 @@ if choice == 'App Build Notes':
             - Package management is a complete headache as you figure it out. This app is on Python 3.10 and I added the absolute minimum list of libraries int the requirements.txt as I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some not pinned to a specific version and let the streamlit package manager avoid conflicts
             - Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted.
             - Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky.
-            - Hosting the app on streamlit sharing was a bit of a pain - I had to remove the pycaret models and some other files to get it to work.
-            - All in all, I learned a lot building this app and I'm excited to build more in the future!
+            - Hosting the app on streamlit sharing was a bit of a pain - I had to configure the modelling, previous ML training took 24mins! to work with the free tier limitations.
+            - All in all, I learned a lot building this app and I'm excited to build more advanced versions.
              """)
     st.divider()
 
