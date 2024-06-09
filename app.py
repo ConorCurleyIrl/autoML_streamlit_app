@@ -66,8 +66,8 @@ if choice == 'Starting Point':
     st.divider()
     st.subheader("A little more info: :mag_right:")
     expander = st.expander("Why did I build this? :building_construction:")
-    expander.write(""" People are often put off Machine Learning due to the complexity but it doesn't have to be that way. Ive always thought of it as a fun puzzle game so hopeully this app can take a liitle of the mystery and seriousness out of it for you.""")
-    expander.write(""" Aslo, you only learn my doing and I wanted to learn more about the Streamlit framework for simple web development and the Pycaret AutomMl package as a prototyping tool""")
+    expander.write(""" People are often put off Machine Learning due to the complexity but Ive always thought of it as a fun puzzle game! Hopefully this app can take a little of the mystery and seriousness out of it!.""")
+    expander.write(""" Also, you only learn my doing and I wanted to learn more about the Streamlit framework for simple web development and the Pycaret AutomMl package as a prototyping tool""")
   
     expander = st.expander("Ok, what is Machine Learning (ML)? What is ML model? :robot_face:")
     expander.write("Machine learning is a branch of artificial intelligence that uses computer algorithms to learn from data and perform tasks that normally require human intelligence.")
@@ -77,23 +77,23 @@ if choice == 'Starting Point':
             AutoML is a process of automating the end-to-end process of applying machine learning to real-world problems.
             This app is designed to make the process of building ML models easier and faster.
                    
-            Building production Machine Learning models requires a lot of time, high quality data, platform infastructure, effort, and expertise. 
+            Building production Machine Learning models requires a lot of time, high quality data, platform infrastructure, effort, and expertise. 
             But with the advent of AutoML, the process has become much easier and faster to build basic starter models.
             
             """)
     expander.info("This app used AutoML technology to build your own ML model without writing code.")
 
     expander = st.expander('Will my models be as good as one built by a experienced Data Scientist? :microscope:') 
-    expander.write("Well no, but they will be pretty good and will be great starting point for understanding your data and making intial predictions.")
+    expander.write("Well no, but they will be pretty good and will be great starting point for understanding your data and making initial predictions.")
     
     expander = st.expander('Ok so how do I use this app? :racing_car:')
-    expander.write("Follow the steps in the navigation menu and in a few clicks you'll have an Machine Learning model trained on histroial data that can provide future predictions.")
+    expander.write("Follow the steps in the navigation menu and in a few clicks you'll have an Machine Learning model trained on historical data that can provide future predictions.")
     
 
     #easter egg 1
     if st.button(':rainbow[DO NOT PRESS THIS BUTTON]') == True:
         st.balloons()
-        st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
+        st.success('You rebel you :wink: You found the balloons button,  I think you are ready to start! :rocket:')
         st.subheader(':rainbow[Select "Step1" in the navigation to continue.] :point_up_2:')
     
     st.divider()    
@@ -111,7 +111,7 @@ if choice == 'Step1: Find your data and upload it!':
     st.image(width=200, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.subheader('Instructions:')
     st.info('Use the file uploader to select your dataset.')
-    st.warning('Note this app can only perform AutoML on classifcation problems - predicting 1 or many outcomes so use a dataset that fits this requirement. Functionality to solve other machine learning problems to come soon!')
+    st.warning('Note this app can only perform AutoML on classifIcation problems - predicting 1 or many outcomes so use a dataset that fits this requirement. Functionality to solve other machine learning problems to come soon!')
     st.divider()
 
     #set up the dataset
@@ -157,7 +157,7 @@ if choice == 'Step1: Find your data and upload it!':
                 st.success('Vodafone dataset downloaded :mobile_phone:')
 
         #penguins        
-        st.subheader('Penguins Speciies Classification Dataset :penguin:')
+        st.subheader('Penguins Species Classification Dataset :penguin:')
         st.info("This is the 'Which penguin can I steal?' dataset, used to predict the species of penguins based on some observations. There are 3 different species of penguins in this dataset.")
         #st.link_button('link to dataset','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
    
@@ -286,7 +286,7 @@ if choice == 'Step3: Machine Learning Time':
         start_time = time.time()
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
         st.info('Beep bop beep bop  .... pop the kettle on :teapot: , this takes a couple mins as my cat crunches those numbers and builds you a model!')
-        st.warning("""Note for adavnaced users: 
+        st.warning("""Note for advanced users: 
                     To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
         exp1 =st.expander('Optional: Want to see the technical settings under the hood?')
         exp1.write('The Pycaret configuration settings used to train the model:')
@@ -426,7 +426,7 @@ if choice == 'Step4: Predict the Future!':
         st.warning('No model available for download.')
    
     expander = st.expander("What is a Pickle file?")
-    expander.info("A pickle file is standardised file type which holds your model pipeline information and the ML model you training. It allows you to save your model so that you can use it later without having to retrain it.")
+    expander.info("A pickle file is standardized file type which holds your model pipeline information and the ML model you training. It allows you to save your model so that you can use it later without having to retrain it.")
     expander.info("You can load the model back into memory using the load_model() function in Pycaret. It is a binary file so you can't open it in a text editor.")
     expander.info("Do you need this file? Not really, but it's a good idea to save it in case you want to use the model later.")
     st.divider()
@@ -453,7 +453,7 @@ if choice == 'Step4: Predict the Future!':
     #Step 5
     st.info("3: Run your model on new data and get some predictions!:")
 
-    if st.button("Alrighty this is the moment of truth - let's punch thoses numbers and predict with our model!") == True:
+    if st.button("Alrighty this is the moment of truth - let's punch those numbers and predict with our model!") == True:
         with open('best_model.pkl', 'rb') as f: 
             best_model = load_model('best_model')
         st.write('Applying our ML model ...')
