@@ -59,7 +59,7 @@ if choice == 'Starting Point 🏎️':
     st.divider()
  
     st.subheader("Who is this App for? 	:game_die:")
-    st.info(":black[This app for anyone who is interested in seeing the end-to-end Machine Learning process without writing code]")
+    st.info(":black[This app is for anyone who is interested in seeing the end-to-end Machine Learning process without writing code]")
     st.info(":black[This app has a simple interface for uploading your dataset, profiling your dataset and then running multiple Machine Learning algorithms to create a predictive model which you can test!]")
     st.info(":black[I hope you enjoy using the app and building your own ML models!]")
     
