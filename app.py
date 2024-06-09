@@ -27,7 +27,7 @@ else:
     df = pd.DataFrame()
 
 # Set the page 
-st.set_page_config(layout="wide", page_title="Conor's EasyML App v1.0 :rocket:", page_icon=":rocket:")
+st.set_page_config(layout="wide", page_title="Conor's EasyML App (1.0)", page_icon=":rocket:")
 hide_default_format = """
        <style>
        #MainMenu {visibility: hidden; }
