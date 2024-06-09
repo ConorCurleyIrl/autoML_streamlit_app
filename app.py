@@ -27,7 +27,7 @@ else:
     df = pd.DataFrame()
 
 # Set the page 
-st.set_page_config(layout="wide", page_title="Conor's EasyML App")
+st.set_page_config(layout="wide", page_title="Conor's EasyML App v1.0 :rocket:", page_icon=":rocket:")
 hide_default_format = """
        <style>
        #MainMenu {visibility: hidden; }
@@ -60,7 +60,7 @@ if choice == 'Starting Point 🏎️':
  
     st.subheader("Who is this App for? 	:game_die:")
     st.info(":black[This app for anyone who is interested in seeing the end-to-end Machine Learning process without writing code]")
-    st.info(":black[This app has a simple interface for uploading your dataset, profiling your dataset and then running machine learning algorithms to create a model which you can test.]")
+    st.info(":black[This app has a simple interface for uploading your dataset, profiling your dataset and then running multiple Machine Learning algorithms to create a predictive model which you can test!]")
     st.info(":black[I hope you enjoy using the app and building your own ML models!]")
     
     st.divider()
