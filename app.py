@@ -273,9 +273,11 @@ if choice == 'Step3: Machine Learning Time':
 
     #Step 2 
     st.info("2: Select columns that should be ignored:")
-    st.write("""Note: if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
-             Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. 
-             In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.""")
+    st.warkdown("""Note: 
+            - if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
+            - Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. 
+            - In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.
+            - In the Mushroom dataset, you are good to go! :mushroom:""")
            
     temp_df=df.drop(target, axis=1)
     ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
