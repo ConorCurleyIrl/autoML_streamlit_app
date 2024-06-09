@@ -65,8 +65,8 @@ if choice == 'Starting Point':
     st.divider()
     st.subheader("A little more info: :mag_right:")
     expander = st.expander("Why did I build this? :building_construction:")
-    expander.write(""" You learn my doing and I wanted to experiment with the Streamlit framework for web development and the Pycaret AutomMl package as a prototyping tool for sharing apps.
-                   Also seeing ML in action will help people understand the machine learning process a little better.""")
+    expander.write(""" People are often put off Machine Learning due to the complexity but it doesn't have to be that way. Ive always thought of it as a fun puzzle game so hopeully this app can take a liitle of the mystery and seriousness out of it for you.""")
+    expander.write(""" Aslo, you only learn my doing and I wanted to learn more about the Streamlit framework for simple web development and the Pycaret AutomMl package as a prototyping tool""")
   
     expander = st.expander("Ok, what is Machine Learning (ML)? What is ML model? :robot_face:")
     expander.write("Machine learning is a branch of artificial intelligence that uses computer algorithms to learn from data and perform tasks that normally require human intelligence.")
@@ -187,7 +187,7 @@ if choice == 'Step2: Make me some pretty graphs!':
     st.subheader('Step 2: Make me some pretty graphs!')
     st.image(width=400, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
     st.subheader('Instructions:')
-    st.info(' 1. Click the button and have a gande! :eyes:')
+    st.info(' 1. Click the button and have a gander! :eyes:')
 
     expander = st.expander("What is Data Profiling?")
     expander.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
@@ -478,12 +478,14 @@ if choice == 'App Build Notes':
     st.image(width=300, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.tenor.com%2FUg6cbVA1ZsMAAAAM%2Fdeveloper.gif&f=1&nofb=1&ipt=7285c5bfb06e6eae122b6d0a5d10980b726559be7da57a57848a303739a2738e&ipo=images')
     st.subheader('How I built this app:')
     st.info('I built this app using the Streamlit framework for the web interface and the Pycaret library for the machine learning models.')
-    st.info("""Some Key Learnings:
+    st.markdown("""Some Key Learnings:
             - Package management is a complete headache as you figure it out. This app is on Python 3.10 and I added the absolute minimum list of libraries int the requirements.txt as I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some not pinned to a specific version and let the streamlit package manager avoid conflicts
             - Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted.
             - Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky.
             - Hosting the app on streamlit sharing was a bit of a pain - I had to configure the modelling, previous ML training took 24mins! to work with the free tier limitations.
-            - All in all, I learned a lot building this app and I'm excited to build more advanced versions.
+            - I'll use Heroku next time for hosting as it has more flexibility and better performance. 
+            - I'll explore flask to compare next and use this app as a base
+            - All in all, I learned a lot building this app and I'm excited to build and release more ML apps 
              """)
     st.divider()
 
