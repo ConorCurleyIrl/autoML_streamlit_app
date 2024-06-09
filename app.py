@@ -397,7 +397,7 @@ if choice == 'Step3: Machine Learning Time':
     try : cm_img = plot_model(best_model, plot = 'confusion_matrix', display_format="streamlit", save=True)
     except: pass
 
-    try : features_img  = plot_model(best_model, plot = 'feature_all', display_format="streamlit", save=True)
+    try : features_img  = plot_model(best_model, plot = 'feature', display_format="streamlit", save=True)
     except: pass
     
     try : pipeline_img  = plot_model(best_model, plot = 'pipeline', display_format="streamlit", save=True)
@@ -579,18 +579,21 @@ except: pass
 try : os.remove('uploaded_data.csv') #deletes CSV
 except: pass
 
+try : os.remove('uploaded_dataset.csv') #deletes CSV
+except: pass
+
 #try : os.remove('best_model.pkl') #deletes CSV
 #except: pass
 
 try : os.remove('AUC.png') #deletes CSV
 except: pass
 
-try : os.remove('confusion_matrix.png') #deletes CSV
+try : os.remove('Confusion Matrix.png') #deletes CSV
 except: pass
 
-try : os.remove('feature_importance.png') #deletes CSV
+try : os.remove('Feature Importance (All).png') #deletes CSVFeature Importance (All)
 except: pass
 
-try : os.remove('pipeline.png') #deletes CSV
+try : os.remove('Pipeline Plot.png') #deletes CSV
 except: pass
 
