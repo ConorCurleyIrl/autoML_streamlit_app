@@ -38,7 +38,7 @@ st.markdown(hide_default_format, unsafe_allow_html=True)
 
 
 st.title('EasyML App :rocket:')
-choice =  st.radio('Navigation menu', ['Starting Point','Step1: Get some data', 'Step2: Make me some pretty graphs!','Step3: Machine Learning Time', 'Step4: Predict the Future!','ML Glossary'],horizontal=True)
+choice =  st.radio('Navigation menu', ['Starting Point','Step1: Find your data and upload it!', 'Step2: Make me some pretty graphs!','Step3: Machine Learning Time', 'Step4: Predict the Future!','App Build Notes'],horizontal=True)
 st.divider()
 
 ######################################################################
@@ -50,8 +50,7 @@ if choice == 'Starting Point':
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info("""
         This app helps anyone build a machine learning (ML) models without writing a single line of code.
-        
-        Note this app can only perform AutoML on classifcation problems in this version, more to come soon!
+       
         """)
     
     st.divider()
@@ -60,13 +59,15 @@ if choice == 'Starting Point':
     st.info(":black[I built this app for anyone who is interested in seeing the end-to-end Machine learning process without writing code]")
     st.info(":black[This app has a simple interface for uploading your dataset, profiling your dataset and then running machine learning algorithms to create a model which you can test.]")
     st.info(":black[I hope you enjoy using the app and building your own ML models!]")
-    st.info("Note: I have included some explainer buttons (optional) along the way which will hopefully help explain some data science concepts. But don't worry if some parts are not clear yet, this is now a simplified process and i will create a more advanced version soon!")
-
+    
     st.divider()
     st.subheader("A little more info: :mag_right:")
     expander = st.expander("Why did I build this? :building_construction:")
-    expander.write(""""I wanted to experiment with the Streamlit framework for web development to explore it's capability as a prototyping tool and for sharing apps.
-                   In addition, Pycaret package which I use here is an excellent Machinelearning package for beginners and""")
+    expander.write(""""
+                   I've built this app to help people understand the machine learning process a little better by showing the process in action.
+
+                   Also I wanted to experiment with the Streamlit framework for web development and the Pycaret AutomMl package as a prototyping tool for sharing apps.
+                   """)
   
     expander = st.expander("What is Machine Learning (ML)? What is ML model? :robot_face:")
     expander.write("Machine learning is a branch of artificial intelligence that uses computer algorithms to learn from data and perform tasks that normally require human intelligence.")
@@ -93,7 +94,7 @@ if choice == 'Starting Point':
     if st.button(':rainbow[DO NOT PRESS THIS BUTTON]') == True:
         st.balloons()
         st.success('You rebel you :wink: You found the ballons button,  I think you are ready to start! :rocket:')
-        st.subheader(':rainbow[Select "Step1: Upload Data" in the Navigation to continue.] 	:point_up_2:')
+        st.subheader(':rainbow[Select "Step1" in the Navigation to continue.] 	:point_up_2:')
     
     st.divider()    
     st.subheader('created by Conor Curley')
@@ -104,20 +105,20 @@ if choice == 'Starting Point':
 # 4. lets build our Upload data page
 ######################################################################
 
-if choice == 'Step1: Get some data':
+if choice == 'Step1: Find your data and upload it!':
 
     st.subheader('Step 1: Upload your dataset')
     st.image(width=300, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.subheader('Instructions:')
     st.info('Use the file uploader to select your dataset or download a sample datasets to use.')
-    st.markdown('Note: This app only supports CSV files for now. If you have a different file type, please convert it to a CSV file before uploading.')
-    
+    st.warning('Note this app can only perform AutoML on classifcation problems - predicting 1 or many outcomes so use a dataset that fits this requirement. Functionality to solve other machine learning problems to come soon!')
     st.divider()
 
     #set up the dataset
     df = pd.DataFrame()
     # Add a file uploader to the sidebar:    
     st.info('Option 1: Please select a CSV file type as your dataset.')
+    st.warning('Note: This app only supports CSV files for now. If you have an Excel file, please save it as a CSV file.')
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")  
 
     if uploaded_file :
@@ -228,8 +229,8 @@ if choice == 'Step3: Machine Learning Time':
     st.subheader('Instructions:')
     st.info('1. Select the target variable you want to predict.')
     st.info('2. Select the columns to ignore.')
-    st.info('3. Hit the button to train your model.')
-    st.info('Optional: Review the model performance statistics and graphs below.')
+    st.info('3. Hit the train model button and watch the magic happen!.')
+    st.info('Optional: Review the model performance statistics and graphs.')
    
 
     st.divider()
@@ -281,20 +282,20 @@ if choice == 'Step3: Machine Learning Time':
 
     st.info("3: Ready to run your model? PRESS THE BUTTON BELOW!")
 
-    if st.button('Train my model baby......Whoosh!!!'):
+    if st.button(':rainbow[Train my model baby......Whoosh!!!]'):
 
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4,normalize = True)
         setup_df=pull()
         start_time = time.time()
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
-        st.info('Figuring out patterns in the data to make preditions.... my cat has some serious machine learning work to do!')
+        st.info('Beep bop beep bop  .... go pop the kettle one, this takes a couple mins as my cat crunches those numbers!')
         st.warning("""Note for adavnaced users: 
-                   To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
+                    To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
         exp1 =st.expander('Optional: Want to see the technical settings under the hood?')
-        exp1.write('The Pycaret settings used to train the model:')
+        exp1.write('The Pycaret configuration settings used to train the model:')
         exp1.dataframe(setup_df)
         #train the model
-        best_model = compare_models(budget_time=2, include=['lr', 'knn', 'nb', 'ridge', 'rf', 'xgboost'], sort='Accuracy', turbo=True) 
+        best_model = compare_models(budget_time=2, include=['lr', 'knn', 'nb', 'ridge', 'rf'], sort='Accuracy', turbo=True) 
         compare_df = pull()
         st.success("Bloody Oath that's an impressive table of ML models! The best model is at the top of the leaderboard.")
         #renders the best model leaderboard: 
@@ -304,7 +305,7 @@ if choice == 'Step3: Machine Learning Time':
         st.write('Time taken to train the model:', round(((time.time() - start_time)/60), 2), 'mins')
         #might review in v2
         best_model= tune_model(best_model)
-        st.subheader('Best Model:')
+        st.success('Specs on the best model are below:')
         st.info(best_model)
         
         save_model(best_model, 'best_model')   
@@ -314,6 +315,7 @@ if choice == 'Step3: Machine Learning Time':
         
     
     st.divider()
+
     st.info('Optional: Review the model performance statistics and graphs below.')
     
     #load the results table
@@ -475,10 +477,20 @@ if choice == 'Step4: Predict the Future!':
 ## 7. ML Glossary Section
 #############################################################################################
 
-if choice == 'ML Glossary':
-    st.title('Machine Learning Glossary:')
-    st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.smartdatacollective.com%2Fwp-content%2Fuploads%2F2021%2F06%2Fmachine-learning-helps-life-insurance-scaled.jpg&f=1&nofb=1&ipt=568d2bad1625616c365ef6f5c3aa772e1f042c5219fe20c70e0660d7143774a6&ipo=images')
-    
+if choice == 'App Build Notes':
+    st.subheader('App Build Notes')
+    st.image(width=300, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.tenor.com%2FUg6cbVA1ZsMAAAAM%2Fdeveloper.gif&f=1&nofb=1&ipt=7285c5bfb06e6eae122b6d0a5d10980b726559be7da57a57848a303739a2738e&ipo=images')
+    st.subheader('How I built this app:')
+    st.info('I built this app using the Streamlit framework for the web interface and the Pycaret library for the machine learning models.')
+    st.info("""Some Key Learnings:
+            - Package management is a complete headache as you figure it out. This app is on Python 3.10 and I added the absolute minimum list of libraries int the requirements.txt as I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some not pinned to a specific version and let the streamlit package manager avoid conflicts
+            - Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted.
+            - Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky.
+            - Hosting the app on streamlit sharing was a bit of a pain - I had to remove the pycaret models and some other files to get it to work.
+            - All in all, I learned a lot building this app and I'm excited to build more in the future!
+             """)
+    st.divider()
+
     st.subheader('Technology I used to build this app:')
     if st.button("Want to learn more about Pycaret?") == True:
         st.subheader('What is Pycaret?')
@@ -495,12 +507,7 @@ if choice == 'ML Glossary':
         st.info('Ydata Profiling is an open-source library that generates profile reports from a pandas DataFrame. These reports contain interactive visualizations that allow you to explore your data.')
         st.link_button('Ydata Profiling Documentation', 'https://pypi.org/project/ydata-profiling/')
 
-    
-    expander = st.expander('What are Classification Problems?')
-    expander.info(variables.short_class_desc)
-
-    expander = st.expander('What is AutoML?')
-    expander.info(variables.short_automl_desc)
+    st.divider()
 
     st.subheader('created by Conor Curley')
     st.image(width=180,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2Fa0afeb9cc47a7baf61be453b9a5736b2%2Ftenor.gif%3Fitemid%3D5957952&f=1&nofb=1&ipt=cf528c182da24543a702e83f1b68b0432117d3f21be75f3f1848402db8e10426&ipo=images&clickurl=https%3A%2F%2Ftenor.com%2Fsearch%2Fmagic-gifs')
@@ -511,7 +518,7 @@ if choice == 'ML Glossary':
 #GARBAGE COLLECTION - remove variables and files
 #################################################
 #garbage collection
-import gc
+
 gc.collect()
 
 try : os.remove('results_table.csv') #deletes CSV
