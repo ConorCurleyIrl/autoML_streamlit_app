@@ -137,6 +137,7 @@ if choice == 'Step1: Find your data and upload it!':
     st.subheader("Have no dataset? Download and use one of these sample datasets")
 
     if st.button('View sample datasets') == True:
+        st.info("These datasets are open-source and can be used for educational purposes. I've included them in the app for you to use. I have slighyly modified the datasets to make them easier to use in the app - moved and renamed coloumns, removed some columns and added some missing values. See App Build Notes for more info and links to original datasets.")
 
         #titanic dataset
         st.subheader('Titanic Passenger Dataset :ship::')
@@ -305,30 +306,18 @@ if choice == 'Step3: Machine Learning Time':
                    fix_imbalance = True,
                    remove_multicollinearity = True, 
                    remove_outliers = True,
-                   numeric_features = True,
-                   categorical_features=True,
-                   low_variance_threshold = 0.1,
+                  # numeric_features = True,
+                  # categorical_features=True,
+                  # low_variance_threshold = 0.1,
                    #multicollinearity_threshold=0.8,
                    ignore_features= ignore_list, 
                    fold=3,
                    normalize = True)
         except: 
-            try: 
-                setup(df,target=target,
-                   fix_imbalance = True,
-                   remove_multicollinearity = True, 
-                   remove_outliers = True,
-                   numeric_features = True,
-                   categorical_features=True,
-                   low_variance_threshold = 0.1,
-                   
-                   ignore_features= ignore_list, 
-                   fold=3,
-                   normalize = True)
-            except:
-                st.warning('There was an error t - have you selected the correct target variable? Or have you selected too many columns to ignore? please select 1-5 colomns to ignore.')
-                st.warning('Please check the dataset and try again. Perhaps the dataset is too small or has other issues.')
-                st.stop()
+            st.warning('There was an unexpected error - have you selected the correct target variable? The target variable needs to be a classification column with 1 or more outcomes.')
+            st.warning('Please check the dataset and try again. Perhaps the dataset is too small or has other issues.')
+            st.stop()
+
         
         setup_df=pull()
         start_time = time.time()
@@ -388,7 +377,7 @@ if choice == 'Step3: Machine Learning Time':
     expander.subheader("5. What does 'f1' mean?")
     expander.success('Short answer - the weighted average of Precision and Recall - the higher the better!')
     expander.subheader("5. What does 'Kappa' mean?")
-    expander.success('its the 10th letter of the Greek alphabet, are you still here??')
+    expander.success('its the 10th letter of the Greek alphabet')
     expander.info('Kappa is a statistic that measures inter-rater agreement for qualitative items. It is generally thought to be a more robust measure than simple percent agreement calculation, as Kappa takes into account the possibility of the agreement occurring by chance.')
     expander.subheader("6. What does 'MCC' mean?")
     expander.success('Melbourne Cricket Club?')
@@ -398,10 +387,11 @@ if choice == 'Step3: Machine Learning Time':
     expander.info('TT sec is the time taken to train the model.')
     
 
-    expander=st.expander('Optional: I just really really want to know more about these models, show me the model performance graphs!')
+    expander=st.expander('Optional: I just love this stuff so show me more model performance graphs!')
 
     #Expander for the model performance
     expander.info('The following graphs show the performance of the best model. These graphs are useful for understanding how well the model is performing and where it can be improved.')
+    expander.subheader('These are the performance graphs for the best model based on a unseen holdout set of data used to test how the model would perform on new data.')
     try : auc_img = plot_model(best_model, plot="auc", display_format="streamlit", save=True)
     except: pass
 
@@ -533,14 +523,15 @@ if choice == 'App Build Notes':
     st.subheader('How I built this app:')
     st.info('I built this app using the Streamlit framework for the web interface and the Pycaret library for the machine learning models.')
     st.subheader("Some Notes & Learnings: (9-June-2024)")
-    st.markdown("- Package management was a complete headache as you figure it out. This app is now on Python 3.10 and I added the absolute minimum list of libraries int the requirements.txt as I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some libraries not pinned to a specific version and let the streamlit package manager avoid conflicts.")
-    st.markdown("- Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted.")
+    st.markdown("- Well its now live and I'm pretty happy with how it turned out. Learned a hell of alot about streamlit, pycaret and more python in general")
+    st.markdown("- Few issues getting the package management right.  This app is now on Python 3.10 (using other versions created package conflicts) and I added the absolute minimum list of libraries in the requirements.txt so I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some libraries not pinned to a specific version and let the streamlit package manager avoid conflicts.")
+    st.markdown("- Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted but now I've the hnag of it so I think I can build more complex apps in the future.")
     st.markdown("- Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky.")
-    st.markdown("- Hosting the app on streamlit sharing was a bit of a pain with the ML modelling need for compute - I had to configure and simplify the modelling process, previous ML training took 24mins! to work with the free tier limitations.")
     st.markdown("- I would plan out the app UX structure better next time - I had to refactor a lot of code as I went along to make it more user-friendly.")
-    st.markdown("- I'll deploy on Heroku next time for hosting as it has more flexibility and better performance. ")
-    st.markdown("- I'll explore flask to compare next and use this app as a base")
-    st.markdown("- All in all, I learned a lot building this app and I'm excited to build and release more ML apps")
+    st.markdown("- Hosting the app on streamlit's public infastructure was tricky with the ML modelling need for compute. I had to configure and simplify the modelling process, previous ML training took 24mins! to work with the free tier limitations. But hey its free so I can't complain too much. Let's see how it goes with more users.")
+    st.markdown("- I may deploy on Heroku next time for hosting as it has more flexibility and better performance. ")
+    st.markdown("- All in all, I learned a lot building this app and I'm excited to build and release more ML apps.")
+    st.markdown("- I will be adding more features and datasets in the future, so stay tuned!")
     
     st.divider()
 
@@ -562,16 +553,18 @@ if choice == 'App Build Notes':
 
     st.divider()
 
-    st.subheader('Links to datasets used in this app:')
+    st.subheader('Links to some datasets used in this app:')
+    st.info("These datasets are open-source and can be used for educational purposes. I've included them in the app for you to use. I have slighyly modified the datasets to make them easier to use in the app - moved and renamed coloumns, removed some columns and added some missing values.")
     st.link_button('Link to titanic dataset :ship:','https://github.com/datasciencedojo/datasets/blob/master/titanic.csv')
     st.link_button('link to penguin dataset :penguin: ','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
     st.link_button('Link to telco dataset :phone:','https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv')
     st.link_button('link to mushroom dataset :mushroom:','https://archive.ics.uci.edu/dataset/848/secondary+mushroom+dataset')
+    
 
     st.divider()    
     st.subheader('created by Conor Curley')
     st.image(width=180,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2Fa0afeb9cc47a7baf61be453b9a5736b2%2Ftenor.gif%3Fitemid%3D5957952&f=1&nofb=1&ipt=cf528c182da24543a702e83f1b68b0432117d3f21be75f3f1848402db8e10426&ipo=images&clickurl=https%3A%2F%2Ftenor.com%2Fsearch%2Fmagic-gifs')
-    st.link_button('Say hello on LinkedIn! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
+    st.link_button('Say hello on LinkedIn if you enjoyed the app! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
 
 
 ################################################
