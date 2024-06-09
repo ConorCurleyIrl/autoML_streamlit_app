@@ -284,7 +284,7 @@ if choice == 'Step3: Machine Learning Time':
         setup_df=pull()
         start_time = time.time()
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
-        st.info('Beep bop beep bop  .... go pop the kettle one, this takes a couple mins as my cat crunches those numbers!')
+        st.info('Beep bop beep bop  .... pop the kettle on :teapot: , this takes a couple mins as my cat crunches those numbers and builds you a model!')
         st.warning("""Note for adavnaced users: 
                     To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
         exp1 =st.expander('Optional: Want to see the technical settings under the hood?')
@@ -415,7 +415,7 @@ if choice == 'Step4: Predict the Future!':
     #if 'best_model' not in locals():
     if os.path.exists('best_model.pkl'): 
         with open('best_model.pkl', 'rb') as f: 
-            if st.download_button('Download Model', f, file_name="best_model.pkl"): 
+            if st.download_button('Download Model - (Optional)', f, file_name="best_model.pkl"): 
                 best_model = load_model('best_model')
                 st.markdown(best_model)
                 st.success('Model downloaded successfully!')          
@@ -425,8 +425,9 @@ if choice == 'Step4: Predict the Future!':
         st.warning('No model available for download.')
    
     expander = st.expander("What is a Pickle file?")
-    expander.info("A pickle file is a serialized file that can be saved to disk. It allows you to save your model so that you can use it later without having to retrain it. Pickle files are a common way to save machine learning models.")
-    
+    expander.info("A pickle file is standardised file type which holds your model pipeline information and the ML model you training. It allows you to save your model so that you can use it later without having to retrain it.")
+    expander.info("You can load the model back into memory using the load_model() function in Pycaret. It is a binary file so you can't open it in a text editor.")
+    expander.info("Do you need this file? Not really, but it's a good idea to save it in case you want to use the model later.")
     st.divider()
 
     #Step 5
@@ -478,15 +479,17 @@ if choice == 'App Build Notes':
     st.image(width=300, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.tenor.com%2FUg6cbVA1ZsMAAAAM%2Fdeveloper.gif&f=1&nofb=1&ipt=7285c5bfb06e6eae122b6d0a5d10980b726559be7da57a57848a303739a2738e&ipo=images')
     st.subheader('How I built this app:')
     st.info('I built this app using the Streamlit framework for the web interface and the Pycaret library for the machine learning models.')
-    st.markdown("""Some Key Learnings:
-            - Package management is a complete headache as you figure it out. This app is on Python 3.10 and I added the absolute minimum list of libraries int the requirements.txt as I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some not pinned to a specific version and let the streamlit package manager avoid conflicts
-            - Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted.
-            - Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky.
-            - Hosting the app on streamlit sharing was a bit of a pain - I had to configure the modelling, previous ML training took 24mins! to work with the free tier limitations.
-            - I'll use Heroku next time for hosting as it has more flexibility and better performance. 
-            - I'll explore flask to compare next and use this app as a base
-            - All in all, I learned a lot building this app and I'm excited to build and release more ML apps 
-             """)
+    st.info("Some ey Learnings:")
+    st.markdown("- Package management is a complete headache as you figure it out. This app is on Python 3.10 and I added the absolute minimum list of libraries int the requirements.txt as I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some not pinned to a specific version and let the streamlit package manager avoid conflicts")
+    st.markdown("- Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted.")
+    st.markdown("- Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky.")
+    st.markdown("- Hosting the app on streamlit sharing was a bit of a pain - I had to configure the modelling, previous ML training took 24mins! to work with the free tier limitations.")
+   
+    st.markdown("- I would plan out the app UX structure better next time - I had to refactor a lot of code as I went along to make it more user-friendly.")
+    st.markdown("- I'll deploy on Heroku next time for hosting as it has more flexibility and better performance. ")
+    st.markdown("- I'll explore flask to compare next and use this app as a base")
+    st.markdown("- All in all, I learned a lot building this app and I'm excited to build and release more ML apps")
+    
     st.divider()
 
     st.subheader('Technology I used to build this app:')
