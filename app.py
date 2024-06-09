@@ -49,14 +49,16 @@ if choice == 'Starting Point':
     st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info("""
-        This app helps anyone build a machine learning (ML) models without writing a single line of code.
+        Well hello there :wave: This app helps users build their own machine learning (ML) models without writing a single line of code!
+        
+        Few clicks and you will have a trained ML model that can make predictions on new data! :rocket:
        
         """)
     
     st.divider()
  
     st.subheader("Who is this App for? 	:game_die:")
-    st.info(":black[I built this app for anyone who is interested in seeing the end-to-end Machine learning process without writing code]")
+    st.info(":black[This app for anyone who is interested in seeing the end-to-end Machine learning process without writing code]")
     st.info(":black[This app has a simple interface for uploading your dataset, profiling your dataset and then running machine learning algorithms to create a model which you can test.]")
     st.info(":black[I hope you enjoy using the app and building your own ML models!]")
     
