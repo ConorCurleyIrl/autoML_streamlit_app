@@ -296,7 +296,7 @@ if choice == 'Step3: Machine Learning Time':
 
     if st.button(':white[Train my model baby......Whoosh!!! :rocket:]', type='primary'):
 
-        setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4,normalize = True)
+        setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True,remove_outliers = True, numeric_features = True,categorical_features=True, low_variance_threshold = 0.1, multicollinearity_threshold=.8, ignore_features= ignore_list,fold=3,normalize = True)
         setup_df=pull()
         start_time = time.time()
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
