@@ -134,15 +134,15 @@ if choice == 'Step1: Find your data and upload it!':
     st.divider()
 
     # Add common datasets
-    st.subheader("Have no dataset? Download and use of these sample datasets")
+    st.subheader("Have no dataset? Download and use one of these sample datasets")
 
     if st.button('View sample datasets') == True:
 
         #titanic dataset
         st.subheader('Titanic Passenger Dataset :ship::')
         st.info("This is the Wonderwall of datasets - everyone who knows it, is sick of it but if you've never seen it then it's a banger!. It is a classic dataset used to train ML models, to predict if a passenger survived or not. using the passenger information.")
-        #st.link_button('Link to dataset source','https://github.com/datasciencedojo/datasets/blob/master/titanic.csv')
-        
+        st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FrvhpSE1rQFsnC%2F200.gif&f=1&nofb=1&ipt=61cb70717c6d7e13616619274bbbaf66e471d15d3751d767e03ad3060a91aeff&ipo=images")
+    
         with open('data/titanic_data.csv', 'rb') as f:
             if st.download_button(':violet[Download Titanic CSV :ship:]', f, file_name="titanic_data.csv"): 
                 st.success('Titanic dataset downloaded :ship:')
@@ -150,8 +150,7 @@ if choice == 'Step1: Find your data and upload it!':
         #telco company dataset
         st.subheader('Vodafone Customer Dataset: :phone:')
         st.info("This is the 'please don't leave me' dataset, used to predict when a customer leaves/churns. Before you ask, yes Churn is silly business term invented to sound technical.")
-        #st.link_button('Link to dataset','https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv')
-      
+        st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2F8FKTJDMvH2IAAAAC%2Fhomer-simpsons.gif&f=1&nofb=1&ipt=0dcde120abcd6aa2f5a6520116b46ccbeeef91232629975183ddbbbda791cb2f&ipo=images")
         with open('data/telco_churn.csv', 'rb') as f: 
             if st.download_button(':red[Download Vodafone Customer CSV :phone:]', f, file_name="telco_churn.csv"): 
                 st.success('Vodafone dataset downloaded :mobile_phone:')
@@ -159,11 +158,23 @@ if choice == 'Step1: Find your data and upload it!':
         #penguins        
         st.subheader('Penguins Species Classification Dataset :penguin:')
         st.info("This is the 'Which penguin can I steal?' dataset, used to predict the species of penguins based on some observations. There are 3 different species of penguins in this dataset.")
-        #st.link_button('link to dataset','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
-   
+        st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.icegif.com%2Fwp-content%2Fuploads%2Fpenguin-icegif.gif&f=1&nofb=1&ipt=977822bbd12a1a908ec2cabb050ff39e04c1a3628e0e8a3ce66799be3cf57a35&ipo=images")
+  
         with open('data/penguins.csv', 'rb') as f: 
             if st.download_button(':blue[Download Penguins CSV]', f, file_name="penguins.csv"): 
                 st.success('Penguin dataset downloaded :penguin:')
+
+
+        #Mushroom dataset
+        st.subheader('Mushroom Classification Dataset :mushroom:')
+        st.info("This is the 'Should Mario eat this?' dataset, used to predict if a mushroom is edible or poisonous based on some observations.")
+        st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F4d%2F4c%2Ffc%2F4d4cfc0fa82e58789f811bda40414bc0.gif&f=1&nofb=1&ipt=d338a8039bb3d70ae5d8198661e3f7da03bae8417b9b4cae095e11841301b9c5&ipo=images")
+       
+        with open('data/mushroom_dataset.csv', 'rb') as f: 
+            if st.download_button(':green[Download Mushroom CSV]', f, file_name="mushroom_dataset.csv"): 
+                st.success('Mushroom dataset downloaded :mushroom:')
+
+
 
     # next steps prompt
     st.divider()
@@ -200,6 +211,7 @@ if choice == 'Step2: Make me some pretty graphs!':
     if not df.empty:  
         #if os.path.exists('uploaded_dataset.csv'):
         #    df = pd.read_csv('uploaded_dataset.csv', index_col=None)
+        st.info('This datsaset has ' + str(df.shape[0]) + ' rows and ' + str(df.shape[1]) + ' columns.')
         st.dataframe(df.head(10))
     else:    
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
@@ -279,15 +291,16 @@ if choice == 'Step3: Machine Learning Time':
 
     st.info("3: Ready to run your model? PRESS THE BUTTON BELOW!")
 
-    if st.button(':rainbow[Train my model baby......Whoosh!!!]'):
+    if st.button(':white[Train my model baby......Whoosh!!! :rocket:]', type='primary'):
 
         setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True, ignore_features= ignore_list,fold=4,normalize = True)
         setup_df=pull()
         start_time = time.time()
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
-        st.info('Beep bop beep bop  .... pop the kettle on :teapot: , this takes a couple mins as my cat crunches those numbers and builds you a model!')
+        st.info('Beep bop beep bop  .... pop the kettle on :teapot: this may take a couple mins as my cat crunches those numbers and builds you a model!')
+        st.warning('Note: The time taken to train the model will depend on the size of the dataset (the mushroom dataset is a big one) and the complexity of the model.')
         st.warning("""Note for advanced users: 
-                    To improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
+                    to improve train time, I have simplified the model parameters. I limited to only a few models, added a time budget, sorted by accuracy (more to simplify for new users), removed hyper-parameter tuning, turned on turbo versions of algorithms and reduced Kfold to 4. I think this is a good starting point for most users. If you want to change these settings, you can do so in the code.""")
         exp1 =st.expander('Optional: Want to see the technical settings under the hood?')
         exp1.write('The Pycaret configuration settings used to train the model:')
         exp1.dataframe(setup_df)
@@ -481,7 +494,7 @@ if choice == 'App Build Notes':
     st.subheader('How I built this app:')
     st.info('I built this app using the Streamlit framework for the web interface and the Pycaret library for the machine learning models.')
     st.subheader("Some Notes & Learnings: (9-June-2024)")
-    st.markdown("- Package management was a complete headache as you figure it out. This app is now on Python 3.10 and I added the absolute minimum list of libraries int the requirements.txt as I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some not pinned to a specific version and let the streamlit package manager avoid conflicts")
+    st.markdown("- Package management was a complete headache as you figure it out. This app is now on Python 3.10 and I added the absolute minimum list of libraries int the requirements.txt as I could to reduce errors. Pycaret and scikit-learn have a lot of included dependencies so once you have them installed, you are good to go ive learned. I also kept some libraries not pinned to a specific version and let the streamlit package manager avoid conflicts.")
     st.markdown("- Streamlit is a great tool for building simple web app with Python but it has some limitations. I had to use a lot of workarounds to get the app to work as I wanted.")
     st.markdown("- Userflow could be a bit better - trying to strike a balance between simplicity and showcasing the ML functionality was tricky.")
     st.markdown("- Hosting the app on streamlit sharing was a bit of a pain with the ML modelling need for compute - I had to configure and simplify the modelling process, previous ML training took 24mins! to work with the free tier limitations.")
@@ -495,7 +508,7 @@ if choice == 'App Build Notes':
     st.subheader('Technology I used to build this app:')
     if st.button("Want to learn more about Pycaret?") == True:
         st.subheader('What is Pycaret?')
-        st.info(variables.short_pycaret_desc)
+        st.info('Pycaret is an open-source, low-code machine learning library in Python that automates the end-to-end machine learning process. It allows you to train, test, and deploy machine learning models without writing code.')
         st.link_button('Pycaret Documentation', 'https://pycaret.gitbook.io/docs')
     
     if st.button("Want to learn more about Streamlit?") == True:
@@ -510,6 +523,13 @@ if choice == 'App Build Notes':
 
     st.divider()
 
+    st.subheader('Links to datasets used in this app:')
+    st.link_button('Link to titanic dataset :ship:','https://github.com/datasciencedojo/datasets/blob/master/titanic.csv')
+    st.link_button('link to penguin dataset :penguin: ','https://github.com/dickoa/penguins/blob/master/data/penguins_lter.csv')
+    st.link_button('Link to telco dataset :phone:','https://github.com/IBM/telco-customer-churn-on-icp4d/blob/master/data/Telco-Customer-Churn.csv')
+    st.link_button('link to mushroom dataset :mushroom:','https://archive.ics.uci.edu/dataset/848/secondary+mushroom+dataset')
+
+    st.divider()    
     st.subheader('created by Conor Curley')
     st.image(width=180,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.tenor.com%2Fimages%2Fa0afeb9cc47a7baf61be453b9a5736b2%2Ftenor.gif%3Fitemid%3D5957952&f=1&nofb=1&ipt=cf528c182da24543a702e83f1b68b0432117d3f21be75f3f1848402db8e10426&ipo=images&clickurl=https%3A%2F%2Ftenor.com%2Fsearch%2Fmagic-gifs')
     st.link_button('Say hello on LinkedIn! :wave:', 'https://www.linkedin.com/in/ccurleyds/')
