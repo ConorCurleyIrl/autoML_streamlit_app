@@ -50,7 +50,7 @@ if choice == 'Starting Point':
     st.subheader('Welcome to my EasyML App! :rocket:')
     st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
     st.info("""
-        Well hello there :wave: This app helps users build their own machine learning (ML) models without writing a single line of code!
+        Well hello there :wave: This app helps users build their own Machine Learning (ML) models without writing a single line of code!
         
         Few clicks and you will have a trained ML model that can make predictions on new data! :rocket:
        
@@ -59,22 +59,22 @@ if choice == 'Starting Point':
     st.divider()
  
     st.subheader("Who is this App for? 	:game_die:")
-    st.info(":black[This app for anyone who is interested in seeing the end-to-end Machine learning process without writing code]")
+    st.info(":black[This app for anyone who is interested in seeing the end-to-end Machine Learning process without writing code]")
     st.info(":black[This app has a simple interface for uploading your dataset, profiling your dataset and then running machine learning algorithms to create a model which you can test.]")
     st.info(":black[I hope you enjoy using the app and building your own ML models!]")
     
     st.divider()
     st.subheader("A little more info: :mag_right:")
     expander = st.expander("Why did I build this? :building_construction:")
-    expander.write(""" People are often put off Machine Learning due to the complexity but Ive always thought of it as a fun puzzle game! Hopefully this app can take a little of the mystery and seriousness out of it!.""")
-    expander.write(""" Also, you only learn my doing and I wanted to learn more about the Streamlit framework for simple web development and the Pycaret AutomMl package as a prototyping tool""")
+    expander.write(""" People are often put off Machine Learning due to the complexity but I've always thought of it as a fun puzzle game! Hopefully this app can take a little of the mystery and seriousness out of it!.""")
+    expander.write(""" Also, you only learn by doing and I wanted to learn more about the Streamlit framework for simple web development and the Pycaret AutomMl package as a prototyping tool""")
   
     expander = st.expander("Ok, what is Machine Learning (ML)? What is ML model? :robot_face:")
     expander.write("Machine learning is a branch of artificial intelligence that uses computer algorithms to learn from data and perform tasks that normally require human intelligence.")
     expander.info("An ML model is a set of complex rules that uses historical and current data to predict future outcomes")
     expander = st.expander("What is AutoML and why is it useful? :computer:")
     expander.write("""
-            AutoML is a process of automating the end-to-end process of applying machine learning to real-world problems.
+            AutoML is a process of automating the end-to-end process of applying Machine Learning to real-world problems.
             This app is designed to make the process of building ML models easier and faster.
                    
             Building production Machine Learning models requires a lot of time, high quality data, platform infrastructure, effort, and expertise. 
@@ -83,11 +83,11 @@ if choice == 'Starting Point':
             """)
     expander.info("This app used AutoML technology to build your own ML model without writing code.")
 
-    expander = st.expander('Will my models be as good as one built by a experienced Data Scientist? :microscope:') 
-    expander.write("Well no, but they will be pretty good and will be great starting point for understanding your data and making initial predictions.")
+    expander = st.expander('Will my model be as good as one built by an experienced Data Scientist? :microscope:') 
+    expander.write("Well no, but they will be pretty good and will be a great starting point for understanding your data and making initial predictions.")
     
     expander = st.expander('Ok so how do I use this app? :racing_car:')
-    expander.write("Follow the steps in the navigation menu and in a few clicks you'll have an Machine Learning model trained on historical data that can provide future predictions.")
+    expander.write("Follow the steps in the navigation menu and in a few clicks you'll have a Machine Learning model trained on historical data that can provide future predictions.")
     
 
     #easter egg 1
@@ -181,7 +181,7 @@ if choice == 'Step1: Find your data and upload it!':
     
     if not df.empty:  
         st.success('A Dataset is uploaded, ready to move to the next step!')
-        st.subheader(':rainbow[Great job you have dataset loaded! Select "Step2" in the navigation to continue.] :point_up_2:')
+        st.subheader(':rainbow[Great job you have a dataset loaded! Select "Step2" in the navigation to continue.] :point_up_2:')
         
     else:    
         st.warning('No dataset uploaded yet. Please upload a dataset to continue.')
@@ -199,7 +199,7 @@ if choice == 'Step2: Make me some pretty graphs!':
     st.subheader('Step 2: Make me some pretty graphs!')
     st.image(width=400, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
     st.subheader('Instructions:')
-    st.info(' 1. Click the button and have a gander! :eyes:')
+    st.info(' 1. Click the button down the page and have a gander at the report! :eyes:')
 
     expander = st.expander("What is Data Profiling?")
     expander.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
@@ -220,7 +220,7 @@ if choice == 'Step2: Make me some pretty graphs!':
     if st.button(':blue[Make those pretty graphs for me!]') == True:
         #create profile report
         start_time_pp = time.time()
-        profile = ProfileReport(df, title='PProfiling Report', explorative=True)
+        profile = ProfileReport(df, title='Profiling Report', explorative=True)
         
         #rendering the report in the streamlit app
         st.info('Review your dataset profile:')
@@ -260,15 +260,15 @@ if choice == 'Step3: Machine Learning Time':
     expander.subheader("4. What about cleaning my data? It's a mess!")
     expander.info('Pycaret will handle missing values, encoding, scaling, and other data preprocessing steps for you. It will also handle class imbalance and multicollinearity.')
         
-    st.subheader("Ready to run some AutoML magic?")
-    st.info('Follow the auotML process steps below to train your model:')
+    st.subheader("Ready to run some Machine Learning magic?")
+    st.info('Follow the process steps below to train your model:')
    
     st.divider()
     #Step 1 
     st.info('1: Selct the target variable - this is the column you want to to predict.')
     st.write("Note: if you are using the titanic dataset, use Survived column. If you are using the Vodafone Customer dataset, use Churn column. If you are using the Penguins dataset, use Species")  
     target = st.selectbox("Select your Target Variable", df.columns)
-    st.success(f"Our ML model with predict:  {target}")
+    st.success(f"Our ML model will predict this column:  {target}")
     variables.temp_target = target
 
     #Step 2 
@@ -341,25 +341,28 @@ if choice == 'Step3: Machine Learning Time':
     expander.subheader("Performance Scores:")   
 
     expander.subheader("1. What does 'Accuracy' mean?")
-    expander.info('Accuracy is the ratio of correctly predicted observations to the total observations. It works well only if there are equal number of samples belonging to each class.')
+    expander.success('Short answer - % the model predicted correctly - the higher the better!')
     expander.subheader("2. What does 'AUC' mean?")
-    expander.info('AUC stands for Area Under the Curve. It is used in classification analysis in order to determine which of the used models predicts the classes best.')
+    expander.success('Short answer - Area under the curve - the higher the better!')
     expander.info('An excellent model has AUC near to the 1 which means it has good measure of separability. A poor model has AUC near to the 0 which means it has worst measure of separability.')
     expander.subheader("3. What does 'Recall' mean?")
-    expander.info('Recall is the ratio of correctly predicted positive observations to the all observations in actual class - yes, it is the ratio of true positive to the sum of true positive and false negative.')
+    expander.success("short answer - % of actual positives correctly predicted - the higher the better!")
     expander.subheader("4. What does 'Precision' mean?")
-    expander.info('Precision is the ratio of correctly predicted positive observations to the total predicted positive observations. High precision relates to the low false positive rate.')
+    expander.success('Short answer - % of predicted positives that are actually positive - the higher the better!')
     expander.subheader("5. What does 'f1' mean?")
-    expander.info('F1 Score is the weighted average of Precision and Recall. Therefore, this score takes both false positives and false negatives into account. It is a good way to show that a classifer has a good value for both false positives and false negatives.')    
+    expander.success('Short answer - the weighted average of Precision and Recall - the higher the better!')
     expander.subheader("5. What does 'Kappa' mean?")
+    expander.success('its the 10th letter of the Greek alphabet, are you still here??')
     expander.info('Kappa is a statistic that measures inter-rater agreement for qualitative items. It is generally thought to be a more robust measure than simple percent agreement calculation, as Kappa takes into account the possibility of the agreement occurring by chance.')
     expander.subheader("6. What does 'MCC' mean?")
-    expander.info('MCC is a measure of the quality of binary classifications. It returns a value between -1 and 1. A coefficient of 1 represents a perfect prediction, 0 an average random prediction and -1 an inverse prediction.')
+    expander.success('Melbourne Cricket Club?')
+    expander.info('Matthews correlation coefficient is a measure of the quality of binary classifications. It returns a value between -1 and 1. A coefficient of 1 represents a perfect prediction, 0 an average random prediction and -1 an inverse prediction.')
     expander.subheader("7. What does 'TT sec' mean?")
+    expander.success('A sporty audi')
     expander.info('TT sec is the time taken to train the model.')
     
-    
-    expander=st.expander('Optional: I really really want to know more about these models, show me the model performance graphs!')
+
+    expander=st.expander('Optional: I just really really want to know more about these models, show me the model performance graphs!')
 
     #Expander for the model performance
     expander.info('The following graphs show the performance of the best model. These graphs are useful for understanding how well the model is performing and where it can be improved.')
@@ -438,8 +441,8 @@ if choice == 'Step4: Predict the Future!':
     else: 
         st.warning('No model available for download.')
    
-    expander = st.expander("What is a Pickle file?")
-    expander.info("A pickle file is standardized file type which holds your model pipeline information and the ML model you training. It allows you to save your model so that you can use it later without having to retrain it.")
+    expander = st.expander("What is a Pickle file (.pkl)?")
+    expander.info("A pickle file is standardized file type which holds your model pipeline information and the ML model you trained. It allows you to save your model so that you can use it later without having to retrain it.")
     expander.info("You can load the model back into memory using the load_model() function in Pycaret. It is a binary file so you can't open it in a text editor.")
     expander.info("Do you need this file? Not really, but it's a good idea to save it in case you want to use the model later.")
     st.divider()
@@ -459,7 +462,7 @@ if choice == 'Step4: Predict the Future!':
 
     test=df_holdout.drop(tt, axis=1)
     if st.button("View a sub-sample of your data, without a target variable."):
-        st.write("This is an example of what your future data would look for new predictions") 
+        st.write("This is an example of what your future data would look like for new predictions") 
         st.dataframe(test)
 
     st.divider()
