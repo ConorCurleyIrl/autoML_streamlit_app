@@ -273,14 +273,17 @@ if choice == 'Step3: Machine Learning Time':
 
     #Step 2 
     st.info("2: Select columns that should be ignored:")
-    st.markdown("""Note: 
-            - if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
-            - Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. 
-            - In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.
-            - In the Mushroom dataset, you are good to go! :mushroom:
+    st.markdown("""Note:
+                - Generally, Select columns that are IDs, have significant missing values or are irrelevant to the model. 
+
+                - if you are using the titanic dataset, you may want to ignore the 'Passenger Id', 'Name', 'Ticket' columns. 
+                - Similar if you are using the Vodafone dataset, you may want to ignore the 'Customer ID' column. 
+                - In the Penguins dataset, you may want to ignore the 'Individual' + 'Sample Number' columns.
+                - In the Mushroom dataset, you are good to go! :mushroom:
                 """)
            
     temp_df=df.drop(target, axis=1)
+    
     ignore_list= st.multiselect("Select columns to ignore: ",temp_df.columns)
     # Display the dataset for reference:
     st.dataframe(df.head(10))
@@ -295,8 +298,38 @@ if choice == 'Step3: Machine Learning Time':
     st.info("3: Ready to run your model? PRESS THE RED BUTTON BELOW!")
 
     if st.button(':white[Train my model baby......Whoosh!!! :rocket:]', type='primary'):
-
-        setup(df,target=target,fix_imbalance = True, remove_multicollinearity = True,remove_outliers = True, numeric_features = True,categorical_features=True, low_variance_threshold = 0.1, multicollinearity_threshold=.8, ignore_features= ignore_list,fold=3,normalize = True)
+    #Pycaret setup and model training settings - each line is a setting for the model
+    #try except block to handle errors if the dataset is too small or has other issues
+        try: 
+            setup(df,target=target,
+                   fix_imbalance = True,
+                   remove_multicollinearity = True, 
+                   remove_outliers = True,
+                   numeric_features = True,
+                   categorical_features=True,
+                   low_variance_threshold = 0.1,
+                   #multicollinearity_threshold=0.8,
+                   ignore_features= ignore_list, 
+                   fold=3,
+                   normalize = True)
+        except: 
+            try: 
+                setup(df,target=target,
+                   fix_imbalance = True,
+                   remove_multicollinearity = True, 
+                   remove_outliers = True,
+                   numeric_features = True,
+                   categorical_features=True,
+                   low_variance_threshold = 0.1,
+                   
+                   ignore_features= ignore_list, 
+                   fold=3,
+                   normalize = True)
+            except:
+                st.warning('There was an error t - have you selected the correct target variable? Or have you selected too many columns to ignore? please select 1-5 colomns to ignore.')
+                st.warning('Please check the dataset and try again. Perhaps the dataset is too small or has other issues.')
+                st.stop()
+        
         setup_df=pull()
         start_time = time.time()
         st.image(width=400, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FdPLWf7LikXoAAAAC%2Ftyping-gif.gif&f=1&nofb=1&ipt=bc9b10d7dbf1c064885a96862c6f4040b6cfe7c6b4e0c777174f662cc93d2783&ipo=images')
