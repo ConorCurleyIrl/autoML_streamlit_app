@@ -147,7 +147,7 @@ if choice == 'Step1: Find your data and upload it!':
 
         #telco company dataset
         st.subheader('Vodafone Customer Dataset: :phone:')
-        st.info("This is the 'please don't leave me' dataset, used to predict when a customer leaves/churns. Before you ask, yes Churn is silly business term invented to sound technical.")
+        st.info("This is the 'please don't leave me' dataset, used to predict when a customer leaves/churns. Before you ask, yes Churn is silly business term invented to sound technical. Also this not actually Vodafone data, it's a sample dataset from a telecommunications company (telco) but helps the learning process to think of a similiar company.")
         st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2F8FKTJDMvH2IAAAAC%2Fhomer-simpsons.gif&f=1&nofb=1&ipt=0dcde120abcd6aa2f5a6520116b46ccbeeef91232629975183ddbbbda791cb2f&ipo=images")
         with open('data/telco_churn.csv', 'rb') as f: 
             if st.download_button(':red[Download Vodafone Customer CSV :phone:]', f, file_name="telco_churn.csv"): 
@@ -159,7 +159,7 @@ if choice == 'Step1: Find your data and upload it!':
         st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.icegif.com%2Fwp-content%2Fuploads%2Fpenguin-icegif.gif&f=1&nofb=1&ipt=977822bbd12a1a908ec2cabb050ff39e04c1a3628e0e8a3ce66799be3cf57a35&ipo=images")
   
         with open('data/penguins.csv', 'rb') as f: 
-            if st.download_button(':blue[Download Penguins CSV]', f, file_name="penguins.csv"): 
+            if st.download_button(':blue[Download Penguins CSV :penguin:]', f, file_name="penguins.csv"): 
                 st.success('Penguin dataset downloaded :penguin:')
 
 
