@@ -168,10 +168,10 @@ if choice == 'Step1: Find your data and upload it!':
         st.info("This is the 'Should Mario eat this?' dataset, used to predict if a mushroom is edible or poisonous based on some observations. Also this has +60,000 rows so it's a big one!")
         st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F4d%2F4c%2Ffc%2F4d4cfc0fa82e58789f811bda40414bc0.gif&f=1&nofb=1&ipt=d338a8039bb3d70ae5d8198661e3f7da03bae8417b9b4cae095e11841301b9c5&ipo=images")
        
-        with open('data/mushroom_dataset.csv', 'rb') as f: 
-            if st.download_button(':green[Download Mushroom CSV]', f, file_name="mushroom_dataset.csv"): 
-                st.success('Mushroom dataset downloaded :mushroom:')
-
+        #with open('data/mushroom_dataset.csv', 'rb') as f: 
+        #   if st.download_button(':green[Download Mushroom CSV]', f, file_name="mushroom_dataset.csv"): 
+        #       st.success('Mushroom dataset downloaded :mushroom:')
+        st.warning('Sadly the large mushroom dataset started brekaing the app with multiple errors, so I have removed it for now. I will fix this in the next version.')
 
 
     # next steps prompt
