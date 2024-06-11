@@ -171,7 +171,7 @@ if choice == 'Step1: Find your data and upload it!':
         #with open('data/mushroom_dataset.csv', 'rb') as f: 
         #   if st.download_button(':green[Download Mushroom CSV]', f, file_name="mushroom_dataset.csv"): 
         #       st.success('Mushroom dataset downloaded :mushroom:')
-        st.warning('Sadly the large mushroom dataset started brekaing the app with multiple errors, so I have removed it for now. I will fix this in the next version.')
+        st.warning('Sadly the large mushroom dataset started breaking the app with multiple errors, so I have removed it for now. I will fix this in the next version.')
 
 
     # next steps prompt
