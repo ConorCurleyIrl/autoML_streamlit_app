@@ -576,6 +576,7 @@ gc.collect()
 try : os.remove('results_table.csv') #deletes CSV
 except: pass
 
+'''
 try : os.remove('uploaded_data.csv') #deletes CSV
 except: pass
 
@@ -584,6 +585,7 @@ except: pass
 
 #try : os.remove('best_model.pkl') #deletes CSV
 #except: pass
+'''
 
 try : os.remove('AUC.png') #deletes CSV
 except: pass
