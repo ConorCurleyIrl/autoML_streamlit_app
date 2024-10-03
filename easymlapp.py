@@ -41,7 +41,7 @@ with st.sidebar:
     st.session_state.selection2 = option_menu(None, ["Home", "Step1: Select Your Dataset", "Step2: Profile Your Dataset", 'Step3: Build Your Model','Step4: Review Model Performance','Step5: Test Predictions'], 
                                               icons=['house', 'cloud-upload', "rocket-takeoff", 'rocket-takeoff','rocket-takeoff'], 
                                               menu_icon="cast", default_index=1,styles={
-                                                "container": {"padding": "0!important", "background-color": "#fafafa"},
+                                                "container": {"padding": "0!important", "background-color": "#4db4c7"},
                                                 "icon": {"color": "orange", "font-size": "12px"}, 
                                                 "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
                                                 "nav-link-selected": {"background-color": "green"},

@@ -56,7 +56,7 @@ def profile():
         profile = ProfileReport(st.session_state.df, title='Profiling Report', explorative=True)
         
         #rendering the report in the streamlit app
-        st.write('Your data profile report is ready!:tada:')
+        st.write('Your dataset profile report is being automatically created :tada:')
         st_profile_report(profile)
         st.write('Time taken to create data profile report', round(((time.time() - start_time_pp)/60), 2), 'mins')
         st.subheader('Look at you go, you profiled your dataset! select "Step3" to continue.]:point_up_2:')
