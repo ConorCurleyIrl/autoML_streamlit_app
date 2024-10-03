@@ -29,7 +29,8 @@ def profile():
     ######################################################################
 
     #Set up profile report
-    st.subheader("Step 2: Let's profile your Data to understand it better!")
+    st.subheader("Step 2: Explore your Data to understand it better! :mag:")
+
     st.image(width=300, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
     st.write('Instructions:')
     st.info(' 1. Click the button down the page and have a gander at the report! :eyes:')
@@ -59,5 +60,6 @@ def profile():
         st.write('Your dataset profile report is being automatically created :tada:')
         st_profile_report(profile)
         st.write('Time taken to create data profile report', round(((time.time() - start_time_pp)/60), 2), 'mins')
-        st.subheader('Look at you go, you profiled your dataset! select "Step3" to continue.]:point_up_2:')
-        
+    
+        if profile is not None:
+            st.success('Look at you go, you profiled your dataset! select "Step3" to continue :point_up_2:')

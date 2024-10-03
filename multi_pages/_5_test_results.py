@@ -62,12 +62,12 @@ def test():
         st.write(f'Accuracy of the model is: {accuracy_score*100}% from our holdout dataset, {holdout_df_size} observations were used.')
         st.write('The barchart below shows the number of correct and incorrect predictions made by the model.')
         st.bar_chart(new_prediction['correct_prediction'].value_counts())
-        
+        st.success('Predictions made successfully!:rocket: But can we do better? Go back and try tuning the model to improve the accuracy by ignoring some columns.')
        
     st.divider()
 
     #easter egg
-    st.info("Gotten this far? I think you deserve a dance!:")	
+    st.success("Gotten this far? I think you deserve a dance!:")	
     if st.button("Dance button!", type='primary') == True:
         st.image(width=500,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FZAoUo4PquusAAAAC%2Fyou-did-it-congratulations.gif&f=1&nofb=1&ipt=bfeb6b6934c23145f401edd23610973857097a7938a18d49835bc9dbbc30e0f1&ipo=images')
         st.subheader(":rainbow[Congrats you beauty! You built your own Machine learning model without writing a single line of code! ]:wink:")

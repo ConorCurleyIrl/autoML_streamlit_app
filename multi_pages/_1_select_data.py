@@ -30,7 +30,7 @@ def data_upload():
     if 'df' not in st.session_state:
         st.session_state.df = pd.DataFrame()
 
-    st.subheader('Step 1: Find your data and upload it!')
+    st.subheader('Step 1: Select your dataset :file_folder:')
 
     st.image(width=300, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.subheader('Instructions:')

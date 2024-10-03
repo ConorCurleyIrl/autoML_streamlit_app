@@ -122,6 +122,7 @@ def results():
         except TypeError as e:
             st.error(f"Error plotting Feature Importance: {e}")
 
+        st.success("Well done, that was a stats heavy section :brain: You are ready to test your model's prediction power. Go to the navigation to continue.")
         # Performance Scores
         st.subheader("Performance Scores:")
 

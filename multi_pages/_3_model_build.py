@@ -32,8 +32,8 @@ def model():
     ######################################################################
 
 
-    st.subheader('Step3: Machine Learning Time ')
-    st.image(width=300, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif')
+    st.subheader('Step 3: Machine Learning Time - Let the magic happen! :mage:')
+    st.image(width=300, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F836931%2Fscreenshots%2F4841254%2Fcrm.gif&f=1&nofb=1&ipt=78209b38c8be610ce07b8bd2c053adea890a56da4318b663f28ae54f6e1e3fb9&ipo=images')
     st.subheader('Instructions:')
     st.info('1. Select the target variable(column) you want to predict.')
     st.info('2. Select the columns to ignore, removes irrelevant columns.')
@@ -130,7 +130,7 @@ def model():
         exp1.dataframe(setup_df)
         #train the model
         #https://pycaret.gitbook.io/docs/get-started/functions/train
-        
+
         best_model = compare_models(budget_time=2, include=['lr', 'knn', 'nb', 'ridge', 'rf', 'gbc'], sort='Accuracy', turbo=True) 
         compare_df = pull()
         st.session_state.compare_df = compare_df
