@@ -1,5 +1,3 @@
-
-######################################################################
 # 1. importing libraries - see requirements.txt for all libraries used
 ######################################################################y
 import streamlit as st 
@@ -13,6 +11,7 @@ from streamlit_pandas_profiling import st_profile_report
 from ydata_profiling import ProfileReport
  
 #cache the data
+######################################################################
 @st.cache_resource(max_entries=10, ttl=3600)
 def load_data():
     return None
@@ -22,8 +21,7 @@ if 'session_state' not in st.session_state:
     st.session_state.session_state = load_data()
 
 
-######################################################################
-# 1. Configuring the app
+#configuring homepage
 ######################################################################
 
 # Set the page configuration
@@ -36,22 +34,14 @@ def load_css(file_name):
 
 load_css("style.css")
 
-st.sidebar.title("About")
-st.sidebar.info("This app is a demo of the Streamlit framework and the Pycaret AutoML package. It is maintained by Conor Curley. You can learn more about the app by selecting the pages in the sidebar.")
+st.sidebar.subheader("Instructions:")
+st.sidebar.write("This is a simple web app that allows you to build a Machine Learning model without writing code. Follow the steps in the sidebar menu to build your own ML model.")
+st.sidebar.info("This is blue box is an instruction box. It will provide you with information on how to use the app. Follow the instructions in each step to build your ML model.")
 
-# Cache the data
-@st.cache_resource(max_entries=100, ttl=3600)
-def load_data():
-    return None
 
-# Enable session state
-if 'session_state' not in st.session_state:
-    st.session_state.session_state = load_data()
-
-######################################################################
 # Homepage
 ######################################################################
-st.title("'Welcome to my EasyML App! :rocket:")
+st.title("Welcome to my EasyML App! :rocket:")
 st.subheader("Build a Machine Learning model in minutes without writing code! :robot_face:")
 st.image(width=400, image=f"https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
 
@@ -91,13 +81,14 @@ expander.write("Follow the steps in the navigation menu and in a few clicks you'
 st.divider()
 
 #easter egg 1
-if st.button(':rainbow[DO NOT PRESS THIS BUTTON]') == True:
+if st.button('DANGER :fire: This is a red action button, press it shit happens',type='primary') == True:
     st.balloons()
     st.success('You rebel you :wink: You found the balloons button,  I think you are ready to start! :rocket:')
-    st.subheader(':rainbow[Select "Step1" in the navigation to continue.] :point_left:')
+    st.subheader(':rainbow[Click "Get Data (Step1)" in the sidebar to get this show on the road.] :point_left:')
 
-st.divider()    
+st.divider()  
+
 st.subheader('Created by Conor Curley')
 st.image(width=180,image=f'https://media.licdn.com/dms/image/v2/D4D03AQE1ykRQDFMyjA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1725466756415?e=1733356800&v=beta&t=tXoMk6tWslRQiMv5q2BTBtZS0gckSz3tYY9H6n0aetQ')
-st.write("Hope you enjoy the app :ballo0n: If you have any questions or feedback, please let me know via LinkedIn.")
+st.write("Hope you enjoy the app :balloon: If you have any questions or feedback, please let me know via LinkedIn.")
 st.link_button('LinkedIn Link :wave:', 'https://www.linkedin.com/in/ccurleyds/')

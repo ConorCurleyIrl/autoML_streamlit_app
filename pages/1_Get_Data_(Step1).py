@@ -1,19 +1,14 @@
-######################################################################
 # 1. importing libraries - see requirements.txt for all libraries used
-######################################################################y
+#######################################################################
 import streamlit as st
 from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
 import pandas as pd
 import time
 from streamlit_pandas_profiling import st_profile_report
-
 from ydata_profiling import ProfileReport
 
-import os #file managementstreamlit multiple pages 2024MMM
-import gc #garbage collection
-
-
-#cache the data
+#cache the data & session state
+######################################################################
 @st.cache_resource(max_entries=10, ttl=3600)
 def load_data():
     return None
@@ -26,7 +21,7 @@ if 'df' not in st.session_state:
     st.session_state.df = pd.DataFrame()
 
 
-######################################################################
+
 # Upload data page
 ######################################################################
      
