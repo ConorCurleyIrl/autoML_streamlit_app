@@ -58,12 +58,12 @@ with st.sidebar:
 
     
 
-st.session_state.selection2 = option_menu(None, ["Home", "Step1: Select Your Dataset", "Step2: Profile Your Dataset", 'Step3: Train Your Model','Step4: Review Model Performance','Step5: Test Future Predictions'], 
+st.session_state.selection2 = option_menu(None, ["Home", "Step1:        Select Your Dataset", "Step2:      Profile Your Dataset", 'Step3:       Train Your Model','Step4:       Review Model Performance','Step5:       Test Future Predictions'], 
                                               icons=['house', 'cloud-upload', "clipboard-data", 'file-bar-graph-fill','rocket-takeoff','crosshair2'], 
-                                              menu_icon="cast", default_index=0,styles={
-                                                "container": {"padding": "0!important", "background-color": "#243664"},
+                                              menu_icon="cast", default_index=0, 
+                                              styles={"container": {"padding": "0!important", "background-color": "#243664"},
                                                 "icon": {"color": "orange", "font-size": "15px"}, 
-                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#262564"},
+                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"5px", "--hover-color": "#262564"},
                                                 "nav-link-selected": {"background-color": "green"},
                                                 }, orientation="horizontal")
 
@@ -77,19 +77,19 @@ st.session_state.selection2 = option_menu(None, ["Home", "Step1: Select Your Dat
 if st.session_state.selection2 == "Home":
     import multi_pages._0_home as home
     home.homeapp()
-elif st.session_state.selection2 == "Step1: Select Your Dataset":
+elif st.session_state.selection2 == "Step1:     Select Your Dataset":
     import multi_pages._1_select_data as select_data
     select_data.data_upload()
-elif st.session_state.selection2 == "Step2: Profile Your Dataset":
+elif st.session_state.selection2 == "Step2:     Profile Your Dataset":
     import multi_pages._2_profile_data as profile_data
     profile_data.profile()
-elif st.session_state.selection2 == "Step3: Train Your Model":
+elif st.session_state.selection2 == "Step3:     Train Your Model":
     import multi_pages._3_model_build as model_build
     model_build.model()
-elif st.session_state.selection2 == "Step4: Review Model Performance":
+elif st.session_state.selection2 == "Step4:     Review Model Performance":
     import multi_pages._4_model_results as model_perf
     model_perf.results()
-elif st.session_state.selection2 == "Step5: Test Future Predictions":
+elif st.session_state.selection2 == "Step5:     Test Future Predictions":
     import multi_pages._5_test_results as model_test
     model_test.test()
 
