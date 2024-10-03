@@ -39,11 +39,11 @@ load_css("style.css")
 with st.sidebar:
     st.title("EasyML App Navigation:")
     st.session_state.selection2 = option_menu(None, ["Home", "Step1: Select Your Dataset", "Step2: Profile Your Dataset", 'Step3: Build Your Model','Step4: Review Model Performance','Step5: Test Predictions'], 
-                                              icons=['house', 'cloud-upload', "rocket-takeoff", 'rocket-takeoff','rocket-takeoff'], 
+                                              icons=['house', 'cloud-upload', "clipboard-data", 'file-bar-graph-fill','rocket-takeoff','crosshair2'], 
                                               menu_icon="cast", default_index=1,styles={
-                                                "container": {"padding": "0!important", "background-color": "#4db4c7"},
+                                                "container": {"padding": "0!important", "background-color": "#243664"},
                                                 "icon": {"color": "orange", "font-size": "15px"}, 
-                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#253664"},
+                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#262564"},
                                                 "nav-link-selected": {"background-color": "green"},
                                                 }
                                               )

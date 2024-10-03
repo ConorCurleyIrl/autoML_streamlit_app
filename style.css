@@ -1,6 +1,6 @@
 /* style.css */
 .navbar {
-    background-color: #253664;
+    background-color: #262564;
     overflow: hidden;
     image-rendering: auto;
 }
@@ -8,7 +8,7 @@
 .navbar a {
     float: left;
     display: block;
-    color: rgb(54, 33, 150);
+    color: rgb(6, 4, 15);
     text-align: center;
     padding: 14px 20px;
     text-decoration: none;

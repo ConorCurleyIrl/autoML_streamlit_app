@@ -40,7 +40,7 @@ def results():
     if 'session_state' not in st.session_state:
         st.session_state.session_state = load_data()
 
-    st.header('Step 4: Review the model performance statistics and graphs below. (Optional) ')
+    st.subheader('Step 4: Review the model performance statistics and graphs below. (Optional) ')
 
     st.divider()
 
