@@ -11,10 +11,6 @@ from streamlit_pandas_profiling import st_profile_report
 #from pandas_profiling.profile_report import ProfileReport
 from ydata_profiling import ProfileReport
 
-
-import os #file managementstreamlit multiple pages 2024MMM
-import gc #garbage collection
-
 ######################################################################
 # Upload data page
 ######################################################################

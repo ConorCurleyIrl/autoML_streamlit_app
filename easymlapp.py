@@ -2,9 +2,6 @@
 ######################################################################y
 import streamlit as st 
 #st.set_page_config(layout="wide", page_title="Conor's EasyML App", page_icon=":rocket:", initial_sidebar_state="expanded")
-
-
-
 from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
 import pandas as pd
 import time
@@ -55,7 +52,7 @@ with st.sidebar:
 # set up Sidebar
 with st.sidebar:
     st.title("How to use this app:")
-    st.write("Follow the steps in the sidebar menu to build your own ML model. Here is a quick guide to help")
+    st.write("Follow the steps in the sidebar menu above to build your own ML model. Here is a quick guide on the colour boxes & action buttons:")
     st.sidebar.info("This is an instruction box (blue), each step has instruction boxes to help you build your ML model.")
     st.sidebar.success('This is an sucess box (green), this should let you know when you have completed a step correctly.')
     st.sidebar.warning('This is an warning box (yellow), this is a warning to let you know something may be missing.')

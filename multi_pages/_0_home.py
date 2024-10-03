@@ -1,23 +1,15 @@
-
-# 1. importing libraries - see requirements.txt for all libraries used
-#######################################################################
-import streamlit as st 
-
-from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
-import pandas as pd
-import time
-from streamlit_pandas_profiling import st_profile_report
-from streamlit_option_menu import option_menu
-from ydata_profiling import ProfileReport
-
-
-
-
 # Homepage Function
 ######################################################################
 
 def homeapp():
     
+    import streamlit as st 
+    from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
+    import pandas as pd
+    import time
+    from streamlit_pandas_profiling import st_profile_report
+    from streamlit_option_menu import option_menu
+    from ydata_profiling import ProfileReport
     #cache the data & session state
     ######################################################################
     @st.cache_resource(max_entries=10, ttl=3600)
