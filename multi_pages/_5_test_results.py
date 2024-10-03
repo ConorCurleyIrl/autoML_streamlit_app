@@ -20,7 +20,7 @@ def test():
 
 
     st.subheader('Step4: Predict the Future! :rocket:')
-    st.image(width=400, image='https://media1.giphy.com/media/ZhESFK96NxbuO1yDgy/giphy.gif')
+    st.image(width=400, use_column_width=True, image='https://media1.giphy.com/media/ZhESFK96NxbuO1yDgy/giphy.gif')
     st.subheader('Instructions:')
     st.info("Click the button below to run the model on new data and get some predictions.")
 
@@ -69,7 +69,7 @@ def test():
     #easter egg
     st.success("Gotten this far? I think you deserve a dance!:")	
     if st.button("Dance button!", type='primary') == True:
-        st.image(width=500,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FZAoUo4PquusAAAAC%2Fyou-did-it-congratulations.gif&f=1&nofb=1&ipt=bfeb6b6934c23145f401edd23610973857097a7938a18d49835bc9dbbc30e0f1&ipo=images')
+        st.image(width=500,use_column_width=True,image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FZAoUo4PquusAAAAC%2Fyou-did-it-congratulations.gif&f=1&nofb=1&ipt=bfeb6b6934c23145f401edd23610973857097a7938a18d49835bc9dbbc30e0f1&ipo=images')
         st.subheader(":rainbow[Congrats you beauty! You built your own Machine learning model without writing a single line of code! ]:wink:")
         st.balloons()
         st.balloons()

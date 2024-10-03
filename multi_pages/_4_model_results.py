@@ -41,7 +41,7 @@ def results():
         st.session_state.session_state = load_data()
 
     st.subheader('Step 4: Review the model performance statistics and graphs below. (Optional) ')
-    st.image(width=200, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2F80EXmSbQc2MAAAAM%2Fandre-braugher-statistics-is-so-beautiful.gif&f=1&nofb=1&ipt=6a69d20b8440d471737cc63dbf6b9bc31b792d983c157f6e4841102b7c00e4aa&ipo=images')
+    st.image(width=200,use_column_width=True, image=f'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2F80EXmSbQc2MAAAAM%2Fandre-braugher-statistics-is-so-beautiful.gif&f=1&nofb=1&ipt=6a69d20b8440d471737cc63dbf6b9bc31b792d983c157f6e4841102b7c00e4aa&ipo=images')
     st.divider()
 
     # Check if best_model is loaded
