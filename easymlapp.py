@@ -65,7 +65,7 @@ st.session_state.selection2 = option_menu(None, ["Home", "Step1:        Select Y
                                                 "icon": {"color": "orange", "font-size": "15px"}, 
                                                 "nav-link": {"font-size": "12px", "text-align": "left", "margin":"5px", "--hover-color": "#262564"},
                                                 "nav-link-selected": {"background-color": "green"},
-                                                }, orientation="horizontal")
+                                                }, orientation="vertical")
 
             
 
