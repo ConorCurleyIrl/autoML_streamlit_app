@@ -36,23 +36,12 @@ def load_css(file_name):
 load_css("style.css")
 
 
-    #configuring homepage
-with st.sidebar:
-    st.title("EasyML App Navigation:")
-    st.image(width=100, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif', use_column_width=True)
-    st.session_state.selection2 = option_menu(None, ["Home", "Step1: Select Your Dataset", "Step2: Profile Your Dataset", 'Step3: Train Your Model','Step4: Review Model Performance','Step5: Test Future Predictions'], 
-                                              icons=['house', 'cloud-upload', "clipboard-data", 'file-bar-graph-fill','rocket-takeoff','crosshair2'], 
-                                              menu_icon="cast", default_index=1,styles={
-                                                "container": {"padding": "0!important", "background-color": "#243664"},
-                                                "icon": {"color": "orange", "font-size": "15px"}, 
-                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#262564"},
-                                                "nav-link-selected": {"background-color": "green"},
-                                                }
-                                              )
-    st.session_state.selection2 
 
 # set up Sidebar
 with st.sidebar:
+    st.title("EasyML App Navigation:")
+    st.image(width=100, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif', use_column_width=True)
+    
     st.title("How to use this app:")
     st.write("Follow the steps in the sidebar menu above to build your own ML model. Here is a quick guide on the colour boxes & action buttons:")
     st.sidebar.info("This is an instruction box (blue), each step has instruction boxes to help you build your ML model.")
@@ -63,11 +52,21 @@ with st.sidebar:
             st.success('You rebel you :wink: You found the balloons button,  I think you are ready to start! :rocket:')
     
     st.subheader('App Created by Conor Curley')
-    st.image(width=100,image=f'https://media.licdn.com/dms/image/v2/D4D03AQE1ykRQDFMyjA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1725466756415?e=1733356800&v=beta&t=tXoMk6tWslRQiMv5q2BTBtZS0gckSz3tYY9H6n0aetQ')
+    st.image(width=100,use_column_width=True,image=f'https://media.licdn.com/dms/image/v2/D4D03AQE1ykRQDFMyjA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1725466756415?e=1733356800&v=beta&t=tXoMk6tWslRQiMv5q2BTBtZS0gckSz3tYY9H6n0aetQ')
     st.write("Hope you enjoy the app :balloon: If you have any questions or feedback, please let me know via LinkedIn.")
     st.link_button('LinkedIn Link :wave:', 'https://www.linkedin.com/in/ccurleyds/')
 
     
+
+st.session_state.selection2 = option_menu(None, ["Home", "Step1: Select Your Dataset", "Step2: Profile Your Dataset", 'Step3: Train Your Model','Step4: Review Model Performance','Step5: Test Future Predictions'], 
+                                              icons=['house', 'cloud-upload', "clipboard-data", 'file-bar-graph-fill','rocket-takeoff','crosshair2'], 
+                                              menu_icon="cast", default_index=0,styles={
+                                                "container": {"padding": "0!important", "background-color": "#243664"},
+                                                "icon": {"color": "orange", "font-size": "15px"}, 
+                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#262564"},
+                                                "nav-link-selected": {"background-color": "green"},
+                                                }, orientation="horizontal")
+
             
 
 

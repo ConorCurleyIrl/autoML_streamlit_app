@@ -35,11 +35,6 @@ def profile():
     st.write('Instructions:')
     st.info(' 1. Click the button down the page and have a gander at the report! :eyes:')
 
-    expander = st.expander("Wait, what is Data Profiling?")
-    expander.info("Data profiling is the process of examining the data available and collecting statistics or informative summaries about that data. The purpose of these statistics is to identify potential issues with the data, such as missing values, outliers, or unexpected distributions.")
-
-    st.divider()
-
     st.markdown("A sample of your dataset is displayed below:")
         # next steps prompt
     if not st.session_state.df.empty:  
@@ -63,3 +58,6 @@ def profile():
     
         if profile is not None:
             st.success('Look at you go, you profiled your dataset! select "Step3" to continue :point_up_2:')
+    
+    
+    

@@ -1,41 +1,14 @@
-
-# 1. importing libraries - see requirements.txt for all libraries used
-#######################################################################
-import streamlit as st 
-
-from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
-import pandas as pd
-import time
-import pkg_resources
-
-from streamlit_pandas_profiling import st_profile_report
-from streamlit_option_menu import option_menu
-from ydata_profiling import ProfileReport
-
-
-def get_package_versions(packages):
-    versions = {}
-    for package in packages:
-        try:
-            versions[package] = pkg_resources.get_distribution(package).version
-        except pkg_resources.DistributionNotFound:
-            versions[package] = "Not installed"
-    return versions
-
-# List of packages to check
-packages = [
-    "streamlit",
-    "pycaret",
-    "pandas",
-    "streamlit_pandas_profiling",
-    "streamlit_option_menu",
-    "ydata_profiling"
-]
-
-# Get package versions
-package_versions = get_package_versions(packages)
-
-# Print package versions to the terminal
-print("Package Versions:")
-for package, version in package_versions.items():
-    print(f"{package}: {version}")
+    #configuring homepage
+with st.sidebar:
+    st.title("EasyML App Navigation:")
+    st.image(width=100, image='https://i.pinimg.com/originals/cc/32/99/cc3299350f3d91327d4a8922ecae8fb8.gif', use_column_width=True)
+    st.session_state.selection2 = option_menu(None, ["Home", "Step1: Select Your Dataset", "Step2: Profile Your Dataset", 'Step3: Train Your Model','Step4: Review Model Performance','Step5: Test Future Predictions'], 
+                                              icons=['house', 'cloud-upload', "clipboard-data", 'file-bar-graph-fill','rocket-takeoff','crosshair2'], 
+                                              menu_icon="cast", default_index=0,styles={
+                                                "container": {"padding": "0!important", "background-color": "#243664"},
+                                                "icon": {"color": "orange", "font-size": "15px"}, 
+                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#262564"},
+                                                "nav-link-selected": {"background-color": "green"},
+                                                }
+                                              )
+    st.session_state.selection2

@@ -2,7 +2,7 @@
 ######################################################################
 
 def homeapp():
-    
+
     import streamlit as st 
     from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
     import pandas as pd
@@ -26,7 +26,7 @@ def homeapp():
     #Homepage
     st.title("Welcome to my EasyML App! :rocket:")
     st.subheader("Build a Machine Learning model in minutes without writing code! :robot_face:")
-    st.image(width=300, image="https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
+    st.image(width=300,use_column_width=True, image="https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
 
     st.divider()
 

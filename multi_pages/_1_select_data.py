@@ -32,7 +32,7 @@ def data_upload():
 
     st.subheader('Step 1: Select your dataset :file_folder:')
 
-    st.image(width=300, image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
+    st.image(width=300, use_column_width=True,image=f'https://c.tenor.com/eUsiEZP1DnMAAAAC/beam-me-up-scotty.gif')
     st.subheader('Instructions:')
     st.info('1. Select a dataset to use or upload your own dataset. :file_folder:')
     st.write('Note: this app can only perform solve classifIcation problems - predicting 1 or many outcomes, select a dataset that fits this requirement. ')
