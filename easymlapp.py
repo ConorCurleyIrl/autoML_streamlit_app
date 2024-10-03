@@ -42,8 +42,8 @@ with st.sidebar:
                                               icons=['house', 'cloud-upload', "rocket-takeoff", 'rocket-takeoff','rocket-takeoff'], 
                                               menu_icon="cast", default_index=1,styles={
                                                 "container": {"padding": "0!important", "background-color": "#4db4c7"},
-                                                "icon": {"color": "orange", "font-size": "12px"}, 
-                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
+                                                "icon": {"color": "orange", "font-size": "15px"}, 
+                                                "nav-link": {"font-size": "12px", "text-align": "left", "margin":"0px", "--hover-color": "#253664"},
                                                 "nav-link-selected": {"background-color": "green"},
                                                 }
                                               )
