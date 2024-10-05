@@ -22,7 +22,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8501
 
 # Run the Streamlit app
-CMD ["streamlit", "run", "easymlapp.py", "--server.port=8501", "--server.address=localhost:"]
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=localhost:"]
 
 #further commands to build and run the docker image
 #docker build -t easyml . 

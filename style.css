@@ -1,26 +1,54 @@
-/* style.css */
-.navbar {
-    background-color: #262564;
-    overflow: hidden;
-    image-rendering: auto;
+/* styles.css */
+
+/* General background and text color */
+body {
+    background-color: #2600ff;
+    color: #e0e0e0;
 }
 
-.navbar a {
-    float: left;
-    display: block;
-    color: rgb(6, 4, 15);
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-    font-size: 17px;
+/* Streamlit specific elements */
+.stApp {
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
-.navbar a:hover {
-    background-color: #ddd;
-    color: black;
+/* Option menu styles */
+.nav-link {
+    color: #ff00c3 !important; /* Light text color */
 }
 
-.navbar a.active {
-    background-color: #04AA6D;
-    color: white;
+.nav-link-selected {
+    background-color: #243664!important; /* Darker background for selected item */
+    color: #ffffff !important; /* White text color for selected item */
+}
+
+/* Button styles */
+.css-1aumxhk {
+    background-color: #f30000 !important; /* Dark background for buttons */
+    color: #e0e0e0 !important; /* Light text color for buttons */
+    border: 1px solid #e0e0e0 !important; /* Light border color */
+}
+
+.css-1aumxhk:hover {
+    background-color: #00ff2f !important; /* Slightly lighter background on hover */
+    color: #ffffff !important; /* White text color on hover */
+}
+
+/* Input field styles */
+.css-1cpxqw2 {
+    background-color: #1f1f1f !important; /* Dark background for input fields */
+    color: #e0e0e0 !important; /* Light text color for input fields */
+    border: 1px solid #e0e0e0 !important; /* Light border color */
+}
+
+/* Select box styles */
+.css-1v0mbdj {
+    background-color: #1f1f1f !important; /* Dark background for select boxes */
+    color: #e0e0e0 !important; /* Light text color for select boxes */
+    border: 1px solid #e0e0e0 !important; /* Light border color */
+}
+
+/* Other custom styles */
+.css-1d391kg {
+    color: #100e0e; /* Change this to your desired color */
 }

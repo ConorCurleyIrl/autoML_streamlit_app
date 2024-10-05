@@ -86,14 +86,19 @@ def results():
         
 
 
+    
+        col1, col2 = st.columns(2)
+        with col1:
         # Fig 1 AUC graph
-        plt.figure(figsize=(8, 5))
-        st.subheader('Fig 1 Model performance: AUC curve')
-        st.write('AUC graph is very useful when the target variable is binary. It is a measure of how well a binary classification model is able to distinguish between positive and negative classes.')
-        try:
-            plot_model(st.session_state.best_model, plot="auc", display_format="streamlit")
-        except TypeError as e:
-            st.error(f"Error plotting AUC curve: {e}")
+        
+            st.subheader('Fig 1 Model performance: AUC curve')
+            st.write('AUC graph is very useful when the target variable is binary. It is a measure of how well a binary classification model is able to distinguish between positive and negative classes.')
+        with col2:
+            try:
+                plt.figure(figsize=(8, 5))
+                plot_model(st.session_state.best_model, plot="auc", display_format="streamlit")
+            except TypeError as e:
+                st.error(f"Error plotting AUC curve: {e}")
 
         # Fig 2 Confusion Matrix
         plt.figure(figsize=(8, 5))

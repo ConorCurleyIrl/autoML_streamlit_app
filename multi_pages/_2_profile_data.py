@@ -27,19 +27,25 @@ def profile():
         st.session_state.session_state = load_data()
 
     ######################################################################
+    #h_col3, Col2 = st.columns(2) 
+        #Set up profile report
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Step 2::mag:", divider=True)
+        st.subheader("Explore your Data to understand it better! :mag:")
+        st.markdown("Instructions:")
+        markdown = """1. Click the button down the page and have a gander at the report! :eyes:
+                    """
 
-    #Set up profile report
-    st.subheader("Step 2: Explore your Data to understand it better! :mag:")
-
-    st.image(width=300, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
-    st.write('Instructions:')
-    st.info(' 1. Click the button down the page and have a gander at the report! :eyes:')
-
+        st.info(markdown)
+    with col2:
+        st.image(width=300, use_column_width=True, image=f'https://visme.co/blog/wp-content/uploads/2016/04/Header-1200-3.gif')
+    
+    
+    st.divider()
     st.markdown("A sample of your dataset is displayed below:")
         # next steps prompt
     if not st.session_state.df.empty:  
-        #if os.path.exists('uploaded_dataset.csv'):
-        #    df = pd.read_csv('uploaded_dataset.csv', index_col=None)
         st.write('This datsaset has ' + str(st.session_state.df.shape[0]) + ' rows and ' + str(st.session_state.df.shape[1]) + ' columns.')
         st.dataframe(st.session_state.df.head(10))
     else:    

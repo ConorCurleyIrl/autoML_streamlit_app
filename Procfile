@@ -1,1 +1,1 @@
-web: streamlit run easymlapp.py
+web: streamlit run app.py

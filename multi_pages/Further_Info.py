@@ -50,9 +50,20 @@ st.markdown("- Hosting the app on streamlit's public infastructure was tricky wi
 st.markdown("- I may deploy on Heroku next time for hosting as it has more flexibility and better performance. ")
 st.markdown("- All in all, I learned a lot building this app and I'm excited to build and release more ML apps.")
 st.markdown("- Thanks for checking out the app! If you have any feedback or questions, please let me know via LinkedIn.")
+'''
+Updates from 
+- reduced packages
+- added session state capability
+- added custom css for styling
+- new menu
+- improved layout and dataset selection
+- multiple page functionality
+- dockerised the app
+= deployed on Heroku
 
 
 
+'''
 st.divider()
 
 st.subheader('Technology I used to build this app:')
