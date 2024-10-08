@@ -1,24 +1,16 @@
-# 1. importing libraries - see requirements.txt for all libraries used
-#######################################################################
-import streamlit as st 
-
-from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
-import pandas as pd
-import time
-from streamlit_pandas_profiling import st_profile_report
-from streamlit_option_menu import option_menu
-from ydata_profiling import ProfileReport
-
-#cache the data & session state
-######################################################################
-
-
-######################################################################
-# Upload data page
-######################################################################
 
 def data_upload():
 
+        # 1. importing libraries - see requirements.txt for all libraries used
+    #######################################################################
+    import streamlit as st 
+    from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
+    import pandas as pd
+    import time
+    from streamlit_pandas_profiling import st_profile_report
+    from streamlit_option_menu import option_menu
+    from ydata_profiling import ProfileReport
+    import pyarrow.parquet as pq
     #cache the data & session state
     @st.cache_resource(max_entries=10, ttl=3600)
     def load_data():
@@ -61,7 +53,7 @@ def data_upload():
             st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.giphy.com%2Fmedia%2FrvhpSE1rQFsnC%2F200.gif&f=1&nofb=1&ipt=61cb70717c6d7e13616619274bbbaf66e471d15d3751d767e03ad3060a91aeff&ipo=images")
 
             if st.button("Let's predict who survives", type='primary') == True:
-                    st.session_state.df = pd.read_parquet("data/titanic_data.parquet", index_col=None)
+                    st.session_state.df = pq.read_table(source="data/titanic_data.parquet").to_pandas() 
                     st.success('Titanic dataset selected :ship: See a sample of the dataset below:')
                     st.dataframe(st.session_state.df.head(5))
             
@@ -73,7 +65,7 @@ def data_upload():
             st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2F8FKTJDMvH2IAAAAC%2Fhomer-simpsons.gif&f=1&nofb=1&ipt=0dcde120abcd6aa2f5a6520116b46ccbeeef91232629975183ddbbbda791cb2f&ipo=images")
 
             if st.button("Let's predict customer churn", type='primary') == True:
-                st.session_state.df = pd.read_parquet("data/telco_churn.parquet", index_col=None)
+                st.session_state.df = pq.read_table(source="data/telco.parquet").to_pandas() 
                 st.success('Vodafone dataset selected :phone: See a sample of the dataset below:')
                 st.dataframe(st.session_state.df.head(5))
 
@@ -87,7 +79,7 @@ def data_upload():
             st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fc.tenor.com%2FOOslTDt3rHAAAAAd%2Fpenguin-of-madagascar.gif&f=1&nofb=1&ipt=079f6fc56a0fb949a4ff5bc2d4607e830fc8d179ed7389aa34fc56703249409d&ipo=images")
 
             if st.button("Which furball is coming home?", type='primary') == True:
-                st.session_state.df = pd.read_parquet("data/penguins.parquet", index_col=None)
+                st.session_state.df = pq.read_table(source="data/penguins.parquet").to_pandas() 
                 st.success('Penguin dataset selected :penguin: See a sample of the dataset below:')
                 st.dataframe(st.session_state.df.head(5))
     with col4:
@@ -98,7 +90,7 @@ def data_upload():
             st.image(width=300, image=f"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F4d%2F4c%2Ffc%2F4d4cfc0fa82e58789f811bda40414bc0.gif&f=1&nofb=1&ipt=d338a8039bb3d70ae5d8198661e3f7da03bae8417b9b4cae095e11841301b9c5&ipo=images")
 
             if st.button("Which mushrooms would kill Mario?", type='primary') == True:
-                st.session_state.df = pd.read_parquet("data/mushrooms.parquet", index_col=None)
+                st.session_state.df = pq.read_table(source="data/mushrooms.parquet").to_pandas()
                 st.success('Mushroom dataset selected :mushroom: See a sample of the dataset below:')
                 st.dataframe(st.session_state.df.head(5))
 

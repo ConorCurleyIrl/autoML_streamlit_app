@@ -1,11 +1,10 @@
 
 
 import pandas as pd
-df = pd.read_csv("data/mushroom_dataset.csv", index_col=None)
-df.to_parquet('data/mushrooms.parquet')
+
+import pyarrow.parquet as pq
+import streamlit as st
 
 
-
-
-
-#df = pd.read_parquet("data/iris.csv", index_col=None)
+df = pq.read_table(source="data/mushrooms.parquet").to_pandas()
+st.dataframe(st.session_state.df.head(5))

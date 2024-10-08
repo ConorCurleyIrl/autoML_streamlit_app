@@ -19,6 +19,8 @@ def test():
     import gc #garbage collection
 
 
+    #####################################################
+
     st.subheader('Step4: Predict the Future! :rocket:')
     st.image(width=400, use_column_width=True, image='https://media1.giphy.com/media/ZhESFK96NxbuO1yDgy/giphy.gif')
     st.subheader('Instructions:')
@@ -77,3 +79,13 @@ def test():
         st.image(use_column_width=True,image=f'https://blog.finxter.com/wp-content/uploads/2022/06/DancingUnicornChubbicornGIF.gif')
         
         
+    st.divider()
+
+    import pandas as pd
+
+    import pyarrow.parquet as pq
+    import streamlit as st
+
+
+    df2 = pq.read_table(source="data/mushrooms.parquet").to_pandas()
+    st.dataframe(st.session_state.df2.head(5))
