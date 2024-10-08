@@ -131,7 +131,7 @@ def model():
         #train the model
         #https://pycaret.gitbook.io/docs/get-started/functions/train
 
-        best_model = compare_models(budget_time=4, include=['lr', 'knn', 'nb', 'ridge', 'rf', 'gbc'], sort='Accuracy', turbo=True) 
+        best_model = compare_models(budget_time=1.5, include=['lr', 'knn', 'nb', 'xgb', 'rf'], sort='Accuracy', turbo=True) 
         compare_df = pull()
         st.session_state.compare_df = compare_df
         st.session_state.best_model = best_model
