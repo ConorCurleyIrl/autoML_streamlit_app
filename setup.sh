@@ -1,13 +1,17 @@
-#!/bin/bash
+mkdir -p ~/.streamlit/
 
-# Create a virtual environment
-python3 -m venv venv
+echo "\
+[general]\n\
+email = \"conor.francis.curley@gmail.com\"\n\
+" > ~/.streamlit/credentials.toml
 
-# Activate the virtual environment
-source venv/bin/activate
+echo "\
+[server]\n\
+headless = true\n\
+enableCORS=false\n\
+port = $PORT\n\
+" > ~/.streamlit/config.toml
 
-# Install required packages
-pip install -r requirements.txt
 
-# Run the Streamlit app
-streamlit run app.py
+
+#https://medium.com/geekculture/deploy-your-streamlit-app-to-heroku-in-3-easy-steps-2804c4a3af58
