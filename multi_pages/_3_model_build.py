@@ -111,6 +111,7 @@ def model():
                     ignore_features= ignore_list, 
                     fold=3,
                     normalize = True)
+        
         except: 
             st.warning('There was an unexpected error - have you selected the correct target variable? The target variable needs to be a classification column with 1 or more outcomes.')
             st.warning('Please check the dataset and try again. Perhaps the dataset is too small or has other issues.')
@@ -130,21 +131,16 @@ def model():
         exp1.dataframe(setup_df)
         #train the model
         #https://pycaret.gitbook.io/docs/get-started/functions/train
-        try: 
-            best_model = compare_models(budget_time=1, include=['lr', 'knn', 'nb', 'xgb', 'rf'], sort='Accuracy', turbo=True) 
-            compare_df = pull()
-            st.session_state.compare_df = compare_df
-            st.session_state.best_model = best_model
-            st.subheader("Bloody Oath that's an impressive table of ML models! :chart_with_upwards_trend:")
-            st.write('The best model is at the top of the leaderboard. You can now review the model performance and make predictions.') 
-            st.dataframe(compare_df) 
-        except: 
-            st.warning('There was an unexpected error - Please check the dataset and try again, or unfortunatly there could  other issues.')
-            st.stop()
+    
+        best_model = compare_models(budget_time=1, sort='Accuracy', turbo=True) 
+        compare_df = pull()
+        st.session_state.compare_df = compare_df
+        st.session_state.best_model = best_model
+        st.subheader("Bloody Oath that's an impressive table of ML models! :chart_with_upwards_trend:")
+        st.write('The best model is at the top of the leaderboard. You can now review the model performance and make predictions.') 
+        st.dataframe(compare_df) 
     
         #renders the best model leaderboard: 
-
-
 
         st.subheader('Best Model Trained:')
         st.info(best_model)
