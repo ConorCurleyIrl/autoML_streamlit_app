@@ -74,4 +74,6 @@ def test():
         st.balloons()
         st.balloons()
         st.balloons()
+        st.image(use_column_width=True,image=f'https://blog.finxter.com/wp-content/uploads/2022/06/DancingUnicornChubbicornGIF.gif')
+        
         

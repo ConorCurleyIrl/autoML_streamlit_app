@@ -1,7 +1,8 @@
 # 1. Importing libraries & multi-page setup
 ######################################################################y
 import streamlit as st 
-st.set_page_config(layout="wide", page_title="Conor's EasyML App", page_icon=":rocket:", initial_sidebar_state="expanded")
+st.set_page_config(layout="wide", page_title="EasyML App by CCurley", page_icon=":rocket:", initial_sidebar_state="expanded")
+
 from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
 import pandas as pd
 import time
@@ -9,8 +10,6 @@ from streamlit_pandas_profiling import st_profile_report
 from streamlit_option_menu import option_menu
 from ydata_profiling import ProfileReport
 
-
-#set the theme
 
 # 2. Page configuration
 ######################################################################y
@@ -26,16 +25,6 @@ def load_data():
 #enable session state
 if 'session_state' not in st.session_state:
     st.session_state.session_state = load_data()
-
-
-# Load custom CSS for additional styling (if needed)
-def load_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-#load_css("style.css")
-
-
 
 # set up Sidebar
 with st.sidebar:
@@ -56,25 +45,25 @@ with st.sidebar:
     st.write("Hope you enjoy the app :balloon: If you have any questions or feedback, please let me know via LinkedIn.")
     st.link_button('LinkedIn Link :wave:', 'https://www.linkedin.com/in/ccurleyds/')
 
+######################################################################y
+# 3. Page Navigation
+######################################################################y
     
-h_col1, h_col2, h_col3, h_col4 = st.columns(4)
+h_col1, h_col2, h_col3 = st.columns(3)
+
+with h_col1:
+    st.write("This menu will help you navigate through the app")
 with h_col1:
     st.session_state.selection2 = option_menu(None, ["Home", "Step1: Select Your Dataset", "Step2: Profile Your Dataset", 'Step3: Train Your Model','Step4: Model Performance','Step5: Test Predictions'], 
                                                 icons=['house', 'cloud-upload', "clipboard-data", 'file-bar-graph-fill','rocket-takeoff','crosshair2'], 
                                                 menu_icon="cast", default_index=0, 
-                                                styles={"container": {"padding": "0!important", "background-color": "#243664"},
+                                                styles={"container": {"padding": "0!important", "background-color": "#338A90"},
                                                     "icon": {"color": "orange", "font-size": "15px"}, 
                                                     "nav-link": {"font-size": "12px", "text-align": "left", "margin":"5px","color":"white","--hover-color": "#262564"},
                                                     "nav-link-selected": {"background-color": "green"},
                                                     }, orientation="vertical")
 
-            
-
-
-######################################################################y
-# 3. Page Navigation
-######################################################################y
-
+st.divider()
 if st.session_state.selection2 == "Home":
     import multi_pages._0_home as home
     home.homeapp()

@@ -19,9 +19,40 @@ import gc #garbage collection
 
 
 
+
+
+#############################################################################################
+## Styling
+#############################################################################################
+
+# added enhanced themes
+# added custom css for styling
+# used columns to layout the app for better user experience
+# added images to make the app more visually appealing
+# simplified the layout with consistent structure 
+
+
+
+
+#############################################################################################
+## Datasets
+#############################################################################################
+
+# utilised session state to store the datasets
+# added links to the datasets used in the app
+
+
+
+
+
+
+
+
 #############################################################################################
 ## App Build Notes
 #############################################################################################
+
+
 
 
 st.subheader('App Build Notes')

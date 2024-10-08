@@ -3,6 +3,7 @@
 
 def homeapp():
 
+    #import libraries
     import streamlit as st 
     from pycaret.classification import setup, compare_models, pull, save_model, load_model, predict_model, plot_model, evaluate_model, tune_model
     import pandas as pd
@@ -10,8 +11,8 @@ def homeapp():
     from streamlit_pandas_profiling import st_profile_report
     from streamlit_option_menu import option_menu
     from ydata_profiling import ProfileReport
+
     #cache the data & session state
-    ######################################################################
     @st.cache_resource(max_entries=10, ttl=3600)
     def load_data():
         return None
@@ -23,17 +24,21 @@ def homeapp():
     if 'df' not in st.session_state:
         st.session_state.df = pd.DataFrame()
     
-    #Homepage
-    st.title("Welcome to my EasyML App! :rocket:")
-    st.subheader("Build a Machine Learning model in minutes without writing code! :robot_face:")
-    st.image(width=300,use_column_width=True, image="https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
+    
+    #Homepage        
+    col1, col2  = st.columns(2)
 
-    st.divider()
+    with col1:
+        st.title("Conor's EasyML App:rocket:")
+        st.subheader("Build a Machine Learning model in minutes without writing code! :robot_face:", divider="gray")
+        st.subheader("But who is this App for? 	:game_die:")
+        st.write("This app is for anyone who is interested in seeing the end-to-end Machine Learning process without writing code. It is designed to be simple and fun to use.")
+        st.write("This app has a simple interface for uploading your dataset, profiling your dataset and then running multiple Machine Learning algorithms to create a predictive model which you can test!")
+        st.write("I hope you enjoy using the app and building your own ML models!")
+    with col2: 
+        st.image(width=300,use_column_width=True, image="https://lh4.googleusercontent.com/-yc4Fn6CZPtBPbRByD33NofqGnKGDrU5yy0t6ukwKKS5BxPLH5mUGLsetAUOtaK4D1oMp7otcLzuyr7khbRvCGvQjRSXJ5kjSbVOi3jbmHIjzHR7PO8mh52BlNgAHfnrViChn3jH5-z8M-A6M5OsK4c")
 
-    st.subheader("Who is this App for? 	:game_die:")
-    st.write("This app is for anyone who is interested in seeing the end-to-end Machine Learning process without writing code. It is designed to be simple and fun to use.")
-    st.write("This app has a simple interface for uploading your dataset, profiling your dataset and then running multiple Machine Learning algorithms to create a predictive model which you can test!")
-    st.write("I hope you enjoy using the app and building your own ML models!")
+    
 
     st.divider()
     st.subheader("A little more info: :mag_right:")
