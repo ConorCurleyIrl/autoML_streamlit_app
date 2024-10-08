@@ -130,14 +130,18 @@ def model():
         exp1.dataframe(setup_df)
         #train the model
         #https://pycaret.gitbook.io/docs/get-started/functions/train
-
-        best_model = compare_models(budget_time=1.5, include=['lr', 'knn', 'nb', 'xgb', 'rf'], sort='Accuracy', turbo=True) 
-        compare_df = pull()
-        st.session_state.compare_df = compare_df
-        st.session_state.best_model = best_model
-        st.subheader("Bloody Oath that's an impressive table of ML models! :chart_with_upwards_trend:")
-        st.write('The best model is at the top of the leaderboard. You can now review the model performance and make predictions.') 
-        st.dataframe(compare_df) 
+        try: 
+            best_model = compare_models(budget_time=1, include=['lr', 'knn', 'nb', 'xgb', 'rf'], sort='Accuracy', turbo=True) 
+            compare_df = pull()
+            st.session_state.compare_df = compare_df
+            st.session_state.best_model = best_model
+            st.subheader("Bloody Oath that's an impressive table of ML models! :chart_with_upwards_trend:")
+            st.write('The best model is at the top of the leaderboard. You can now review the model performance and make predictions.') 
+            st.dataframe(compare_df) 
+        except: 
+            st.warning('There was an unexpected error - Please check the dataset and try again, or unfortunatly there could  other issues.')
+            st.stop()
+    
         #renders the best model leaderboard: 
 
 
